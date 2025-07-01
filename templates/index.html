@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Email Generator - v1.0.3</title> <!-- NEW Version marker in title -->
+    <title>Email Generator</title> <!-- Removed version marker -->
     <style>
         /* Basic styling for the entire page */
         body {
@@ -120,12 +120,63 @@
             height: auto;
             border-radius: 2px;
         }
+        .auth-links {
+            margin-bottom: 20px;
+            text-align: right;
+            padding-right: 10px;
+        }
+        .auth-links a {
+            color: #66b3ff;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+        .flash-message {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .flash-message.success {
+            background-color: #28a745;
+            color: white;
+        }
+        .flash-message.danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        .flash-message.info {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .flash-message.warning {
+            background-color: #ffc107;
+            color: #333;
+        }
     </style>
 </head>
 <body>
-    <!-- Left Panel: Controls for email generation -->
     <div class="controls-panel">
-        <h1>Email Generator - v1.0.3</h1> <!-- NEW Version marker in H1 -->
+        <div class="auth-links">
+            {% if current_user.is_authenticated %}
+                Logged in as: {{ current_user.username }}
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <h1>Email Generator</h1> <!-- Removed version marker -->
         <form id="emailForm">
             <!-- Header Section -->
             <div class="section-header">
@@ -501,7 +552,7 @@ www.tripadvisor.ie
             "id_mismatch": "Thank you for submitting your identification document. We’ve reviewed the details and noticed that the name on the ID does not match the name registered on your account. For security and verification purposes, we kindly ask you to provide an explanation for the discrepancy, along with any supporting documents (such as a legal name change certificate or proof of relationship, if applicable).\n",
             "poa_issue_base": `Regrettably, we are unable to accept the submitted document as valid proof of address, as it is an {{ poa_issue_reason }} and does not meet our verification requirements.
 Please kindly provide an acceptable form of address verification for {{ poa_issue_person_name }}. This may include one of the following:
-A bank statement issued within the last three months, showing your residential address. Sensitive information such as transaction amounts may be redacted, but the name, address, account name, and IBAN/account number must remain clearly visible; or
+A bank statement issued within the last three months, showing your residential address. Sensitive information such as transaction amounts may be redacted; however, the name, address, account name, and IBAN/account number must remain clearly visible; or
 A utility bill (excluding mobile phone bills and invoices) issued within the last three months to your residential address.
 Kindly note that we are unable to proceed with your application until a valid proof of address is received.\n`,
             "clarification_nationality_residency": "Thank you for submitting your documents. During our review, we noticed that there is some inconsistency or missing information regarding your nationality or residency status. To proceed with the verification process, we kindly ask you to provide clarification and, if possible, additional documentation confirming your current nationality and/or residency (e.g., passport, residency permit, or utility bill).\n",
@@ -663,11 +714,82 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
             }
 
 
-            // 5. UBO Identity verification (already uses individual checkboxes, no change needed here)
-            // This section already has individual checkboxes for UBO1, UBO2, UBO3, so no change to logic needed.
+            // 2. Opener NEW supplier
+            if (data.get('opener_new_supplier')) {
+                emailParts.push(EMAIL_TEMPLATES['opener_new_supplier']);
+                console.log("Added Opener NEW supplier."); // Debug log
+            }
 
-            // 6. UBO Address verification (already uses individual checkboxes, no change needed here)
-            // This section already has individual checkboxes for UBO1, UBO2, UBO3, so no change to logic needed.
+            // 3. Opener RAI
+            if (data.get('opener_rai')) {
+                emailParts.push(EMAIL_TEMPLATES['opener_rai']);
+                console.log("Added Opener RAI."); // Debug log
+            }
+
+            // 4. Why POI/POA needed
+            if (data.get('why_poi_poa_needed')) {
+                emailParts.push(EMAIL_TEMPLATES['why_poi_poa_needed']);
+                console.log("Added Why POI/POA needed."); // Debug log
+            }
+
+            // 5. UBO Identity verification (now uses individual checkboxes, no change needed here)
+            if (data.get('ubo_identity_verification')) {
+                const companyNameUboId = data.get('company_name_ubo_id') || '';
+                emailParts.push(EMAIL_TEMPLATES['ubo_identity_verification'].replace('{{ company_name_ubo_id }}', companyNameUboId));
+                console.log("Added UBO Identity verification."); // Debug log
+                // These are individual checkboxes, so process them separately
+                if (document.getElementById('ubo_id_1').checked) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_id_1'].replace('{{ ubo_id_name_1 }}', data.get('ubo_id_name_1') || ''));
+                    console.log("Added UBO 1.");
+                }
+                if (document.getElementById('ubo_id_2').checked) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_id_2'].replace('{{ ubo_id_name_2 }}', data.get('ubo_id_name_2') || ''));
+                    console.log("Added UBO 2.");
+                }
+                if (document.getElementById('ubo_id_3').checked) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_id_3'].replace('{{ ubo_id_name_3 }}', data.get('ubo_id_name_3') || ''));
+                    console.log("Added UBO 3.");
+                }
+            }
+
+            // 6. UBO Address verification (now uses individual checkboxes, no change needed here)
+            if (data.get('ubo_address_verification')) {
+                emailParts.push(EMAIL_TEMPLATES['ubo_address_verification']);
+                console.log("Added UBO Address verification."); // Debug log
+                // These are individual checkboxes, so process them separately
+                if (document.getElementById('ubo_address_1').checked) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_address_1'].replace('{{ ubo_address_name_1 }}', data.get('ubo_address_name_1') || ''));
+                    console.log("Added UBO Address 1.");
+                }
+                if (document.getElementById('ubo_address_2').checked) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_address_2'].replace('{{ ubo_address_name_2 }}', data.get('ubo_address_name_2') || ''));
+                    console.log("Added UBO Address 2.");
+                }
+                if (document.getElementById('ubo_address_3').checked) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_address_3'].replace('{{ ubo_address_name_3 }}', data.get('ubo_address_name_3') || ''));
+                    console.log("Added UBO Address 3.");
+                }
+            }
+
+
+            // 7. No UBO (State owned entity or Publicly listed)
+            if (data.get('no_ubo')) {
+                const companyNameNoUbo = data.get('company_name_no_ubo') || '';
+                emailParts.push(EMAIL_TEMPLATES['no_ubo'].replace('{{ company_name_no_ubo }}', companyNameNoUbo));
+                console.log("Added No UBO."); // Debug log
+            }
+
+            // 8. Identity verification (Individual)
+            if (data.get('identity_verification_individual')) {
+                emailParts.push(EMAIL_TEMPLATES['identity_verification_individual']);
+                console.log("Added Identity verification (Individual)."); // Debug log
+            }
+
+            // 9. POA verification (Individual)
+            if (data.get('poa_verification_individual')) {
+                emailParts.push(EMAIL_TEMPLATES['poa_verification_individual']);
+                console.log("Added POA verification (Individual)."); // Debug log
+            }
 
             // 10. ID Verification Issues (now multi-select)
             if (data.get('id_verification_issues')) {
@@ -688,72 +810,6 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
                     'documents_without_name_address': EMAIL_TEMPLATES['poa_issue_base'],
                     'handwritten_or_informal_documents': EMAIL_TEMPLATES['poa_issue_base']
                 }, "POA Verification Issues");
-            }
-
-            // 16. Bank Statement (now multi-select)
-            if (data.get('bank_statement')) {
-                processMultiCheckboxes('bank_statement_issue_type', {
-                    'bank_statement_illegible': EMAIL_TEMPLATES['bank_statement_illegible'],
-                    'bank_statement_mismatch': EMAIL_TEMPLATES['bank_statement_mismatch'],
-                    'bank_statement_expired': EMAIL_TEMPLATES['bank_statement_expired']
-                }, "Bank Statement Issues");
-            }
-
-            // 19. Changes Made (now multi-select)
-            if (data.get('changes_made')) {
-                processMultiCheckboxes('changes_type', {
-                    'registered_address_or_principal_place_of_business': EMAIL_TEMPLATES['changes_registered_address']
-                }, "Changes Made");
-            }
-
-            // 20. Clarification Request (now multi-select)
-            if (data.get('clarification_request')) {
-                processMultiCheckboxes('clarification_type', {
-                    'request_for_clarification_on_business_name': EMAIL_TEMPLATES['clarification_business_name_discrepancy_1'], // Placeholder for complex logic
-                    'request_for_business_activity_update': EMAIL_TEMPLATES['clarification_business_activity_update'],
-                    'request_for_entity_tin_vat_number': EMAIL_TEMPLATES['clarification_entity_tin_vat'],
-                    'company_structure_ownership_chart': EMAIL_TEMPLATES['clarification_company_structure_ownership_chart']
-                }, "Clarification Request");
-            }
-
-
-            // Remaining sections (no change to logic, just re-ordering if needed)
-            // 2. Opener NEW supplier
-            if (data.get('opener_new_supplier')) {
-                emailParts.push(EMAIL_TEMPLATES['opener_new_supplier']);
-                console.log("Added Opener NEW supplier."); // Debug log
-            }
-
-            // 3. Opener RAI
-            if (data.get('opener_rai')) {
-                emailParts.push(EMAIL_TEMPLATES['opener_rai']);
-                console.log("Added Opener RAI."); // Debug log
-            }
-
-            // 4. Why POI/POA needed
-            if (data.get('why_poi_poa_needed')) {
-                emailParts.push(EMAIL_TEMPLATES['why_poi_poa_needed']);
-                console.log("Added Why POI/POA needed."); // Debug log
-            }
-
-            // ... (other sections that are single-checkbox and don't need processMultiCheckboxes)
-            // 7. No UBO (State owned entity or Publicly listed)
-            if (data.get('no_ubo')) {
-                const companyNameNoUbo = data.get('company_name_no_ubo') || '';
-                emailParts.push(EMAIL_TEMPLATES['no_ubo'].replace('{{ company_name_no_ubo }}', companyNameNoUbo));
-                console.log("Added No UBO."); // Debug log
-            }
-
-            // 8. Identity verification (Individual)
-            if (data.get('identity_verification_individual')) {
-                emailParts.push(EMAIL_TEMPLATES['identity_verification_individual']);
-                console.log("Added Identity verification (Individual)."); // Debug log
-            }
-
-            // 9. POA verification (Individual)
-            if (data.get('poa_verification_individual')) {
-                emailParts.push(EMAIL_TEMPLATES['poa_verification_individual']);
-                console.log("Added POA verification (Individual)."); // Debug log
             }
 
             // 12. Clarification on Nationality / Residency
@@ -782,6 +838,15 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
                 console.log("Added Financial Status."); // Debug log
             }
 
+            // 16. Bank Statement (now multi-select)
+            if (data.get('bank_statement')) {
+                processMultiCheckboxes('bank_statement_issue_type', {
+                    'bank_statement_illegible': EMAIL_TEMPLATES['bank_statement_illegible'],
+                    'bank_statement_mismatch': EMAIL_TEMPLATES['bank_statement_mismatch'],
+                    'bank_statement_expired': EMAIL_TEMPLATES['bank_statement_expired']
+                }, "Bank Statement Issues");
+            }
+
             // 17. Acceptable Forms of Address Verification
             if (data.get('acceptable_address_verification')) {
                 emailParts.push(EMAIL_TEMPLATES['acceptable_address_verification']);
@@ -792,6 +857,23 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
             if (data.get('acceptable_photo_id')) {
                 emailParts.push(EMAIL_TEMPLATES['acceptable_photo_id']);
                 console.log("Added Acceptable Forms of Photo ID."); // Debug log
+            }
+
+            // 19. Changes Made (now multi-select)
+            if (data.get('changes_made')) {
+                processMultiCheckboxes('changes_type', {
+                    'registered_address_or_principal_place_of_business': EMAIL_TEMPLATES['changes_registered_address']
+                }, "Changes Made");
+            }
+
+            // 20. Clarification Request (now multi-select)
+            if (data.get('clarification_request')) {
+                processMultiCheckboxes('clarification_type', {
+                    'request_for_clarification_on_business_name': EMAIL_TEMPLATES['clarification_business_name_discrepancy_1'], // Placeholder for complex logic
+                    'request_for_business_activity_update': EMAIL_TEMPLATES['clarification_business_activity_update'],
+                    'request_for_entity_tin_vat_number': EMAIL_TEMPLATES['clarification_entity_tin_vat'],
+                    'company_structure_ownership_chart': EMAIL_TEMPLATES['clarification_company_structure_ownership_chart']
+                }, "Clarification Request");
             }
 
             // 21. SOW/SOF for the UBOs
