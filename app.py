@@ -15,7 +15,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# --- Database Table Creation on App Startup (THE CORRECTED FIX) ---
+# --- Database Table Creation on App Startup ---
 # This block ensures database tables are created when the app starts up,
 # as Gunicorn imports and executes the global scope of app.py.
 # This is crucial for ephemeral SQLite on Render's free tier, as the database file
@@ -55,34 +55,32 @@ def load_user(user_id):
 def index():
     return render_template('index.html', current_user=current_user)
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
+# --- User Registration Route (REMOVED FOR MANUAL CREATION) ---
+# The public /register route is removed to restrict who can create accounts.
+# Users will now be created manually by the administrator.
+# @app.route('/register', methods=['GET', 'POST'])
+# def register():
+#     if current_user.is_authenticated:
+#         return redirect(url_for('index'))
+#     if request.method == 'POST':
+#         username = request.form.get('username')
+#         password = request.form.get('password')
+#         if not username or not password:
+#             flash('Username and password are required!', 'danger')
+#             return render_template('register.html')
+#         existing_user = User.query.filter_by(username=username).first()
+#         if existing_user:
+#             flash('Username already exists. Please choose a different one.', 'warning')
+#             return render_template('register.html')
+#         new_user = User(username=username)
+#         new_user.set_password(password)
+#         db.session.add(new_user)
+#         db.session.commit()
+#         flash('Registration successful! You can now log in.', 'success')
+#         return redirect(url_for('login'))
+#     return render_template('register.html')
 
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-
-        if not username or not password:
-            flash('Username and password are required!', 'danger')
-            return render_template('register.html')
-
-        existing_user = User.query.filter_by(username=username).first()
-        if existing_user:
-            flash('Username already exists. Please choose a different one.', 'warning')
-            return render_template('register.html')
-
-        new_user = User(username=username)
-        new_user.set_password(password)
-        db.session.add(new_user)
-        db.session.commit()
-
-        flash('Registration successful! You can now log in.', 'success')
-        return redirect(url_for('login'))
-
-    return render_template('register.html')
-
+# --- User Login Route ---
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -104,6 +102,7 @@ def login():
 
     return render_template('login.html')
 
+# --- User Logout Route ---
 @app.route('/logout')
 @login_required
 def logout():
@@ -111,9 +110,35 @@ def logout():
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
 
-# --- Main Application Run (for local development only) ---
-# This block remains commented out because Gunicorn will be responsible for starting the app on Render.
-# if __name__ == '__main__':
-#     app.run(debug=True)
+# --- Manual User Creation Function (Run LOCALLY ONCE for each user) ---
+# This function is NOT part of the web application routes.
+# You run this directly from your terminal to add users to the database.
+def create_initial_users():
+    with app.app_context():
+        # Create database tables if they don't exist (important for local first run)
+        db.create_all()
+        print("Database tables checked/created locally.")
 
-    
+        username = input("Enter username for new user: ")
+        password = input(f"Enter password for {username}: ")
+
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            print(f"User '{username}' already exists. Skipping creation.")
+        else:
+            new_user = User(username=username)
+            new_user.set_password(password)
+            db.session.add(new_user)
+            db.session.commit()
+            print(f"User '{username}' created successfully!")
+
+# --- Main Application Run (for local development or manual commands) ---
+# This block is used for running the app locally OR for executing manual commands.
+if __name__ == '__main__':
+    # To run the web app locally (for testing before deploy):
+    # Uncomment the line below and run `python app.py`
+    # app.run(debug=True)
+
+    # To create initial users for your team (run this LOCALLY ONCE for each user):
+    # Uncomment the line below and run `python app.py`
+    create_initial_users() # <--- UNCOMMENT THIS LINE TO MANUALLY CREATE USERS LOCALLY

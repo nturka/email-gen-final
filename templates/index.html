@@ -1,9 +1,17 @@
 <!DOCTYPE html>
+<!--
+    *** RENDER CACHE BUSTER: VERSION 1.0.4 ***
+    This is a unique marker to force Render's CDN to refresh this file.
+    If you see this comment, the latest index.html is being served.
+    Please verify the header: "Dear [Name],"
+    And multi-select functionality.
+    *****************************************
+-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Generator</title> <!-- Removed version marker -->
+    <title>Email Generator - v1.0.4</title> <!-- NEW Version marker in title -->
     <style>
         /* Basic styling for the entire page */
         body {
@@ -165,7 +173,7 @@
                 <a href="{{ url_for('logout') }}">Logout</a>
             {% else %}
                 <a href="{{ url_for('login') }}">Login</a>
-                <a href="{{ url_for('register') }}">Register</a>
+                <!-- Removed Register link as registration is now manual -->
             {% endif %}
         </div>
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -176,7 +184,7 @@
             {% endif %}
         {% endwith %}
 
-        <h1>Email Generator</h1> <!-- Removed version marker -->
+        <h1>Email Generator - v1.0.4</h1> <!-- NEW Version marker in H1 -->
         <form id="emailForm">
             <!-- Header Section -->
             <div class="section-header">
@@ -552,7 +560,7 @@ www.tripadvisor.ie
             "id_mismatch": "Thank you for submitting your identification document. We’ve reviewed the details and noticed that the name on the ID does not match the name registered on your account. For security and verification purposes, we kindly ask you to provide an explanation for the discrepancy, along with any supporting documents (such as a legal name change certificate or proof of relationship, if applicable).\n",
             "poa_issue_base": `Regrettably, we are unable to accept the submitted document as valid proof of address, as it is an {{ poa_issue_reason }} and does not meet our verification requirements.
 Please kindly provide an acceptable form of address verification for {{ poa_issue_person_name }}. This may include one of the following:
-A bank statement issued within the last three months, showing your residential address. Sensitive information such as transaction amounts may be redacted; however, the name, address, account name, and IBAN/account number must remain clearly visible; or
+A bank statement issued within the last three months, showing your residential address. Sensitive information such as transaction amounts may be redacted, but the name, address, account name, and IBAN/account number must remain clearly visible; or
 A utility bill (excluding mobile phone bills and invoices) issued within the last three months to your residential address.
 Kindly note that we are unable to proceed with your application until a valid proof of address is received.\n`,
             "clarification_nationality_residency": "Thank you for submitting your documents. During our review, we noticed that there is some inconsistency or missing information regarding your nationality or residency status. To proceed with the verification process, we kindly ask you to provide clarification and, if possible, additional documentation confirming your current nationality and/or residency (e.g., passport, residency permit, or utility bill).\n",
@@ -994,3 +1002,4 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
     </script>
 </body>
 </html>
+
