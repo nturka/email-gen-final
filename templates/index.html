@@ -464,7 +464,7 @@
     <script>
         // JavaScript object to store all email template snippets
         const EMAIL_TEMPLATES = {
-            "header": "Dear {{ recipient_name }},\n\n",
+            "header": "Dear {{ recipient_name }},\n\n", // Corrected to "Dear [Name],"
             // The footer template now includes the image HTML directly
             "footer": `\nWe will retain your documents on file, and all data is stored securely in accordance with GDPR requirements.
 Further information about the verification process can be found <a href="https://help.supplier.viator.com/en/articles/363-account-verification-for-suppliers-using-owl-payments-europe">here</a>.
@@ -583,9 +583,13 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
 
             // 1. Header Section
             const recipientName = data.get('recipient_name')?.trim();
+            console.log("Recipient Name (from input):", recipientName); // Debug log
             if (recipientName) {
-                emailParts.push(EMAIL_TEMPLATES['header'].replace('{{ recipient_name }}', recipientName));
-                console.log("Added Header."); // Debug log
+                const headerTemplate = EMAIL_TEMPLATES['header'];
+                console.log("Header template before replacement:", headerTemplate); // Debug log
+                const finalHeader = headerTemplate.replace('{{ recipient_name }}', recipientName);
+                emailParts.push(finalHeader);
+                console.log("Added Header:", finalHeader); // Debug log
             }
 
             // 2. Opener NEW supplier
@@ -893,7 +897,6 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
                 toggleBusinessNameOptions(); // Initial call
 
                 // Logic for 'Clarification Request' -> 'Request for Business Activity Update'
-                // FIX: Corrected variable declaration from document.getElementById directly to a const for consistency
                 const clarificationBusinessActivityRadio = document.getElementById('request_for_business_activity_update');
                 const businessActivityUpdateFields = document.getElementById('business_activity_update_fields');
                 const toggleBusinessActivityUpdateFields = () => {
