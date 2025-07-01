@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Email Generator</title>
+    <style>
+        /* Basic styling for the entire page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #1a1a1a; /* Dark background */
+            color: #f0f0f0; /* Light text */
+            display: flex; /* Use flexbox for layout: controls on left, preview on right */
+            min-height: 100vh; /* Ensure full viewport height */
+        }
+
+        /* Styling for the left-hand control panel */
+        .controls-panel {
+            flex: 1; /* Takes 1 part of the available horizontal space */
+            padding: 20px;
+            background-color: #2a2a2a; /* Slightly lighter dark for controls */
+            overflow-y: auto; /* Enables vertical scrolling if content overflows */
+        }
+
+        /* Styling for the right-hand email preview panel */
+        .email-preview-panel {
+            flex: 1.5; /* Takes 1.5 parts of the available horizontal space, making it wider */
+            padding: 20px;
+            background-color: #333; /* Even lighter dark for preview */
+            border-left: 1px solid #444; /* Separator line */
+            overflow-y: auto; /* Enables vertical scrolling if content overflows */
+            white-space: pre-wrap; /* Preserves whitespace (like newlines) and wraps text */
+            word-wrap: break-word; /* Breaks long words to prevent horizontal scrolling */
+        }
+
+        /* Header styling */
+        h1, h2 {
+            color: #66b3ff; /* Lighter blue for headers */
+        }
+
+        /* Styling for each main form section */
+        form div {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #3a3a3a; /* Darker background for individual sections */
+        }
+
+        /* Styling for the main category headers within the form */
+        form div.section-header {
+            background-color: #4a4a4a; /* Distinct background for main headers */
+            font-weight: bold;
+            font-size: 0.9em; /* Smaller font size for main categories */
+        }
+
+        /* Styling for labels */
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        /* Styling for text input fields */
+        input[type="text"] {
+            width: calc(100% - 20px); /* Full width minus padding */
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #555; /* Darker border for inputs */
+            border-radius: 4px;
+            background-color: #222; /* Dark input background */
+            color: #f0f0f0; /* Light input text */
+        }
+
+        /* Styling for checkboxes and radio buttons */
+        input[type="checkbox"], input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #66b3ff; /* Blue accent color for checkboxes/radios */
+        }
+
+        /* Styling for subcategory labels/divs */
+        .subheader {
+            margin-left: 20px; /* Indent subcategories */
+            margin-top: 5px;
+            margin-bottom: 5px;
+            font-weight: normal; /* Subcategories are not bold */
+            font-size: 0.85em; /* Slightly smaller font for subcategories */
+        }
+
+        /* Styling for inline text input fields */
+        .inline-field {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        /* Styling for the footer images */
+        .footer-images {
+            display: flex; /* Use flexbox to arrange images horizontally */
+            align-items: center; /* Vertically align images */
+            gap: 10px; /* Space between images */
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .footer-images img {
+            max-width: 120px; /* Max width for images */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 4px; /* Optional: slight round corners */
+        }
+
+        /* Styling for signature images */
+        .signature-images {
+            display: flex;
+            align-items: center;
+            gap: 5px; /* Smaller gap for signature images */
+            margin-top: 5px; /* Small margin above */
+        }
+        .signature-images img {
+            max-width: 80px; /* Make signature images small */
+            height: auto;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Left Panel: Controls for email generation -->
+    <div class="controls-panel">
+        <h1>Email Generator</h1>
+        <form id="emailForm">
+            <!-- Header Section -->
+            <div class="section-header">
+                <label for="recipient_name">Header: Dear </label>
+                <input type="text" id="recipient_name" name="recipient_name" placeholder="Insert Name Here">,
+            </div>
+
+            <!-- Opener NEW supplier -->
+            <div class="section-header">
+                <input type="checkbox" id="opener_new_supplier" name="opener_new_supplier">
+                <label for="opener_new_supplier">Opener NEW supplier</label>
+            </div>
+
+            <!-- Opener RAI -->
+            <div class="section-header">
+                <input type="checkbox" id="opener_rai" name="opener_rai">
+                <label for="opener_rai">Opener RAI</label>
+            </div>
+
+            <!-- Why POI/POA needed -->
+            <div class="section-header">
+                <input type="checkbox" id="why_poi_poa_needed" name="why_poi_poa_needed">
+                <label for="why_poi_poa_needed">Why POI/POA needed</label>
+            </div>
+
+            <!-- UBO Identity verification -->
+            <div class="section-header">
+                <input type="checkbox" id="ubo_identity_verification" name="ubo_identity_verification">
+                <label for="ubo_identity_verification">UBO Identity verification</label>
+                <!-- Subcategories for UBO Identity verification (pre-shown) -->
+                <div id="ubo_identity_fields">
+                    <label for="company_name_ubo_id" class="subheader">Company Name:</label>
+                    <input type="text" id="company_name_ubo_id" name="company_name_ubo_id" placeholder="Insert Company Name">
+                    <div class="subheader">
+                        <input type="checkbox" id="ubo_id_1" name="ubo_id_1">
+                        <label for="ubo_id_1">UBO 1:</label>
+                        <input type="text" name="ubo_id_name_1" placeholder="UBO 1 Name" class="inline-field">
+                    </div>
+                    <div class="subheader">
+                        <input type="checkbox" id="ubo_id_2" name="ubo_id_2">
+                        <label for="ubo_id_2">UBO 2:</label>
+                        <input type="text" name="ubo_id_2_name_2" placeholder="UBO 2 Name" class="inline-field">
+                    </div>
+                    <div class="subheader">
+                        <input type="checkbox" id="ubo_id_3" name="ubo_id_3">
+                        <label for="ubo_id_3">UBO 3:</label>
+                        <input type="text" name="ubo_id_name_3" placeholder="UBO 3 Name" class="inline-field">
+                    </div>
+                </div>
+            </div>
+
+            <!-- UBO Address verification -->
+            <div class="section-header">
+                <input type="checkbox" id="ubo_address_verification" name="ubo_address_verification">
+                <label for="ubo_address_verification">UBO Address verification</label>
+                <!-- Subcategories for UBO Address verification (pre-shown) -->
+                <div id="ubo_address_fields">
+                    <div class="subheader">
+                        <input type="checkbox" id="ubo_address_1" name="ubo_address_1">
+                        <label for="ubo_address_1">UBO 1:</label>
+                        <input type="text" name="ubo_address_name_1" placeholder="UBO 1 Name" class="inline-field">
+                    </div>
+                    <div class="subheader">
+                        <input type="checkbox" id="ubo_address_2" name="ubo_address_2">
+                        <label for="ubo_address_2">UBO 2:</label>
+                        <input type="text" name="ubo_address_name_2" placeholder="UBO 2 Name" class="inline-field">
+                    </div>
+                    <div class="subheader">
+                        <input type="checkbox" id="ubo_address_3" name="ubo_address_3">
+                        <label for="ubo_id_3">UBO 3:</label>
+                        <input type="text" name="ubo_address_name_3" placeholder="UBO 3 Name" class="inline-field">
+                    </div>
+                </div>
+            </div>
+
+            <!-- No UBO (State owned entity or Publicly listed) -->
+            <div class="section-header">
+                <input type="checkbox" id="no_ubo" name="no_ubo">
+                <label for="no_ubo">No UBO (State owned entity or Publicly listed)</label>
+                <!-- Input field for Company Name (pre-shown) -->
+                <div id="no_ubo_fields">
+                    <label for="company_name_no_ubo" class="subheader">Company Name:</label>
+                    <input type="text" id="company_name_no_ubo" name="company_name_no_ubo" placeholder="Insert Company Name">
+                </div>
+            </div>
+
+            <!-- Identity verification (Individual) -->
+            <div class="section-header">
+                <input type="checkbox" id="identity_verification_individual" name="identity_verification_individual">
+                <label for="identity_verification_individual">Identity verification (Individual)</label>
+            </div>
+
+            <!-- POA verification (Individual) -->
+            <div class="section-header">
+                <input type="checkbox" id="poa_verification_individual" name="poa_verification_individual">
+                <label for="poa_verification_individual">POA verification (Individual)</label>
+            </div>
+
+            <!-- ID Verification Issues -->
+            <div class="section-header">
+                <input type="checkbox" id="id_verification_issues" name="id_verification_issues">
+                <label for="id_verification_issues">ID Verification Issues</label>
+                <!-- Subcategories for ID Verification Issues (pre-shown) -->
+                <div id="id_issues_subcategories">
+                    <div class="subheader">
+                        <input type="radio" id="illegible_id" name="id_issue_type" value="illegible_id">
+                        <label for="illegible_id">Illegible ID</label>
+                    </div>
+                    <div class="subheader">
+                        <input type="radio" id="expired_id" name="id_issue_type" value="expired_id">
+                        <label for="expired_id">Expired ID</label>
+                    </div>
+                    <div class="subheader">
+                        <input type="radio" id="mismatch_id_account_name" name="id_issue_type" value="mismatch_id_account_name">
+                        <label for="mismatch_id_account_name">Mismatch between ID and account name</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- POA Verification Issues -->
+            <div class="section-header">
+                <input type="checkbox" id="poa_verification_issues" name="poa_verification_issues">
+                <label for="poa_verification_issues">POA Verification Issues</label>
+                <!-- Subcategories for POA Verification Issues (pre-shown) -->
+                <div id="poa_issues_subcategories">
+                    <div class="subheader">
+                        <input type="radio" id="receipts_or_invoices" name="poa_issue_type" value="receipts_or_invoices">
+                        <label for="receipts_or_invoices">Receipts or Invoices</label>
+                    </div>
+                    <div class="subheader">
+                        <input type="radio" id="mobile_phone_bills" name="poa_issue_type" value="mobile_phone_bills">
+                        <label for="mobile_phone_bills">Mobile Phone Bills</label>
+                    </div>
+                    <div class="subheader">
+                        <input type="radio" id="insurance_policies" name="poa_issue_type" value="insurance_policies">
+                        <label for="insurance_policies">Insurance Policies</label>
+                    </div>
+                    <div class="subheader">
+                        <input type="radio" id="documents_older_than_3_months" name="poa_issue_type" value="documents_older_than_3_months">
+                        <label for="documents_older_than_3_months">Documents Older Than 3 Months</label>
+                    </div>
+                    <div class="subheader">
+                        <input type="radio" id="documents_without_name_address" name="poa_issue_type" value="documents_without_name_address">
+                        <label for="documents_without_name_address">Documents Without Name + Address</label>
+                    </div>
+                    <div class="subheader">
+                        <input type="radio" id="handwritten_or_informal_documents" name="poa_issue_type" value="handwritten_or_informal_documents">
+                        <label for="handwritten_or_informal_documents">Handwritten or Informal Documents</label>
+                    </div>
+                    <div class="subheader">
+                        <label for="poa_issue_person_name">Person's Name for POA Issue:</label>
+                        <input type="text" id="poa_issue_person_name" name="poa_issue_person_name" placeholder="Insert Name">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clarification on Nationality / Residency -->
+            <div class="section-header">
+                <input type="checkbox" id="clarification_nationality_residency" name="clarification_nationality_residency">
+                <label for="clarification_nationality_residency">Clarification on Nationality / Residency</label>
+            </div>
+
+            <!-- Constitutional Documents -->
+            <div class="section-header">
+                <input type="checkbox" id="constitutional_documents" name="constitutional_documents">
+                <label for="constitutional_documents">Constitutional Documents</label>
+                <!-- Input field for Company Name (pre-shown) -->
+                <div id="constitutional_documents_fields">
+                    <label for="company_name_constitutional" class="subheader">Company Name:</label>
+                    <input type="text" id="company_name_constitutional" name="company_name_constitutional" placeholder="Insert Company Name">
+                </div>
+            </div>
+
+            <!-- Structure Verification -->
+            <div class="section-header">
+                <input type="checkbox" id="structure_verification" name="structure_verification">
+                <label for="structure_verification">Structure Verification</label>
+            </div>
+
+            <!-- Financial Status -->
+            <div class="section-header">
+                <input type="checkbox" id="financial_status" name="financial_status">
+                <label for="financial_status">Financial Status</label>
+                <!-- Input field for Company Name (pre-shown) -->
+                <div id="financial_status_fields">
+                    <label for="company_name_financial" class="subheader">Company Name:</label>
+                    <input type="text" id="company_name_financial" name="company_name_financial" placeholder="Insert Company Name">
+                </div>
+            </div>
+
+            <!-- Bank Statement -->
+            <div class="section-header">
+                <input type="checkbox" id="bank_statement" name="bank_statement">
+                <label for="bank_statement">Bank Statement</label>
+                <!-- Subcategories for Bank Statement (pre-shown) -->
+                <div id="bank_statement_subcategories">
+                    <div class="subheader">
+                        <input type="radio" id="bank_statement_illegible" name="bank_statement_issue_type" value="bank_statement_illegible">
+                        <label for="bank_statement_illegible">Bank Statement illegible</label>
+                        <input type="text" name="bank_account_ending_illegible" placeholder="Bank account ending XXX" class="inline-field" id="bank_account_ending_illegible_field">
+                    </div>
+                    <div class="subheader">
+                        <input type="radio" id="bank_statement_mismatch" name="bank_statement_issue_type" value="bank_statement_mismatch">
+                        <label for="bank_statement_mismatch">Bank Statement mismatch with account details</label>
+                        <input type="text" name="bank_account_ending_mismatch" placeholder="Bank account ending XXX" class="inline-field" id="bank_account_ending_mismatch_field">
+                    </div>
+                    <div class="subheader">
+                        <input type="radio" id="bank_statement_expired" name="bank_statement_issue_type" value="bank_statement_expired">
+                        <label for="bank_statement_expired">Bank Statement expired</label>
+                        <input type="text" name="bank_account_ending_expired" placeholder="Bank account ending XXX" class="inline-field" id="bank_account_ending_expired_field">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acceptable Forms of Address Verification -->
+            <div class="section-header">
+                <input type="checkbox" id="acceptable_address_verification" name="acceptable_address_verification">
+                <label for="acceptable_address_verification">Acceptable Forms of Address Verification</label>
+            </div>
+
+            <!-- Acceptable Forms of Photo ID -->
+            <div class="section-header">
+                <input type="checkbox" id="acceptable_photo_id" name="acceptable_photo_id">
+                <label for="acceptable_photo_id">Acceptable Forms of Photo ID</label>
+            </div>
+
+            <!-- Changes made -->
+            <div class="section-header">
+                <input type="checkbox" id="changes_made" name="changes_made">
+                <label for="changes_made">Changes made</label>
+                <!-- Subcategories for Changes made (pre-shown) -->
+                <div id="changes_made_subcategories">
+                    <div class="subheader">
+                        <input type="radio" id="registered_address_or_principal_place_of_business" name="changes_type" value="registered_address_or_principal_place_of_business">
+                        <label for="registered_address_or_principal_place_of_business">Registered Address or Principal Place of Business</label>
+                        <div id="address_change_fields">
+                            <label for="new_address" class="subheader">New Address:</label>
+                            <input type="text" id="new_address" name="new_address" placeholder="Insert Address">
+                            <label for="address_source" class="subheader">Based on:</label>
+                            <select id="address_source" name="address_source">
+                                <option value="provided bank statement">provided bank statement</option>
+                                <option value="external research">external research</option>
+                                <option value="our records">our records</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clarification request -->
+            <div class="section-header">
+                <input type="checkbox" id="clarification_request" name="clarification_request">
+                <label for="clarification_request">Clarification request</label>
+                <!-- Subcategories for Clarification request (pre-shown) -->
+                <div id="clarification_request_subcategories">
+                    <div class="subheader">
+                        <input type="radio" id="request_for_clarification_on_business_name" name="clarification_type" value="request_for_clarification_on_business_name">
+                        <label for="request_for_clarification_on_business_name">Request for clarification on Business Name</label>
+                        <div id="business_name_clarification_options">
+                            <div class="subheader">
+                                <input type="radio" id="biz_name_option1" name="clarification_business_name_option" value="option1">
+                                <label for="biz_name_option1">Option 1:</label>
+                                The provided bank statement lists the entity name as
+                                <input type="text" name="bank_name" placeholder="Bank Name" class="inline-field">.
+                                Please provide clarification on the link between
+                                <input type="text" name="bank_name_text" placeholder="Bank Name" class="inline-field"> and your entity,
+                                <input type="text" name="your_entity_name" placeholder="Your Entity Name" class="inline-field">.
+                            </div>
+                            <div class="subheader">
+                                <input type="radio" id="biz_name_option2" name="clarification_business_name_option" value="option2">
+                                <label for="biz_name_option2">Option 2:</label>
+                                The provided bank statement is in the name of
+                                <input type="text" name="bank_name_2" placeholder="Bank Name" class="inline-field">. This conflicts with the name,
+                                <input type="text" name="application_name_2" placeholder="Application Name" class="inline-field">, provided on your application.
+                                Please provide clarity on this discrepancy.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="subheader">
+                        <input type="radio" id="request_for_business_activity_update" name="clarification_type" value="request_for_business_activity_update">
+                        <label for="request_for_business_activity_update">Request for Business Activity Update</label>
+                        <div id="business_activity_update_fields">
+                            <label for="original_business_activity" class="subheader">Original Business Activity:</label>
+                            <input type="text" id="original_business_activity" name="original_business_activity" placeholder="e.g., consulting, retail">
+                        </div>
+                    </div>
+                    <div class="subheader">
+                        <input type="radio" id="request_for_entity_tin_vat_number" name="clarification_type" value="request_for_entity_tin_vat_number">
+                        <label for="request_for_entity_tin_vat_number">Request for entity TIN/VAT number</label>
+                    </div>
+                    <div class="subheader">
+                        <input type="radio" id="company_structure_ownership_chart" name="clarification_type" value="company_structure_ownership_chart">
+                        <label for="company_structure_ownership_chart">Company Structure / Ownership Chart</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SOW/SOF for the UBOs -->
+            <div class="section-header">
+                <input type="checkbox" id="sow_sof_ubos" name="sow_sof_ubos">
+                <label for="sow_sof_ubos">SOW/SOF for the UBOs</label>
+            </div>
+
+            <!-- SOW/SOF for the Company -->
+            <div class="section-header">
+                <input type="checkbox" id="sow_sof_company" name="sow_sof_company">
+                <label for="sow_sof_company">SOW/SOF for the Company</label>
+            </div>
+
+            <!-- Sanctions / PEP Declaration -->
+            <div class="section-header">
+                <input type="checkbox" id="sanctions_pep_declaration" name="sanctions_pep_declaration">
+                <label for="sanctions_pep_declaration">Sanctions / PEP Declaration</label>
+            </div>
+
+            <!-- Insert Image Section -->
+            <div class="section-header">
+                <input type="checkbox" id="insert_image" name="insert_image">
+                <label for="insert_image">Insert Image</label>
+                <div id="image_fields">
+                    <label for="image_url" class="subheader">Image URL:</label>
+                    <input type="text" id="image_url" name="image_url" placeholder="Paste image URL here">
+                    <label for="image_alt_text" class="subheader">Alt Text (for accessibility):</label>
+                    <input type="text" id="image_alt_text" name="image_alt_text" placeholder="Describe the image">
+                </div>
+            </div>
+
+            <!-- Insert GIF Section -->
+            <div class="section-header">
+                <input type="checkbox" id="insert_gif" name="insert_gif">
+                <label for="insert_gif">Insert GIF</label>
+                <div id="gif_fields">
+                    <label for="gif_url" class="subheader">GIF URL:</label>
+                    <input type="text" id="gif_url" name="gif_url" placeholder="Paste GIF URL here">
+                    <label for="gif_alt_text" class="subheader">Alt Text (for accessibility):</label>
+                    <input type="text" id="gif_alt_text" name="gif_alt_text" placeholder="Describe the GIF">
+                </div>
+            </div>
+
+            <!-- Supplier Company Name -->
+            <div class="section-header">
+                <label for="supplier_company_name">Supplier Company Name:</label>
+                <input type="text" id="supplier_company_name" name="supplier_company_name" placeholder="Insert Supplier Company Name">
+            </div>
+
+            <!-- Footer Checkbox -->
+            <div class="section-header">
+                <input type="checkbox" id="include_footer" name="include_footer" checked>
+                <label for="include_footer">Include Footer</label>
+            </div>
+        </form>
+    </div>
+
+    <!-- Right Panel: Displays the generated email -->
+    <div class="email-preview-panel">
+        <h2>Generated Email:</h2>
+        <pre id="generated_email_display"></pre>
+    </div>
+
+    <script>
+        // JavaScript object to store all email template snippets
+        const EMAIL_TEMPLATES = {
+            "header": "Dear {{ recipient_name }},\n\n",
+            // The footer template now includes the image HTML directly
+            "footer": `\nWe will retain your documents on file, and all data is stored securely in accordance with GDPR requirements.
+Further information about the verification process can be found <a href="https://help.supplier.viator.com/en/articles/363-account-verification-for-suppliers-using-owl-payments-europe">here</a>.
+
+Should you have any questions or need further assistance, do not hesitate to contact us.
+Thank you for your cooperation and trust in our services.
+Kind Regards,
+Owl KYC Verification Team
+
+<div class="signature-images">
+    <img src="https://i.imgur.com/BPjhFrs.gif" alt="Signature GIF" style="max-width: 80px; height: auto;">
+    <img src="https://i.imgur.com/taKDaPF.png" alt="Signature Image" style="max-width: 80px; height: auto;">
+</div>
+
+<div class="footer-images">
+    </div>
+* owleu-verification@viator.com
+www.tripadvisor.ie
+`,
+            "opener_new_supplier": "Thank you for your application.\nIn order to proceed, we kindly request the following information:\n",
+            "opener_rai": "Thank you for your email.\nIn order to proceed, we kindly request the following information:\n",
+            "why_poi_poa_needed": "We understand your concerns and would like to provide some clarity regarding our request. We are obligated to conduct enhanced due diligence in accordance with regulatory standards. These regulations require us to identify and verify any individual who owns or controls 25% or more of a business. The identification and verification process involves confirming the identity of the individuals and their residential addresses. Identity is verified through the secure links provided, which authenticate a valid form of photo ID.\n",
+            "ubo_identity_verification": "As the ultimate beneficial owner of {{ company_name_ubo_id }}, please provide valid photo identification for identity verification purposes. A valid form of photo identification will be required to complete this process. Please refer to the list of acceptable forms of photo ID below.\n",
+            "ubo_id_1": "UBO 1: {{ ubo_id_name_1 }}\n",
+            "ubo_id_2": "UBO 2: {{ ubo_id_name_2 }}\n",
+            "ubo_id_3": "UBO 3: {{ ubo_id_name_3 }}\n",
+            "ubo_address_verification": "We require a document verifying your current residential address, issued within the past three months. This can be submitted via return email. Acceptable forms of address verification are listed below.\n",
+            "ubo_address_1": "UBO 1: {{ ubo_address_name_1 }}\n",
+            "ubo_address_2": "UBO 2: {{ ubo_address_name_2 }}\n",
+            "ubo_address_3": "UBO 3: {{ ubo_address_name_3 }}\n",
+            "no_ubo": "As {{ company_name_no_ubo }} is a state-owned entity and no such natural person can be identified as the ultimate beneficial owner, we are required to carry out verification on at least two directors in order to meet our regulatory obligations.\nThe identification and verification process involves confirming the identity of the individuals and their residential addresses. Identity is verified through the secure links provided, which authenticate a valid form of photo IDs. Residential addresses are verified via the proof of address documents submitted. Please note that once you confirm the nominated directors for verification, we can issue the identity verification links to you for onward transmission. We can confirm that email addresses for the directors are not required to complete this process.\n",
+            "identity_verification_individual": "To complete the verification process and comply with regulatory requirements, we kindly ask you to provide a valid government-issued photo ID for identity verification. Please ensure the document is clear and legible, showing your full name, photograph, date of birth, and expiration date. Acceptable forms of ID include a passport, national ID card, or driver’s license.\n",
+            "poa_verification_individual": "To complete your verification process, we kindly ask you to provide a valid proof of address document. Please submit a recent (dated within the last 3 months) official document showing your full name and current residential address. Acceptable documents include utility bills, bank statements, government-issued letters, or tenancy agreements. Ensure the document is clear and legible.\n",
+            "id_illegible": "Unfortunately, the ID document provided is illegible, and we’re unable to complete the verification process at this time. To proceed, kindly upload a clear and legible copy of your ID. Please ensure that all information, including your name, photo, and expiration date, is clearly visible and not obscured.\n",
+            "id_expired": "Thank you for providing your identification. Upon review, we noticed that the ID submitted is expired. Unfortunately, we cannot proceed with the verification process using an expired document. To continue, please submit a valid, unexpired form of identification. Ensure that all details are clearly visible for successful verification.\n",
+            "id_mismatch": "Thank you for submitting your identification document. We’ve reviewed the details and noticed that the name on the ID does not match the name registered on your account. For security and verification purposes, we kindly ask you to provide an explanation for the discrepancy, along with any supporting documents (such as a legal name change certificate or proof of relationship, if applicable).\n",
+            "poa_issue_base": `Regrettably, we are unable to accept the submitted document as valid proof of address, as it is an {{ poa_issue_reason }} and does not meet our verification requirements.
+Please kindly provide an acceptable form of address verification for {{ poa_issue_person_name }}. This may include one of the following:
+A bank statement issued within the last three months, showing your residential address. Sensitive information such as transaction amounts may be redacted; however, the name, address, account name, and IBAN/account number must remain clearly visible; or
+A utility bill (excluding mobile phone bills and invoices) issued within the last three months to your residential address.
+Kindly note that we are unable to proceed with your application until a valid proof of address is received.\n`,
+            "clarification_nationality_residency": "Thank you for submitting your documents. During our review, we noticed that there is some inconsistency or missing information regarding your nationality or residency status. To proceed with the verification process, we kindly ask you to provide clarification and, if possible, additional documentation confirming your current nationality and/or residency (e.g., passport, residency permit, or utility bill).\n",
+            "constitutional_documents": "To verify the legal existence and registration details of {{ company_name_constitutional }}, please provide a copy of the company’s Memorandum and Articles of Association and/or the Certificate of Incorporation.\n",
+            "structure_verification": "Please provide a company organization chart clearly identifying the ownership hierarchy, including all intermediate entities and ultimate beneficial owners.\n",
+            "financial_status": "To assess the financial standing of {{ company_name_financial }}, please provide a copy of the most recent financial reports and accounts, audited where available.\n",
+            "bank_statement_illegible": "Unfortunately, we are unable to accept the copy of the bank statement provided as it was illegible. Please provide a clearer copy of a bank statement in the company’s name for the bank account ending *{{ bank_account_ending_illegible }} as it appears in your payout details. This document should be dated within the last 3 months.\n",
+            "bank_statement_mismatch": "Unfortunately, we are unable to accept the copy of the bank statement provided as it was illegible. Please provide a clearer copy of a bank statement in the company’s name for the bank account ending *{{ bank_account_ending_mismatch }} as it appears in your payout details. This document should be dated within the last 3 months.\n",
+            "bank_statement_expired": "Unfortunately, the bank statement provided cannot be accepted. As part of our verification process, please provide a bank statement dated within the last three months. The statement must be in the name of the business and clearly show the account holder’s name, account number, and transaction activity.\n",
+            "acceptable_address_verification": `Acceptable Forms of Address Verification:
+⦁ A bank statement issued to your residential address within the last three months. (Sensitive details such as transaction values may be redacted, but the name, address, account name, and IBAN/account number must remain visible.); or
+⦁ A utility bill issued to your residential address within the last three months.
+⦁ A valid Drivers license (This may only be used where it has not already been used as a proof of identity).\n`,
+            "acceptable_photo_id": `Acceptable Forms of Photo ID:
+⦁ A valid passport; or
+⦁ A valid photo card driving license issued by an EU/EEA Member State; or
+⦁ A valid government-issued ID card from an EU/EEA Member State.\n`,
+            "changes_registered_address": `Please be advised that we have updated your registered address/principal place of business address to the following, "{{ new_address }}", based on the {{ address_source }}.\n`,
+            "clarification_business_name_discrepancy_1": `The provided bank statement lists the entity name as {{ bank_name }}. Please provide clarification on the link between {{ bank_name_text }} and your entity, {{ your_entity_name }}.\n`,
+            "clarification_business_name_discrepancy_2": `The provided bank statement is in the name of {{ bank_name_2 }}. This conflicts with the name, {{ application_name_2 }}, provided on your application. Please provide clarity on this discrepancy.\n`,
+            "clarification_business_activity_update": `Our records indicate that the company was originally incorporated as an {{ original_business_activity }}. Please provide clarification on when the nature of the business changed.\n`,
+            "clarification_entity_tin_vat": "The TIN (Tax Identification Number) provided on application is not a valid TIN. Please provide a valid TIN (Tax identification number).\n",
+            "clarification_company_structure_ownership_chart": `Thank you for your submission. To complete our due diligence and verification process, we require a detailed company structure and ownership chart.
+Please provide a document that clearly identifies:
+All entities within the ownership chain
+All Ultimate Beneficial Owners (UBOs)
+Registration numbers for each entity
+The country of incorporation for each entity
+This information is essential to comply with regulatory requirements and to proceed with your application. If you need a sample format or further clarification, please let us know — we’re happy to assist.\n`,
+            "sow_sof_ubos": `As part of our compliance and verification procedures, we kindly request additional information regarding the Source of Wealth (SOW) and Source of Funds (SOF) for all Ultimate Beneficial Owners (UBOs) of the company.
+Please provide documentation that clearly outlines:
+Source of Wealth: The origin of the UBOs’ overall wealth (e.g., business ownership, investments, inheritance, etc.)
+Source of Funds: The specific origin of the funds being used in this transaction or business relationship (e.g., bank statements, sale agreements, dividends, etc.)
+This information is required to satisfy regulatory obligations and ensure transparency in our business relationship. If you have any questions about acceptable documents or need guidance, we’re here to help.\n`,
+            "sow_sof_company": `As part of our ongoing compliance and due diligence requirements, we kindly request documentation regarding the Source of Wealth (SOW) and Source of Funds (SOF) for the business.
+Please provide information that includes:
+Source of Wealth (SOW): An explanation of how the business has generated its overall wealth (e.g., revenue from operations, sale of assets, investments, long-term contracts, etc.)
+Source of Funds (SOF): The specific origin of the funds involved in the current or proposed transaction (e.g., recent income, capital contributions, loan agreements, or other relevant documents)
+This information is essential for us to complete our verification process in accordance with regulatory standards.\n`,
+            "sanctions_pep_declaration": `As part of our regulatory compliance procedures, we kindly request a self-certification regarding your sanctions status and whether you or any related parties are considered Politically Exposed Persons (PEPs).
+Please confirm the following for all relevant individuals or entities (including UBOs, directors, and key stakeholders):
+Whether any party is currently listed on international sanctions lists (e.g., OFAC, UN, EU, UK sanctions)
+Whether any party is or has been a PEP, including close associates or immediate family members of PEPs
+You may submit this declaration in a signed letter or by completing a standard self-certification form if one has been provided.
+This information is required to fulfill our Anti-Money Laundering (AML) and Know Your Customer (KYC) obligations.\n`,
+            "insert_image_template": `\n<img src="{{ image_url }}" alt="{{ image_alt_text }}" style="max-width: 100%; height: auto; display: block; margin: 10px auto;">\n`,
+            "insert_gif_template": `\n<img src="{{ gif_url }}" alt="{{ gif_alt_text }}" style="max-width: 100%; height: auto; display: block; margin: 10px auto;">\n`
+        };
+
+        // Map for POA issue reasons to display correctly in the template
+        const poa_issue_reason_map = {
+            'receipts_or_invoices': 'receipt or invoice',
+            'mobile_phone_bills': 'mobile phone bill',
+            'insurance_policies': 'insurance policy',
+            'documents_older_than_3_months': 'document older than 3 months',
+            'documents_without_name_address': 'document without your name and/or address',
+            'handwritten_or_informal_documents': 'handwritten or informal document'
+        };
+
+        /**
+         * Generates the email content based on the current form selections.
+         * This function is called whenever a relevant form input changes.
+         */
+        function generateEmail() {
+            const emailParts = []; // Array to hold all selected email sections
+            const form = document.getElementById('emailForm');
+            // FormData provides an easy way to get all form input values
+            const data = new FormData(form);
+
+            // 1. Header Section
+            const recipientName = data.get('recipient_name')?.trim();
+            if (recipientName) {
+                // Replace placeholder with actual name
+                emailParts.push(EMAIL_TEMPLATES['header'].replace('{{ recipient_name }}', recipientName));
+            }
+
+            // 2. Opener NEW supplier
+            if (data.get('opener_new_supplier')) {
+                emailParts.push(EMAIL_TEMPLATES['opener_new_supplier']);
+            }
+
+            // 3. Opener RAI
+            if (data.get('opener_rai')) {
+                emailParts.push(EMAIL_TEMPLATES['opener_rai']);
+            }
+
+            // 4. Why POI/POA needed
+            if (data.get('why_poi_poa_needed')) {
+                emailParts.push(EMAIL_TEMPLATES['why_poi_poa_needed']);
+            }
+
+            // 5. UBO Identity verification
+            if (data.get('ubo_identity_verification')) {
+                const companyNameUboId = data.get('company_name_ubo_id') || '';
+                emailParts.push(EMAIL_TEMPLATES['ubo_identity_verification'].replace('{{ company_name_ubo_id }}', companyNameUboId));
+                if (data.get('ubo_id_1')) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_id_1'].replace('{{ ubo_id_name_1 }}', data.get('ubo_id_name_1') || ''));
+                }
+                if (data.get('ubo_id_2')) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_id_2'].replace('{{ ubo_id_name_2 }}', data.get('ubo_id_name_2') || ''));
+                }
+                if (data.get('ubo_id_3')) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_id_3'].replace('{{ ubo_id_name_3 }}', data.get('ubo_id_name_3') || ''));
+                }
+            }
+
+            // 6. UBO Address verification
+            if (data.get('ubo_address_verification')) {
+                emailParts.push(EMAIL_TEMPLATES['ubo_address_verification']);
+                if (data.get('ubo_address_1')) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_address_1'].replace('{{ ubo_address_name_1 }}', data.get('ubo_address_name_1') || ''));
+                }
+                if (data.get('ubo_address_2')) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_address_2'].replace('{{ ubo_address_name_2 }}', data.get('ubo_address_name_2') || ''));
+                }
+                if (data.get('ubo_address_3')) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_address_3'].replace('{{ ubo_address_name_3 }}', data.get('ubo_address_name_3') || ''));
+                }
+            }
+
+            // 7. No UBO (State owned entity or Publicly listed)
+            if (data.get('no_ubo')) {
+                const companyNameNoUbo = data.get('company_name_no_ubo') || '';
+                emailParts.push(EMAIL_TEMPLATES['no_ubo'].replace('{{ company_name_no_ubo }}', companyNameNoUbo));
+            }
+
+            // 8. Identity verification (Individual)
+            if (data.get('identity_verification_individual')) {
+                emailParts.push(EMAIL_TEMPLATES['identity_verification_individual']);
+            }
+
+            // 9. POA verification (Individual)
+            if (data.get('poa_verification_individual')) {
+                emailParts.push(EMAIL_TEMPLATES['poa_verification_individual']);
+            }
+
+            // 10. ID Verification Issues
+            if (data.get('id_verification_issues')) {
+                const idIssueType = data.get('id_issue_type');
+                if (idIssueType === 'illegible_id') {
+                    emailParts.push(EMAIL_TEMPLATES['id_illegible']);
+                } else if (idIssueType === 'expired_id') {
+                    emailParts.push(EMAIL_TEMPLATES['id_expired']);
+                } else if (idIssueType === 'mismatch_id_account_name') {
+                    emailParts.push(EMAIL_TEMPLATES['id_mismatch']);
+                }
+            }
+
+            // 11. POA Verification Issues
+            if (data.get('poa_verification_issues')) {
+                const poaIssueType = data.get('poa_issue_type');
+                const poaIssueReason = poa_issue_reason_map[poaIssueType] || poaIssueType; // Get mapped reason or use raw value
+                const poaIssuePersonName = data.get('poa_issue_person_name') || '';
+                let poaTemplate = EMAIL_TEMPLATES['poa_issue_base'];
+                poaTemplate = poaTemplate.replace('{{ poa_issue_reason }}', poaIssueReason);
+                poaTemplate = poaTemplate.replace('{{ poa_issue_person_name }}', poaIssuePersonName);
+                emailParts.push(poaTemplate);
+            }
+
+            // 12. Clarification on Nationality / Residency
+            if (data.get('clarification_nationality_residency')) {
+                emailParts.push(EMAIL_TEMPLATES['clarification_nationality_residency']);
+            }
+
+            // 13. Constitutional Documents
+            if (data.get('constitutional_documents')) {
+                const companyNameConstitutional = data.get('company_name_constitutional') || '';
+                emailParts.push(EMAIL_TEMPLATES['constitutional_documents'].replace('{{ company_name_constitutional }}', companyNameConstitutional));
+            }
+
+            // 14. Structure Verification
+            if (data.get('structure_verification')) {
+                emailParts.push(EMAIL_TEMPLATES['structure_verification']);
+            }
+
+            // 15. Financial Status
+            if (data.get('financial_status')) {
+                const companyNameFinancial = data.get('company_name_financial') || '';
+                emailParts.push(EMAIL_TEMPLATES['financial_status'].replace('{{ company_name_financial }}', companyNameFinancial));
+            }
+
+            // 16. Bank Statement
+            if (data.get('bank_statement')) {
+                const bankStatementIssueType = data.get('bank_statement_issue_type');
+                if (bankStatementIssueType === 'bank_statement_illegible') {
+                    emailParts.push(EMAIL_TEMPLATES['bank_statement_illegible'].replace('{{ bank_account_ending_illegible }}', data.get('bank_account_ending_illegible') || ''));
+                } else if (bankStatementIssueType === 'bank_statement_mismatch') {
+                    emailParts.push(EMAIL_TEMPLATES['bank_statement_mismatch'].replace('{{ bank_account_ending_mismatch }}', data.get('bank_account_ending_mismatch') || ''));
+                } else if (bankStatementIssueType === 'bank_statement_expired') {
+                    emailParts.push(EMAIL_TEMPLATES['bank_statement_expired'].replace('{{ bank_account_ending_expired }}', data.get('bank_account_ending_expired') || ''));
+                }
+            }
+
+            // 17. Acceptable Forms of Address Verification
+            if (data.get('acceptable_address_verification')) {
+                emailParts.push(EMAIL_TEMPLATES['acceptable_address_verification']);
+            }
+
+            // 18. Acceptable Forms of Photo ID
+            if (data.get('acceptable_photo_id')) {
+                emailParts.push(EMAIL_TEMPLATES['acceptable_photo_id']);
+            }
+
+            // 19. Changes Made
+            if (data.get('changes_made')) {
+                const changesType = data.get('changes_type');
+                if (changesType === 'registered_address_or_principal_place_of_business') {
+                    const newAddress = data.get('new_address') || '';
+                    const addressSource = data.get('address_source') || 'our records';
+                    let changeTemplate = EMAIL_TEMPLATES['changes_registered_address'];
+                    changeTemplate = changeTemplate.replace('{{ new_address }}', newAddress);
+                    changeTemplate = changeTemplate.replace('{{ address_source }}', addressSource);
+                    emailParts.push(changeTemplate);
+                }
+            }
+
+            // 20. Clarification Request
+            if (data.get('clarification_request')) {
+                const clarificationType = data.get('clarification_type');
+                if (clarificationType === 'request_for_clarification_on_business_name') {
+                    const clarificationBusinessNameOption = data.get('clarification_business_name_option');
+                    if (clarificationBusinessNameOption === 'option1') {
+                        const bankName = data.get('bank_name') || '';
+                        const yourEntityName = data.get('your_entity_name') || '';
+                        let template = EMAIL_TEMPLATES['clarification_business_name_discrepancy_1'];
+                        template = template.replace('{{ bank_name }}', bankName);
+                        template = template.replace('{{ bank_name_text }}', bankName); // Use bank_name for both placeholders
+                        template = template.replace('{{ your_entity_name }}', yourEntityName);
+                        emailParts.push(template);
+                    } else if (clarificationBusinessNameOption === 'option2') {
+                        const bankName2 = data.get('bank_name_2') || '';
+                        const applicationName2 = data.get('application_name_2') || '';
+                        let template = EMAIL_TEMPLATES['clarification_business_name_discrepancy_2'];
+                        template = template.replace('{{ bank_name_2 }}', bankName2);
+                        template = template.replace('{{ application_name_2 }}', applicationName2);
+                        emailParts.push(template);
+                    }
+                } else if (clarificationType === 'request_for_business_activity_update') {
+                    const originalBusinessActivity = data.get('original_business_activity') || '';
+                    emailParts.push(EMAIL_TEMPLATES['clarification_business_activity_update'].replace('{{ original_business_activity }}', originalBusinessActivity));
+                } else if (clarificationType === 'request_for_entity_tin_vat_number') {
+                    emailParts.push(EMAIL_TEMPLATES['clarification_entity_tin_vat']);
+                } else if (clarificationType === 'company_structure_ownership_chart') {
+                    emailParts.push(EMAIL_TEMPLATES['clarification_company_structure_ownership_chart']);
+                }
+            }
+
+            // 21. SOW/SOF for the UBOs
+            if (data.get('sow_sof_ubos')) {
+                emailParts.push(EMAIL_TEMPLATES['sow_sof_ubos']);
+            }
+
+            // 22. SOW/SOF for the Company
+            if (data.get('sow_sof_company')) {
+                emailParts.push(EMAIL_TEMPLATES['sow_sof_company']);
+            }
+
+            // 23. Sanctions / PEP Declaration
+            if (data.get('sanctions_pep_declaration')) {
+                emailParts.push(EMAIL_TEMPLATES['sanctions_pep_declaration']);
+            }
+
+            // 24. Insert Image
+            if (data.get('insert_image')) {
+                const imageUrl = data.get('image_url')?.trim();
+                const imageAltText = data.get('image_alt_text')?.trim() || 'Image';
+                if (imageUrl) {
+                    let imageTemplate = EMAIL_TEMPLATES['insert_image_template'];
+                    imageTemplate = imageTemplate.replace('{{ image_url }}', imageUrl);
+                    imageTemplate = imageTemplate.replace('{{ image_alt_text }}', imageAltText);
+                    emailParts.push(imageTemplate);
+                }
+            }
+
+            // 25. Insert GIF
+            if (data.get('insert_gif')) {
+                const gifUrl = data.get('gif_url')?.trim();
+                const gifAltText = data.get('gif_alt_text')?.trim() || 'GIF animation';
+                if (gifUrl) {
+                    let gifTemplate = EMAIL_TEMPLATES['insert_gif_template'];
+                    gifTemplate = gifTemplate.replace('{{ gif_url }}', gifUrl);
+                    gifTemplate = gifTemplate.replace('{{ gif_alt_text }}', gifAltText);
+                    emailParts.push(gifTemplate);
+                }
+            }
+
+            // 26. Supplier Company Name (appears before footer if footer is included)
+            const supplierCompanyName = data.get('supplier_company_name')?.trim();
+            if (supplierCompanyName) {
+                emailParts.push(`\nSupplier Company Name: ${supplierCompanyName}\n`);
+            }
+
+            // 27. Footer (conditional based on checkbox)
+            if (data.get('include_footer')) {
+                emailParts.push(EMAIL_TEMPLATES['footer']);
+            }
+
+            // Join all selected parts and display in the preview panel
+            const generatedEmail = emailParts.join('\n');
+            document.getElementById('generated_email_display').innerHTML = generatedEmail;
+        }
+
+        // Event listener for when the entire HTML document is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('emailForm');
+
+            // Attach event listeners to all form elements that can change the email content.
+            // 'change' event fires when an element's value changes and it loses focus (or for checkboxes/radios, immediately).
+            // 'input' event fires immediately when a text input's value changes.
+            form.addEventListener('change', generateEmail);
+            form.addEventListener('input', generateEmail);
+
+            // Function to toggle visibility of input fields within new media sections
+            function toggleMediaFields(checkboxId, fieldsDivId) {
+                const checkbox = document.getElementById(checkboxId);
+                const fieldsDiv = document.getElementById(fieldsDivId);
+                if (checkbox && fieldsDiv) {
+                    checkbox.addEventListener('change', function() {
+                        fieldsDiv.style.display = this.checked ? 'block' : 'none';
+                    });
+                    // Set initial state
+                    fieldsDiv.style.display = checkbox.checked ? 'block' : 'none';
+                }
+            }
+
+            // Apply toggle logic for Image and GIF fields
+            toggleMediaFields('insert_image', 'image_fields');
+            toggleMediaFields('insert_gif', 'gif_fields');
+
+
+            // Specific logic to show/hide conditional input fields within subcategories.
+            // These fields are pre-shown initially, but their visibility might depend on radio button selections.
+            function setupConditionalFieldsVisibility() {
+                // Bank Statement radio buttons to show specific text inputs for account ending
+                const bankStatementRadios = document.querySelectorAll('input[name="bank_statement_issue_type"]');
+                const bankAccountEndingIllegibleField = document.getElementById('bank_account_ending_illegible_field');
+                const bankAccountEndingMismatchField = document.getElementById('bank_account_ending_mismatch_field');
+                const bankAccountEndingExpiredField = document.getElementById('bank_account_ending_expired_field');
+
+                const toggleBankEndingFields = () => {
+                    // Hide all bank account ending fields first
+                    bankAccountEndingIllegibleField.style.display = 'none';
+                    bankAccountEndingMismatchField.style.display = 'none';
+                    bankAccountEndingExpiredField.style.display = 'none';
+
+                    // Show only the relevant field based on the selected radio button
+                    const selectedRadio = document.querySelector('input[name="bank_statement_issue_type"]:checked');
+                    if (selectedRadio) {
+                        if (selectedRadio.value === 'bank_statement_illegible') {
+                            bankAccountEndingIllegibleField.style.display = 'inline-block';
+                        } else if (selectedRadio.value === 'bank_statement_mismatch') {
+                            bankAccountEndingMismatchField.style.display = 'inline-block';
+                        } else if (selectedRadio.value === 'bank_statement_expired') {
+                            bankAccountEndingExpiredField.style.display = 'inline-block';
+                        }
+                    }
+                };
+                // Attach event listeners to each radio button and call on load
+                bankStatementRadios.forEach(radio => radio.addEventListener('change', toggleBankEndingFields));
+                toggleBankEndingFields(); // Initial call to set correct visibility on page load
+
+
+                // Logic for 'Changes Made' -> 'Registered Address or Principal Place of Business'
+                const registeredAddressRadio = document.getElementById('registered_address_or_principal_place_of_business');
+                const addressChangeFields = document.getElementById('address_change_fields');
+                const toggleAddressChangeFields = () => {
+                    // Show/hide the address input and source select based on radio button state
+                    addressChangeFields.style.display = registeredAddressRadio.checked ? 'block' : 'none';
+                };
+                registeredAddressRadio.addEventListener('change', toggleAddressChangeFields);
+                toggleAddressChangeFields(); // Initial call
+
+
+                // Logic for 'Clarification Request' -> 'Request for clarification on Business Name'
+                const clarificationBusinessNameRadio = document.getElementById('request_for_clarification_on_business_name');
+                const businessNameClarificationOptions = document.getElementById('business_name_clarification_options');
+                const toggleBusinessNameOptions = () => {
+                    // Show/hide the business name clarification options based on radio button state
+                    businessNameClarificationOptions.style.display = clarificationBusinessNameRadio.checked ? 'block' : 'none';
+                };
+                clarificationBusinessNameRadio.addEventListener('change', toggleBusinessNameOptions);
+                toggleBusinessNameOptions(); // Initial call
+
+                // Logic for 'Clarification Request' -> 'Request for Business Activity Update'
+                const clarificationBusinessActivityRadio = document.getElementById('request_for_business_activity_update');
+                const businessActivityUpdateFields = document.getElementById('business_activity_update_fields');
+                const toggleBusinessActivityUpdateFields = () => {
+                    // Show/hide the business activity update input based on radio button state
+                    businessActivityUpdateFields.style.display = clarificationBusinessActivityRadio.checked ? 'block' : 'none';
+                };
+                clarificationBusinessActivityRadio.addEventListener('change', toggleBusinessActivityUpdateFields);
+                toggleBusinessActivityUpdateFields(); // Initial call
+            }
+
+            // Call the setup function after the DOM is loaded
+            setupConditionalFieldsVisibility();
+
+            // Perform an initial email generation to display the default state
+            generateEmail();
+        });
+    </script>
+</body>
+</html>
