@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -15,14 +16,14 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# --- Database Table Creation on First Request (THE CORRECTED FIX) ---
-# This decorator ensures the create_tables function runs once when the application
-# receives its very first request, creating the database tables if they don't exist.
-# This is the most reliable way for ephemeral SQLite databases on Render.
-@app.before_first_request
-def create_tables():
+# --- Database Table Creation on App Startup (THE 100% CORRECTED FIX for Flask 3.x) ---
+# This block ensures database tables are created when the app starts up,
+# as Gunicorn imports and executes the global scope of app.py.
+# This is crucial for ephemeral SQLite on Render's free tier, as the database file
+# and its tables do not persist across restarts or deploys.
+with app.app_context():
     db.create_all()
-    print("Database tables checked/created on first request!")
+    print("Database tables checked/created on app startup!")
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
