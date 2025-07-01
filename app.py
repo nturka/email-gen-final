@@ -15,13 +15,14 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# --- Database Initialization on Startup (THIS IS THE KEY FIX) ---
-# This block ensures database tables are created when the app starts.
-# This is crucial for SQLite on Render's free tier, as the database file
-# might not persist across restarts/deploys.
-with app.app_context():
+# --- Database Table Creation on First Request (THE CORRECTED FIX) ---
+# This decorator ensures the create_tables function runs once when the application
+# receives its very first request, creating the database tables if they don't exist.
+# This is the most reliable way for ephemeral SQLite databases on Render.
+@app.before_first_request
+def create_tables():
     db.create_all()
-    print("Database tables checked/created on startup!")
+    print("Database tables checked/created on first request!")
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -114,3 +115,4 @@ def logout():
 # This block remains commented out because Gunicorn will be responsible for starting the app on Render.
 # if __name__ == '__main__':
 #     app.run(debug=True)
+
