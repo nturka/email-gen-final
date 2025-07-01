@@ -584,6 +584,8 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
             // 1. Header Section
             const recipientName = data.get('recipient_name')?.trim();
             console.log("Recipient Name (from input):", recipientName); // Debug log
+            // The template itself is "Dear {{ recipient_name }},\n\n"
+            // The replace method will correctly substitute {{ recipient_name }}
             if (recipientName) {
                 const headerTemplate = EMAIL_TEMPLATES['header'];
                 console.log("Header template before replacement:", headerTemplate); // Debug log
