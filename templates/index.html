@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Email Generator</title>
+    <title>Dynamic Email Generator - v1.0.2</title> <!-- Version marker in title -->
     <style>
         /* Basic styling for the entire page */
         body {
@@ -125,7 +125,7 @@
 <body>
     <!-- Left Panel: Controls for email generation -->
     <div class="controls-panel">
-        <h1>Email Generator</h1>
+        <h1>Email Generator - v1.0.2</h1> <!-- Version marker in H1 -->
         <form id="emailForm">
             <!-- Header Section -->
             <div class="section-header">
@@ -190,7 +190,7 @@
                     </div>
                     <div class="subheader">
                         <input type="checkbox" id="ubo_address_2" name="ubo_address_2">
-                        <label for="ubo_address_2">UBO 2:</label>
+                        <label for="ubo_id_2">UBO 2:</label>
                         <input type="text" name="ubo_address_name_2" placeholder="UBO 2 Name" class="inline-field">
                     </div>
                     <div class="subheader">
@@ -464,7 +464,7 @@
     <script>
         // JavaScript object to store all email template snippets
         const EMAIL_TEMPLATES = {
-            "header": "Dear {{ recipient_name }},\n\n", // Corrected to "Dear [Name],"
+            "header": "Dear {{ recipient_name }},\n\n", // This is the correct template
             // The footer template now includes the image HTML directly
             "footer": `\nWe will retain your documents on file, and all data is stored securely in accordance with GDPR requirements.
 Further information about the verification process can be found <a href="https://help.supplier.viator.com/en/articles/363-account-verification-for-suppliers-using-owl-payments-europe">here</a>.
