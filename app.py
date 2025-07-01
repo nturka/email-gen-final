@@ -8,8 +8,7 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-if __name__ == '__main__':
-    # Run the Flask development server.
-    # debug=True allows for automatic reloading on code changes and provides detailed error messages.
-    # For production environments, set debug=False.
-    app.run(debug=True)
+# IMPORTANT: Remove the app.run() block when deploying with Gunicorn or other WSGI servers.
+# Gunicorn will directly import and run the 'app' Flask instance.
+# if __name__ == '__main__':
+#     app.run(debug=True)
