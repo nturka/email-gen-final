@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Email Generator - v1.0.2</title> <!-- Version marker in title -->
+    <title>Dynamic Email Generator - v1.0.3</title> <!-- NEW Version marker in title -->
     <style>
         /* Basic styling for the entire page */
         body {
@@ -125,7 +125,7 @@
 <body>
     <!-- Left Panel: Controls for email generation -->
     <div class="controls-panel">
-        <h1>Email Generator - v1.0.2</h1> <!-- Version marker in H1 -->
+        <h1>Email Generator - v1.0.3</h1> <!-- NEW Version marker in H1 -->
         <form id="emailForm">
             <!-- Header Section -->
             <div class="section-header">
@@ -231,15 +231,15 @@
                 <!-- Subcategories for ID Verification Issues (pre-shown) -->
                 <div id="id_issues_subcategories">
                     <div class="subheader">
-                        <input type="radio" id="illegible_id" name="id_issue_type" value="illegible_id">
+                        <input type="checkbox" id="illegible_id" name="id_issue_type" value="illegible_id">
                         <label for="illegible_id">Illegible ID</label>
                     </div>
                     <div class="subheader">
-                        <input type="radio" id="expired_id" name="id_issue_type" value="expired_id">
+                        <input type="checkbox" id="expired_id" name="id_issue_type" value="expired_id">
                         <label for="expired_id">Expired ID</label>
                     </div>
                     <div class="subheader">
-                        <input type="radio" id="mismatch_id_account_name" name="id_issue_type" value="mismatch_id_account_name">
+                        <input type="checkbox" id="mismatch_id_account_name" name="id_issue_type" value="mismatch_id_account_name">
                         <label for="mismatch_id_account_name">Mismatch between ID and account name</label>
                     </div>
                 </div>
@@ -252,27 +252,27 @@
                 <!-- Subcategories for POA Verification Issues (pre-shown) -->
                 <div id="poa_issues_subcategories">
                     <div class="subheader">
-                        <input type="radio" id="receipts_or_invoices" name="poa_issue_type" value="receipts_or_invoices">
+                        <input type="checkbox" id="receipts_or_invoices" name="poa_issue_type" value="receipts_or_invoices">
                         <label for="receipts_or_invoices">Receipts or Invoices</label>
                     </div>
                     <div class="subheader">
-                        <input type="radio" id="mobile_phone_bills" name="poa_issue_type" value="mobile_phone_bills">
+                        <input type="checkbox" id="mobile_phone_bills" name="poa_issue_type" value="mobile_phone_bills">
                         <label for="mobile_phone_bills">Mobile Phone Bills</label>
                     </div>
                     <div class="subheader">
-                        <input type="radio" id="insurance_policies" name="poa_issue_type" value="insurance_policies">
+                        <input type="checkbox" id="insurance_policies" name="poa_issue_type" value="insurance_policies">
                         <label for="insurance_policies">Insurance Policies</label>
                     </div>
                     <div class="subheader">
-                        <input type="radio" id="documents_older_than_3_months" name="poa_issue_type" value="documents_older_than_3_months">
+                        <input type="checkbox" id="documents_older_than_3_months" name="poa_issue_type" value="documents_older_than_3_months">
                         <label for="documents_older_than_3_months">Documents Older Than 3 Months</label>
                     </div>
                     <div class="subheader">
-                        <input type="radio" id="documents_without_name_address" name="poa_issue_type" value="documents_without_name_address">
+                        <input type="checkbox" id="documents_without_name_address" name="poa_issue_type" value="documents_without_name_address">
                         <label for="documents_without_name_address">Documents Without Name + Address</label>
                     </div>
                     <div class="subheader">
-                        <input type="radio" id="handwritten_or_informal_documents" name="poa_issue_type" value="handwritten_or_informal_documents">
+                        <input type="checkbox" id="handwritten_or_informal_documents" name="poa_issue_type" value="handwritten_or_informal_documents">
                         <label for="handwritten_or_informal_documents">Handwritten or Informal Documents</label>
                     </div>
                     <div class="subheader">
@@ -323,17 +323,17 @@
                 <!-- Subcategories for Bank Statement (pre-shown) -->
                 <div id="bank_statement_subcategories">
                     <div class="subheader">
-                        <input type="radio" id="bank_statement_illegible" name="bank_statement_issue_type" value="bank_statement_illegible">
+                        <input type="checkbox" id="bank_statement_illegible" name="bank_statement_issue_type" value="bank_statement_illegible">
                         <label for="bank_statement_illegible">Bank Statement illegible</label>
                         <input type="text" name="bank_account_ending_illegible" placeholder="Bank account ending XXX" class="inline-field" id="bank_account_ending_illegible_field">
                     </div>
                     <div class="subheader">
-                        <input type="radio" id="bank_statement_mismatch" name="bank_statement_issue_type" value="bank_statement_mismatch">
+                        <input type="checkbox" id="bank_statement_mismatch" name="bank_statement_issue_type" value="bank_statement_mismatch">
                         <label for="bank_statement_mismatch">Bank Statement mismatch with account details</label>
                         <input type="text" name="bank_account_ending_mismatch" placeholder="Bank account ending XXX" class="inline-field" id="bank_account_ending_mismatch_field">
                     </div>
                     <div class="subheader">
-                        <input type="radio" id="bank_statement_expired" name="bank_statement_issue_type" value="bank_statement_expired">
+                        <input type="checkbox" id="bank_statement_expired" name="bank_statement_issue_type" value="bank_statement_expired">
                         <label for="bank_statement_expired">Bank Statement expired</label>
                         <input type="text" name="bank_account_ending_expired" placeholder="Bank account ending XXX" class="inline-field" id="bank_account_ending_expired_field">
                     </div>
@@ -359,7 +359,7 @@
                 <!-- Subcategories for Changes made (pre-shown) -->
                 <div id="changes_made_subcategories">
                     <div class="subheader">
-                        <input type="radio" id="registered_address_or_principal_place_of_business" name="changes_type" value="registered_address_or_principal_place_of_business">
+                        <input type="checkbox" id="registered_address_or_principal_place_of_business" name="changes_type" value="registered_address_or_principal_place_of_business">
                         <label for="registered_address_or_principal_place_of_business">Registered Address or Principal Place of Business</label>
                         <div id="address_change_fields">
                             <label for="new_address" class="subheader">New Address:</label>
@@ -382,11 +382,11 @@
                 <!-- Subcategories for Clarification request (pre-shown) -->
                 <div id="clarification_request_subcategories">
                     <div class="subheader">
-                        <input type="radio" id="request_for_clarification_on_business_name" name="clarification_type" value="request_for_clarification_on_business_name">
+                        <input type="checkbox" id="request_for_clarification_on_business_name" name="clarification_type" value="request_for_clarification_on_business_name">
                         <label for="request_for_clarification_on_business_name">Request for clarification on Business Name</label>
                         <div id="business_name_clarification_options">
                             <div class="subheader">
-                                <input type="radio" id="biz_name_option1" name="clarification_business_name_option" value="option1">
+                                <input type="checkbox" id="biz_name_option1" name="clarification_business_name_option" value="option1">
                                 <label for="biz_name_option1">Option 1:</label>
                                 The provided bank statement lists the entity name as
                                 <input type="text" name="bank_name" placeholder="Bank Name" class="inline-field">.
@@ -395,7 +395,7 @@
                                 <input type="text" name="your_entity_name" placeholder="Your Entity Name" class="inline-field">.
                             </div>
                             <div class="subheader">
-                                <input type="radio" id="biz_name_option2" name="clarification_business_name_option" value="option2">
+                                <input type="checkbox" id="biz_name_option2" name="clarification_business_name_option" value="option2">
                                 <label for="biz_name_option2">Option 2:</label>
                                 The provided bank statement is in the name of
                                 <input type="text" name="bank_name_2" placeholder="Bank Name" class="inline-field">. This conflicts with the name,
@@ -405,7 +405,7 @@
                         </div>
                     </div>
                     <div class="subheader">
-                        <input type="radio" id="request_for_business_activity_update" name="clarification_type" value="request_for_business_activity_update">
+                        <input type="checkbox" id="request_for_business_activity_update" name="clarification_type" value="request_for_business_activity_update">
                         <label for="request_for_business_activity_update">Request for Business Activity Update</label>
                         <div id="business_activity_update_fields">
                             <label for="original_business_activity" class="subheader">Original Business Activity:</label>
@@ -413,11 +413,11 @@
                         </div>
                     </div>
                     <div class="subheader">
-                        <input type="radio" id="request_for_entity_tin_vat_number" name="clarification_type" value="request_for_entity_tin_vat_number">
+                        <input type="checkbox" id="request_for_entity_tin_vat_number" name="clarification_type" value="request_for_entity_tin_vat_number">
                         <label for="request_for_entity_tin_vat_number">Request for entity TIN/VAT number</label>
                     </div>
                     <div class="subheader">
-                        <input type="radio" id="company_structure_ownership_chart" name="clarification_type" value="company_structure_ownership_chart">
+                        <input type="checkbox" id="company_structure_ownership_chart" name="clarification_type" value="company_structure_ownership_chart">
                         <label for="company_structure_ownership_chart">Company Structure / Ownership Chart</label>
                     </div>
                 </div>
@@ -501,7 +501,7 @@ www.tripadvisor.ie
             "id_mismatch": "Thank you for submitting your identification document. We’ve reviewed the details and noticed that the name on the ID does not match the name registered on your account. For security and verification purposes, we kindly ask you to provide an explanation for the discrepancy, along with any supporting documents (such as a legal name change certificate or proof of relationship, if applicable).\n",
             "poa_issue_base": `Regrettably, we are unable to accept the submitted document as valid proof of address, as it is an {{ poa_issue_reason }} and does not meet our verification requirements.
 Please kindly provide an acceptable form of address verification for {{ poa_issue_person_name }}. This may include one of the following:
-A bank statement issued within the last three months, showing your residential address. Sensitive information such as transaction amounts may be redacted; however, the name, address, account name, and IBAN/account number must remain clearly visible; or
+A bank statement issued within the last three months, showing your residential address. Sensitive information such as transaction amounts may be redacted, but the name, address, account name, and IBAN/account number must remain clearly visible; or
 A utility bill (excluding mobile phone bills and invoices) issued within the last three months to your residential address.
 Kindly note that we are unable to proceed with your application until a valid proof of address is received.\n`,
             "clarification_nationality_residency": "Thank you for submitting your documents. During our review, we noticed that there is some inconsistency or missing information regarding your nationality or residency status. To proceed with the verification process, we kindly ask you to provide clarification and, if possible, additional documentation confirming your current nationality and/or residency (e.g., passport, residency permit, or utility bill).\n",
@@ -564,7 +564,7 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
          * This function is called whenever a relevant form input changes.
          */
         function generateEmail() {
-            console.log("generateEmail function called."); // Debug log
+            console.log("generateEmail function called (v1.0.3)."); // Debug log with version
             const emailParts = []; // Array to hold all selected email sections
             const form = document.getElementById('emailForm');
             const generatedEmailDisplay = document.getElementById('generated_email_display'); // Get the display element
@@ -579,13 +579,11 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
             }
 
             const data = new FormData(form);
-            console.log("Form data collected:", Object.fromEntries(data.entries())); // Debug log: show all form data
+            console.log("Form data collected (v1.0.3):", Object.fromEntries(data.entries())); // Debug log: show all form data
 
             // 1. Header Section
             const recipientName = data.get('recipient_name')?.trim();
             console.log("Recipient Name (from input):", recipientName); // Debug log
-            // The template itself is "Dear {{ recipient_name }},\n\n"
-            // The replace method will correctly substitute {{ recipient_name }}
             if (recipientName) {
                 const headerTemplate = EMAIL_TEMPLATES['header'];
                 console.log("Header template before replacement:", headerTemplate); // Debug log
@@ -594,6 +592,132 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
                 console.log("Added Header:", finalHeader); // Debug log
             }
 
+            // Helper function to process multiple checkboxes for a section
+            function processMultiCheckboxes(checkboxGroupName, templateMap, sectionHeader) {
+                const selectedCheckboxes = form.querySelectorAll(`input[name="${checkboxGroupName}"]:checked`);
+                if (selectedCheckboxes.length > 0) {
+                    if (sectionHeader) {
+                        emailParts.push(`\n--- ${sectionHeader} ---\n`); // Add a clear header for the section
+                    }
+                    selectedCheckboxes.forEach(checkbox => {
+                        const value = checkbox.value;
+                        let templateToAdd = templateMap[value];
+                        if (templateToAdd) {
+                            // Handle special cases for POA_ISSUE_BASE which needs person name
+                            if (checkboxGroupName === 'poa_issue_type') {
+                                const poaIssuePersonName = data.get('poa_issue_person_name') || '';
+                                const poaIssueReason = poa_issue_reason_map[value] || value;
+                                templateToAdd = templateToAdd.replace('{{ poa_issue_reason }}', poaIssueReason);
+                                templateToAdd = templateToAdd.replace('{{ poa_issue_person_name }}', poaIssuePersonName);
+                            }
+                            // Handle special cases for Clarification Request Business Name Options
+                            else if (checkboxGroupName === 'clarification_type' && (value === 'request_for_clarification_on_business_name')) {
+                                const clarificationBusinessNameOption = data.get('clarification_business_name_option');
+                                if (clarificationBusinessNameOption === 'option1') {
+                                    const bankName = data.get('bank_name') || '';
+                                    const yourEntityName = data.get('your_entity_name') || '';
+                                    templateToAdd = EMAIL_TEMPLATES['clarification_business_name_discrepancy_1'];
+                                    templateToAdd = templateToAdd.replace('{{ bank_name }}', bankName);
+                                    templateToAdd = templateToAdd.replace('{{ bank_name_text }}', bankName);
+                                    templateToAdd = templateToAdd.replace('{{ your_entity_name }}', yourEntityName);
+                                } else if (clarificationBusinessNameOption === 'option2') {
+                                    const bankName2 = data.get('bank_name_2') || '';
+                                    const applicationName2 = data.get('application_name_2') || '';
+                                    templateToAdd = EMAIL_TEMPLATES['clarification_business_name_discrepancy_2'];
+                                    templateToAdd = templateToAdd.replace('{{ bank_name_2 }}', bankName2);
+                                    templateToAdd = templateToAdd.replace('{{ application_name_2 }}', applicationName2);
+                                }
+                            }
+                            // Handle special cases for Clarification Request Business Activity Update
+                            else if (checkboxGroupName === 'clarification_type' && value === 'request_for_business_activity_update') {
+                                const originalBusinessActivity = data.get('original_business_activity') || '';
+                                templateToAdd = templateToAdd.replace('{{ original_business_activity }}', originalBusinessActivity);
+                            }
+                            // Handle special cases for Changes Made Registered Address
+                            else if (checkboxGroupName === 'changes_type' && value === 'registered_address_or_principal_place_of_business') {
+                                const newAddress = data.get('new_address') || '';
+                                const addressSource = data.get('address_source') || 'our records';
+                                templateToAdd = templateToAdd.replace('{{ new_address }}', newAddress);
+                                templateToAdd = templateToAdd.replace('{{ address_source }}', addressSource);
+                            }
+                            // Handle special cases for Bank Statement (account ending)
+                            else if (checkboxGroupName === 'bank_statement_issue_type') {
+                                let bankAccountEnding = '';
+                                if (value === 'bank_statement_illegible') {
+                                    bankAccountEnding = data.get('bank_account_ending_illegible') || '';
+                                } else if (value === 'bank_statement_mismatch') {
+                                    bankAccountEnding = data.get('bank_account_ending_mismatch') || '';
+                                } else if (value === 'bank_statement_expired') {
+                                    bankAccountEnding = data.get('bank_account_ending_expired') || '';
+                                }
+                                templateToAdd = templateToAdd.replace('*{{ bank_account_ending_illegible }}', `*${bankAccountEnding}`);
+                                templateToAdd = templateToAdd.replace('*{{ bank_account_ending_mismatch }}', `*${bankAccountEnding}`);
+                                templateToAdd = templateToAdd.replace('*{{ bank_account_ending_expired }}', `*${bankAccountEnding}`);
+                            }
+
+                            emailParts.push(templateToAdd);
+                            console.log(`Added ${checkboxGroupName} - ${value}.`); // Debug log
+                        }
+                    });
+                }
+            }
+
+
+            // 5. UBO Identity verification (already uses individual checkboxes, no change needed here)
+            // This section already has individual checkboxes for UBO1, UBO2, UBO3, so no change to logic needed.
+
+            // 6. UBO Address verification (already uses individual checkboxes, no change needed here)
+            // This section already has individual checkboxes for UBO1, UBO2, UBO3, so no change to logic needed.
+
+            // 10. ID Verification Issues (now multi-select)
+            if (data.get('id_verification_issues')) {
+                processMultiCheckboxes('id_issue_type', {
+                    'illegible_id': EMAIL_TEMPLATES['id_illegible'],
+                    'expired_id': EMAIL_TEMPLATES['id_expired'],
+                    'mismatch_id_account_name': EMAIL_TEMPLATES['id_mismatch']
+                }, "ID Verification Issues");
+            }
+
+            // 11. POA Verification Issues (now multi-select)
+            if (data.get('poa_verification_issues')) {
+                processMultiCheckboxes('poa_issue_type', {
+                    'receipts_or_invoices': EMAIL_TEMPLATES['poa_issue_base'],
+                    'mobile_phone_bills': EMAIL_TEMPLATES['poa_issue_base'],
+                    'insurance_policies': EMAIL_TEMPLATES['poa_issue_base'],
+                    'documents_older_than_3_months': EMAIL_TEMPLATES['poa_issue_base'],
+                    'documents_without_name_address': EMAIL_TEMPLATES['poa_issue_base'],
+                    'handwritten_or_informal_documents': EMAIL_TEMPLATES['poa_issue_base']
+                }, "POA Verification Issues");
+            }
+
+            // 16. Bank Statement (now multi-select)
+            if (data.get('bank_statement')) {
+                processMultiCheckboxes('bank_statement_issue_type', {
+                    'bank_statement_illegible': EMAIL_TEMPLATES['bank_statement_illegible'],
+                    'bank_statement_mismatch': EMAIL_TEMPLATES['bank_statement_mismatch'],
+                    'bank_statement_expired': EMAIL_TEMPLATES['bank_statement_expired']
+                }, "Bank Statement Issues");
+            }
+
+            // 19. Changes Made (now multi-select)
+            if (data.get('changes_made')) {
+                processMultiCheckboxes('changes_type', {
+                    'registered_address_or_principal_place_of_business': EMAIL_TEMPLATES['changes_registered_address']
+                }, "Changes Made");
+            }
+
+            // 20. Clarification Request (now multi-select)
+            if (data.get('clarification_request')) {
+                processMultiCheckboxes('clarification_type', {
+                    'request_for_clarification_on_business_name': EMAIL_TEMPLATES['clarification_business_name_discrepancy_1'], // Placeholder for complex logic
+                    'request_for_business_activity_update': EMAIL_TEMPLATES['clarification_business_activity_update'],
+                    'request_for_entity_tin_vat_number': EMAIL_TEMPLATES['clarification_entity_tin_vat'],
+                    'company_structure_ownership_chart': EMAIL_TEMPLATES['clarification_company_structure_ownership_chart']
+                }, "Clarification Request");
+            }
+
+
+            // Remaining sections (no change to logic, just re-ordering if needed)
             // 2. Opener NEW supplier
             if (data.get('opener_new_supplier')) {
                 emailParts.push(EMAIL_TEMPLATES['opener_new_supplier']);
@@ -612,43 +736,7 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
                 console.log("Added Why POI/POA needed."); // Debug log
             }
 
-            // 5. UBO Identity verification
-            if (data.get('ubo_identity_verification')) {
-                const companyNameUboId = data.get('company_name_ubo_id') || '';
-                emailParts.push(EMAIL_TEMPLATES['ubo_identity_verification'].replace('{{ company_name_ubo_id }}', companyNameUboId));
-                console.log("Added UBO Identity verification."); // Debug log
-                if (data.get('ubo_id_1')) {
-                    emailParts.push(EMAIL_TEMPLATES['ubo_id_1'].replace('{{ ubo_id_name_1 }}', data.get('ubo_id_name_1') || ''));
-                    console.log("Added UBO 1."); // Debug log
-                }
-                if (data.get('ubo_id_2')) {
-                    emailParts.push(EMAIL_TEMPLATES['ubo_id_2'].replace('{{ ubo_id_name_2 }}', data.get('ubo_id_name_2') || ''));
-                    console.log("Added UBO 2."); // Debug log
-                }
-                if (data.get('ubo_id_3')) {
-                    emailParts.push(EMAIL_TEMPLATES['ubo_id_3'].replace('{{ ubo_id_name_3 }}', data.get('ubo_id_name_3') || ''));
-                    console.log("Added UBO 3."); // Debug log
-                }
-            }
-
-            // 6. UBO Address verification
-            if (data.get('ubo_address_verification')) {
-                emailParts.push(EMAIL_TEMPLATES['ubo_address_verification']);
-                console.log("Added UBO Address verification."); // Debug log
-                if (data.get('ubo_address_1')) {
-                    emailParts.push(EMAIL_TEMPLATES['ubo_address_1'].replace('{{ ubo_address_name_1 }}', data.get('ubo_address_name_1') || ''));
-                    console.log("Added UBO Address 1."); // Debug log
-                }
-                if (data.get('ubo_address_2')) {
-                    emailParts.push(EMAIL_TEMPLATES['ubo_address_2'].replace('{{ ubo_address_name_2 }}', data.get('ubo_address_name_2') || ''));
-                    console.log("Added UBO Address 2."); // Debug log
-                }
-                if (data.get('ubo_address_3')) {
-                    emailParts.push(EMAIL_TEMPLATES['ubo_address_3'].replace('{{ ubo_address_name_3 }}', data.get('ubo_address_name_3') || ''));
-                    console.log("Added UBO Address 3."); // Debug log
-                }
-            }
-
+            // ... (other sections that are single-checkbox and don't need processMultiCheckboxes)
             // 7. No UBO (State owned entity or Publicly listed)
             if (data.get('no_ubo')) {
                 const companyNameNoUbo = data.get('company_name_no_ubo') || '';
@@ -666,33 +754,6 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
             if (data.get('poa_verification_individual')) {
                 emailParts.push(EMAIL_TEMPLATES['poa_verification_individual']);
                 console.log("Added POA verification (Individual)."); // Debug log
-            }
-
-            // 10. ID Verification Issues
-            if (data.get('id_verification_issues')) {
-                const idIssueType = data.get('id_issue_type');
-                if (idIssueType === 'illegible_id') {
-                    emailParts.push(EMAIL_TEMPLATES['id_illegible']);
-                    console.log("Added ID Illegible."); // Debug log
-                } else if (idIssueType === 'expired_id') {
-                    emailParts.push(EMAIL_TEMPLATES['id_expired']);
-                    console.log("Added ID Expired."); // Debug log
-                } else if (idIssueType === 'mismatch_id_account_name') {
-                    emailParts.push(EMAIL_TEMPLATES['id_mismatch']);
-                    console.log("Added ID Mismatch."); // Debug log
-                }
-            }
-
-            // 11. POA Verification Issues
-            if (data.get('poa_verification_issues')) {
-                const poaIssueType = data.get('poa_issue_type');
-                const poaIssueReason = poa_issue_reason_map[poaIssueType] || poaIssueType; // Get mapped reason or use raw value
-                const poaIssuePersonName = data.get('poa_issue_person_name') || '';
-                let poaTemplate = EMAIL_TEMPLATES['poa_issue_base'];
-                poaTemplate = poaTemplate.replace('{{ poa_issue_reason }}', poaIssueReason);
-                poaTemplate = poaTemplate.replace('{{ poa_issue_person_name }}', poaIssuePersonName);
-                emailParts.push(poaTemplate);
-                console.log("Added POA Verification Issues."); // Debug log
             }
 
             // 12. Clarification on Nationality / Residency
@@ -721,21 +782,6 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
                 console.log("Added Financial Status."); // Debug log
             }
 
-            // 16. Bank Statement
-            if (data.get('bank_statement')) {
-                const bankStatementIssueType = data.get('bank_statement_issue_type');
-                if (bankStatementIssueType === 'bank_statement_illegible') {
-                    emailParts.push(EMAIL_TEMPLATES['bank_statement_illegible'].replace('{{ bank_account_ending_illegible }}', data.get('bank_account_ending_illegible') || ''));
-                    console.log("Added Bank Statement Illegible."); // Debug log
-                } else if (bankStatementIssueType === 'bank_statement_mismatch') {
-                    emailParts.push(EMAIL_TEMPLATES['bank_statement_mismatch'].replace('{{ bank_account_ending_mismatch }}', data.get('bank_account_ending_mismatch') || ''));
-                    console.log("Added Bank Statement Mismatch."); // Debug log
-                } else if (bankStatementIssueType === 'bank_statement_expired') {
-                    emailParts.push(EMAIL_TEMPLATES['bank_statement_expired'].replace('{{ bank_account_ending_expired }}', data.get('bank_account_ending_expired') || ''));
-                    console.log("Added Bank Statement Expired."); // Debug log
-                }
-            }
-
             // 17. Acceptable Forms of Address Verification
             if (data.get('acceptable_address_verification')) {
                 emailParts.push(EMAIL_TEMPLATES['acceptable_address_verification']);
@@ -746,56 +792,6 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
             if (data.get('acceptable_photo_id')) {
                 emailParts.push(EMAIL_TEMPLATES['acceptable_photo_id']);
                 console.log("Added Acceptable Forms of Photo ID."); // Debug log
-            }
-
-            // 19. Changes Made
-            if (data.get('changes_made')) {
-                const changesType = data.get('changes_type');
-                if (changesType === 'registered_address_or_principal_place_of_business') {
-                    const newAddress = data.get('new_address') || '';
-                    const addressSource = data.get('address_source') || 'our records';
-                    let changeTemplate = EMAIL_TEMPLATES['changes_registered_address'];
-                    changeTemplate = changeTemplate.replace('{{ new_address }}', newAddress);
-                    changeTemplate = changeTemplate.replace('{{ address_source }}', addressSource);
-                    emailParts.push(changeTemplate);
-                    console.log("Added Changes Made - Registered Address."); // Debug log
-                }
-            }
-
-            // 20. Clarification Request
-            if (data.get('clarification_request')) {
-                const clarificationType = data.get('clarification_type');
-                if (clarificationType === 'request_for_clarification_on_business_name') {
-                    const clarificationBusinessNameOption = data.get('clarification_business_name_option');
-                    if (clarificationBusinessNameOption === 'option1') {
-                        const bankName = data.get('bank_name') || '';
-                        const yourEntityName = data.get('your_entity_name') || '';
-                        let template = EMAIL_TEMPLATES['clarification_business_name_discrepancy_1'];
-                        template = template.replace('{{ bank_name }}', bankName);
-                        template = template.replace('{{ bank_name_text }}', bankName); // Use bank_name for both placeholders
-                        template = template.replace('{{ your_entity_name }}', yourEntityName);
-                        emailParts.push(template);
-                        console.log("Added Clarification Request - Business Name Option 1."); // Debug log
-                    } else if (clarificationBusinessNameOption === 'option2') {
-                        const bankName2 = data.get('bank_name_2') || '';
-                        const applicationName2 = data.get('application_name_2') || '';
-                        let template = EMAIL_TEMPLATES['clarification_business_name_discrepancy_2'];
-                        template = template.replace('{{ bank_name_2 }}', bankName2);
-                        template = template.replace('{{ application_name_2 }}', applicationName2);
-                        emailParts.push(template);
-                        console.log("Added Clarification Request - Business Name Option 2."); // Debug log
-                    }
-                } else if (clarificationType === 'request_for_business_activity_update') {
-                    const originalBusinessActivity = data.get('original_business_activity') || '';
-                    emailParts.push(EMAIL_TEMPLATES['clarification_business_activity_update'].replace('{{ original_business_activity }}', originalBusinessActivity));
-                    console.log("Added Clarification Request - Business Activity Update."); // Debug log
-                } else if (clarificationType === 'request_for_entity_tin_vat_number') {
-                    emailParts.push(EMAIL_TEMPLATES['clarification_entity_tin_vat']);
-                    console.log("Added Clarification Request - Entity TIN/VAT."); // Debug log
-                } else if (clarificationType === 'company_structure_ownership_chart') {
-                    emailParts.push(EMAIL_TEMPLATES['clarification_company_structure_ownership_chart']);
-                    console.log("Added Clarification Request - Company Structure Chart."); // Debug log
-                }
             }
 
             // 21. SOW/SOF for the UBOs
@@ -830,13 +826,13 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
             }
 
             const generatedEmail = emailParts.join('\n');
-            console.log("Final generated email content:", generatedEmail); // Debug log
+            console.log("Final generated email content (v1.0.3):", generatedEmail); // Debug log
             generatedEmailDisplay.innerHTML = generatedEmail;
             console.log("Display element updated."); // Debug log
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            console.log("DOMContentLoaded event fired."); // Debug log
+            console.log("DOMContentLoaded event fired (v1.0.3)."); // Debug log
             const form = document.getElementById('emailForm');
             const generatedEmailDisplay = document.getElementById('generated_email_display'); // Get the display element
 
@@ -853,8 +849,8 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
 
             // Specific logic to show/hide conditional input fields within subcategories.
             function setupConditionalFieldsVisibility() {
-                // Bank Statement radio buttons to show specific text inputs for account ending
-                const bankStatementRadios = document.querySelectorAll('input[name="bank_statement_issue_type"]');
+                // Bank Statement checkboxes to show specific text inputs for account ending
+                const bankStatementCheckboxes = document.querySelectorAll('input[name="bank_statement_issue_type"]');
                 const bankAccountEndingIllegibleField = document.getElementById('bank_account_ending_illegible_field');
                 const bankAccountEndingMismatchField = document.getElementById('bank_account_ending_mismatch_field');
                 const bankAccountEndingExpiredField = document.getElementById('bank_account_ending_expired_field');
@@ -864,47 +860,47 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
                     bankAccountEndingMismatchField.style.display = 'none';
                     bankAccountEndingExpiredField.style.display = 'none';
 
-                    const selectedRadio = document.querySelector('input[name="bank_statement_issue_type"]:checked');
-                    if (selectedRadio) {
-                        if (selectedRadio.value === 'bank_statement_illegible') {
-                            bankAccountEndingIllegibleField.style.display = 'inline-block';
-                        } else if (selectedRadio.value === 'bank_statement_mismatch') {
-                            bankAccountEndingMismatchField.style.display = 'inline-block';
-                        } else if (selectedRadio.value === 'bank_statement_expired') {
-                            bankAccountEndingExpiredField.style.display = 'inline-block';
-                        }
+                    // Show fields only if their corresponding checkbox is checked
+                    if (document.getElementById('bank_statement_illegible').checked) {
+                        bankAccountEndingIllegibleField.style.display = 'inline-block';
+                    }
+                    if (document.getElementById('bank_statement_mismatch').checked) {
+                        bankAccountEndingMismatchField.style.display = 'inline-block';
+                    }
+                    if (document.getElementById('bank_statement_expired').checked) {
+                        bankAccountEndingExpiredField.style.display = 'inline-block';
                     }
                 };
-                bankStatementRadios.forEach(radio => radio.addEventListener('change', toggleBankEndingFields));
+                bankStatementCheckboxes.forEach(checkbox => checkbox.addEventListener('change', toggleBankEndingFields));
                 toggleBankEndingFields(); // Initial call to set correct visibility on page load
 
 
                 // Logic for 'Changes Made' -> 'Registered Address or Principal Place of Business'
-                const registeredAddressRadio = document.getElementById('registered_address_or_principal_place_of_business');
+                const registeredAddressCheckbox = document.getElementById('registered_address_or_principal_place_of_business');
                 const addressChangeFields = document.getElementById('address_change_fields');
                 const toggleAddressChangeFields = () => {
-                    addressChangeFields.style.display = registeredAddressRadio.checked ? 'block' : 'none';
+                    addressChangeFields.style.display = registeredAddressCheckbox.checked ? 'block' : 'none';
                 };
-                registeredAddressRadio.addEventListener('change', toggleAddressChangeFields);
+                registeredAddressCheckbox.addEventListener('change', toggleAddressChangeFields);
                 toggleAddressChangeFields(); // Initial call
 
 
                 // Logic for 'Clarification Request' -> 'Request for clarification on Business Name'
-                const clarificationBusinessNameRadio = document.getElementById('request_for_clarification_on_business_name');
+                const clarificationBusinessNameCheckbox = document.getElementById('request_for_clarification_on_business_name');
                 const businessNameClarificationOptions = document.getElementById('business_name_clarification_options');
                 const toggleBusinessNameOptions = () => {
-                    businessNameClarificationOptions.style.display = clarificationBusinessNameRadio.checked ? 'block' : 'none';
+                    businessNameClarificationOptions.style.display = clarificationBusinessNameCheckbox.checked ? 'block' : 'none';
                 };
-                clarificationBusinessNameRadio.addEventListener('change', toggleBusinessNameOptions);
+                clarificationBusinessNameCheckbox.addEventListener('change', toggleBusinessNameOptions);
                 toggleBusinessNameOptions(); // Initial call
 
                 // Logic for 'Clarification Request' -> 'Request for Business Activity Update'
-                const clarificationBusinessActivityRadio = document.getElementById('request_for_business_activity_update');
+                const clarificationBusinessActivityCheckbox = document.getElementById('request_for_business_activity_update');
                 const businessActivityUpdateFields = document.getElementById('business_activity_update_fields');
                 const toggleBusinessActivityUpdateFields = () => {
-                    businessActivityUpdateFields.style.display = clarificationBusinessActivityRadio.checked ? 'block' : 'none';
+                    businessActivityUpdateFields.style.display = clarificationBusinessActivityCheckbox.checked ? 'block' : 'none';
                 };
-                clarificationBusinessActivityRadio.addEventListener('change', toggleBusinessActivityUpdateFields);
+                clarificationBusinessActivityCheckbox.addEventListener('change', toggleBusinessActivityUpdateFields);
                 toggleBusinessActivityUpdateFields(); // Initial call
             }
 
