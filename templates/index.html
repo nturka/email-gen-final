@@ -441,30 +441,6 @@
                 <label for="sanctions_pep_declaration">Sanctions / PEP Declaration</label>
             </div>
 
-            <!-- Insert Image Section -->
-            <div class="section-header">
-                <input type="checkbox" id="insert_image" name="insert_image">
-                <label for="insert_image">Insert Image</label>
-                <div id="image_fields">
-                    <label for="image_url" class="subheader">Image URL:</label>
-                    <input type="text" id="image_url" name="image_url" placeholder="Paste image URL here">
-                    <label for="image_alt_text" class="subheader">Alt Text (for accessibility):</label>
-                    <input type="text" id="image_alt_text" name="image_alt_text" placeholder="Describe the image">
-                </div>
-            </div>
-
-            <!-- Insert GIF Section -->
-            <div class="section-header">
-                <input type="checkbox" id="insert_gif" name="insert_gif">
-                <label for="insert_gif">Insert GIF</label>
-                <div id="gif_fields">
-                    <label for="gif_url" class="subheader">GIF URL:</label>
-                    <input type="text" id="gif_url" name="gif_url" placeholder="Paste GIF URL here">
-                    <label for="gif_alt_text" class="subheader">Alt Text (for accessibility):</label>
-                    <input type="text" id="gif_alt_text" name="gif_alt_text" placeholder="Describe the GIF">
-                </div>
-            </div>
-
             <!-- Supplier Company Name -->
             <div class="section-header">
                 <label for="supplier_company_name">Supplier Company Name:</label>
@@ -499,12 +475,10 @@ Kind Regards,
 Owl KYC Verification Team
 
 <div class="signature-images">
-    <img src="https://imgur.com/BPjhFrs" alt="Signature GIF" style="max-width: 80px; height: auto;">
-    <img src="https://imgur.com/taKDaPF" alt="Signature Image" style="max-width: 80px; height: auto;">
+    <img src="https://i.imgur.com/BPjhFrs.gif" alt="Signature GIF" style="max-width: 80px; height: auto;">
+    <img src="https://i.imgur.com/taKDaPF.png" alt="Signature Image" style="max-width: 80px; height: auto;">
 </div>
 
-<div class="footer-images">
-    </div>
 * owleu-verification@viator.com
 www.tripadvisor.ie
 `,
@@ -572,9 +546,7 @@ Please confirm the following for all relevant individuals or entities (including
 Whether any party is currently listed on international sanctions lists (e.g., OFAC, UN, EU, UK sanctions)
 Whether any party is or has been a PEP, including close associates or immediate family members of PEPs
 You may submit this declaration in a signed letter or by completing a standard self-certification form if one has been provided.
-This information is required to fulfill our Anti-Money Laundering (AML) and Know Your Customer (KYC) obligations.\n`,
-            "insert_image_template": `\n<img src="{{ image_url }}" alt="{{ image_alt_text }}" style="max-width: 100%; height: auto; display: block; margin: 10px auto;">\n`,
-            "insert_gif_template": `\n<img src="{{ gif_url }}" alt="{{ gif_alt_text }}" style="max-width: 100%; height: auto; display: block; margin: 10px auto;">\n`
+This information is required to fulfill our Anti-Money Laundering (AML) and Know Your Customer (KYC) obligations.\n`
         };
 
         // Map for POA issue reasons to display correctly in the template
@@ -592,36 +564,350 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
          * This function is called whenever a relevant form input changes.
          */
         function generateEmail() {
+            console.log("generateEmail function called."); // Debug log
             const emailParts = []; // Array to hold all selected email sections
             const form = document.getElementById('emailForm');
-            // FormData provides an easy way to get all form input values
+            const generatedEmailDisplay = document.getElementById('generated_email_display'); // Get the display element
+
+            if (!form) {
+                console.error("Error: Form element with ID 'emailForm' not found!"); // Debug log
+                return; // Stop if form is not found
+            }
+            if (!generatedEmailDisplay) {
+                console.error("Error: Display element with ID 'generated_email_display' not found!"); // Debug log
+                return; // Stop if display element is not found
+            }
+
             const data = new FormData(form);
+            console.log("Form data collected:", Object.fromEntries(data.entries())); // Debug log: show all form data
 
             // 1. Header Section
             const recipientName = data.get('recipient_name')?.trim();
             if (recipientName) {
-                // Replace placeholder with actual name
                 emailParts.push(EMAIL_TEMPLATES['header'].replace('{{ recipient_name }}', recipientName));
+                console.log("Added Header."); // Debug log
             }
 
             // 2. Opener NEW supplier
             if (data.get('opener_new_supplier')) {
                 emailParts.push(EMAIL_TEMPLATES['opener_new_supplier']);
+                console.log("Added Opener NEW supplier."); // Debug log
             }
 
             // 3. Opener RAI
             if (data.get('opener_rai')) {
                 emailParts.push(EMAIL_TEMPLATES['opener_rai']);
+                console.log("Added Opener RAI."); // Debug log
             }
 
             // 4. Why POI/POA needed
             if (data.get('why_poi_poa_needed')) {
                 emailParts.push(EMAIL_TEMPLATES['why_poi_poa_needed']);
+                console.log("Added Why POI/POA needed."); // Debug log
             }
 
             // 5. UBO Identity verification
             if (data.get('ubo_identity_verification')) {
                 const companyNameUboId = data.get('company_name_ubo_id') || '';
                 emailParts.push(EMAIL_TEMPLATES['ubo_identity_verification'].replace('{{ company_name_ubo_id }}', companyNameUboId));
+                console.log("Added UBO Identity verification."); // Debug log
                 if (data.get('ubo_id_1')) {
-                    emailPa
+                    emailParts.push(EMAIL_TEMPLATES['ubo_id_1'].replace('{{ ubo_id_name_1 }}', data.get('ubo_id_name_1') || ''));
+                    console.log("Added UBO 1."); // Debug log
+                }
+                if (data.get('ubo_id_2')) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_id_2'].replace('{{ ubo_id_name_2 }}', data.get('ubo_id_name_2') || ''));
+                    console.log("Added UBO 2."); // Debug log
+                }
+                if (data.get('ubo_id_3')) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_id_3'].replace('{{ ubo_id_name_3 }}', data.get('ubo_id_name_3') || ''));
+                    console.log("Added UBO 3."); // Debug log
+                }
+            }
+
+            // 6. UBO Address verification
+            if (data.get('ubo_address_verification')) {
+                emailParts.push(EMAIL_TEMPLATES['ubo_address_verification']);
+                console.log("Added UBO Address verification."); // Debug log
+                if (data.get('ubo_address_1')) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_address_1'].replace('{{ ubo_address_name_1 }}', data.get('ubo_address_name_1') || ''));
+                    console.log("Added UBO Address 1."); // Debug log
+                }
+                if (data.get('ubo_address_2')) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_address_2'].replace('{{ ubo_address_name_2 }}', data.get('ubo_address_name_2') || ''));
+                    console.log("Added UBO Address 2."); // Debug log
+                }
+                if (data.get('ubo_address_3')) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_address_3'].replace('{{ ubo_address_name_3 }}', data.get('ubo_address_name_3') || ''));
+                    console.log("Added UBO Address 3."); // Debug log
+                }
+            }
+
+            // 7. No UBO (State owned entity or Publicly listed)
+            if (data.get('no_ubo')) {
+                const companyNameNoUbo = data.get('company_name_no_ubo') || '';
+                emailParts.push(EMAIL_TEMPLATES['no_ubo'].replace('{{ company_name_no_ubo }}', companyNameNoUbo));
+                console.log("Added No UBO."); // Debug log
+            }
+
+            // 8. Identity verification (Individual)
+            if (data.get('identity_verification_individual')) {
+                emailParts.push(EMAIL_TEMPLATES['identity_verification_individual']);
+                console.log("Added Identity verification (Individual)."); // Debug log
+            }
+
+            // 9. POA verification (Individual)
+            if (data.get('poa_verification_individual')) {
+                emailParts.push(EMAIL_TEMPLATES['poa_verification_individual']);
+                console.log("Added POA verification (Individual)."); // Debug log
+            }
+
+            // 10. ID Verification Issues
+            if (data.get('id_verification_issues')) {
+                const idIssueType = data.get('id_issue_type');
+                if (idIssueType === 'illegible_id') {
+                    emailParts.push(EMAIL_TEMPLATES['id_illegible']);
+                    console.log("Added ID Illegible."); // Debug log
+                } else if (idIssueType === 'expired_id') {
+                    emailParts.push(EMAIL_TEMPLATES['id_expired']);
+                    console.log("Added ID Expired."); // Debug log
+                } else if (idIssueType === 'mismatch_id_account_name') {
+                    emailParts.push(EMAIL_TEMPLATES['id_mismatch']);
+                    console.log("Added ID Mismatch."); // Debug log
+                }
+            }
+
+            // 11. POA Verification Issues
+            if (data.get('poa_verification_issues')) {
+                const poaIssueType = data.get('poa_issue_type');
+                const poaIssueReason = poa_issue_reason_map[poaIssueType] || poaIssueType; // Get mapped reason or use raw value
+                const poaIssuePersonName = data.get('poa_issue_person_name') || '';
+                let poaTemplate = EMAIL_TEMPLATES['poa_issue_base'];
+                poaTemplate = poaTemplate.replace('{{ poa_issue_reason }}', poaIssueReason);
+                poaTemplate = poaTemplate.replace('{{ poa_issue_person_name }}', poaIssuePersonName);
+                emailParts.push(poaTemplate);
+                console.log("Added POA Verification Issues."); // Debug log
+            }
+
+            // 12. Clarification on Nationality / Residency
+            if (data.get('clarification_nationality_residency')) {
+                emailParts.push(EMAIL_TEMPLATES['clarification_nationality_residency']);
+                console.log("Added Clarification on Nationality / Residency."); // Debug log
+            }
+
+            // 13. Constitutional Documents
+            if (data.get('constitutional_documents')) {
+                const companyNameConstitutional = data.get('company_name_constitutional') || '';
+                emailParts.push(EMAIL_TEMPLATES['constitutional_documents'].replace('{{ company_name_constitutional }}', companyNameConstitutional));
+                console.log("Added Constitutional Documents."); // Debug log
+            }
+
+            // 14. Structure Verification
+            if (data.get('structure_verification')) {
+                emailParts.push(EMAIL_TEMPLATES['structure_verification']);
+                console.log("Added Structure Verification."); // Debug log
+            }
+
+            // 15. Financial Status
+            if (data.get('financial_status')) {
+                const companyNameFinancial = data.get('company_name_financial') || '';
+                emailParts.push(EMAIL_TEMPLATES['financial_status'].replace('{{ company_name_financial }}', companyNameFinancial));
+                console.log("Added Financial Status."); // Debug log
+            }
+
+            // 16. Bank Statement
+            if (data.get('bank_statement')) {
+                const bankStatementIssueType = data.get('bank_statement_issue_type');
+                if (bankStatementIssueType === 'bank_statement_illegible') {
+                    emailParts.push(EMAIL_TEMPLATES['bank_statement_illegible'].replace('{{ bank_account_ending_illegible }}', data.get('bank_account_ending_illegible') || ''));
+                    console.log("Added Bank Statement Illegible."); // Debug log
+                } else if (bankStatementIssueType === 'bank_statement_mismatch') {
+                    emailParts.push(EMAIL_TEMPLATES['bank_statement_mismatch'].replace('{{ bank_account_ending_mismatch }}', data.get('bank_account_ending_mismatch') || ''));
+                    console.log("Added Bank Statement Mismatch."); // Debug log
+                } else if (bankStatementIssueType === 'bank_statement_expired') {
+                    emailParts.push(EMAIL_TEMPLATES['bank_statement_expired'].replace('{{ bank_account_ending_expired }}', data.get('bank_account_ending_expired') || ''));
+                    console.log("Added Bank Statement Expired."); // Debug log
+                }
+            }
+
+            // 17. Acceptable Forms of Address Verification
+            if (data.get('acceptable_address_verification')) {
+                emailParts.push(EMAIL_TEMPLATES['acceptable_address_verification']);
+                console.log("Added Acceptable Forms of Address Verification."); // Debug log
+            }
+
+            // 18. Acceptable Forms of Photo ID
+            if (data.get('acceptable_photo_id')) {
+                emailParts.push(EMAIL_TEMPLATES['acceptable_photo_id']);
+                console.log("Added Acceptable Forms of Photo ID."); // Debug log
+            }
+
+            // 19. Changes Made
+            if (data.get('changes_made')) {
+                const changesType = data.get('changes_type');
+                if (changesType === 'registered_address_or_principal_place_of_business') {
+                    const newAddress = data.get('new_address') || '';
+                    const addressSource = data.get('address_source') || 'our records';
+                    let changeTemplate = EMAIL_TEMPLATES['changes_registered_address'];
+                    changeTemplate = changeTemplate.replace('{{ new_address }}', newAddress);
+                    changeTemplate = changeTemplate.replace('{{ address_source }}', addressSource);
+                    emailParts.push(changeTemplate);
+                    console.log("Added Changes Made - Registered Address."); // Debug log
+                }
+            }
+
+            // 20. Clarification Request
+            if (data.get('clarification_request')) {
+                const clarificationType = data.get('clarification_type');
+                if (clarificationType === 'request_for_clarification_on_business_name') {
+                    const clarificationBusinessNameOption = data.get('clarification_business_name_option');
+                    if (clarificationBusinessNameOption === 'option1') {
+                        const bankName = data.get('bank_name') || '';
+                        const yourEntityName = data.get('your_entity_name') || '';
+                        let template = EMAIL_TEMPLATES['clarification_business_name_discrepancy_1'];
+                        template = template.replace('{{ bank_name }}', bankName);
+                        template = template.replace('{{ bank_name_text }}', bankName); // Use bank_name for both placeholders
+                        template = template.replace('{{ your_entity_name }}', yourEntityName);
+                        emailParts.push(template);
+                        console.log("Added Clarification Request - Business Name Option 1."); // Debug log
+                    } else if (clarificationBusinessNameOption === 'option2') {
+                        const bankName2 = data.get('bank_name_2') || '';
+                        const applicationName2 = data.get('application_name_2') || '';
+                        let template = EMAIL_TEMPLATES['clarification_business_name_discrepancy_2'];
+                        template = template.replace('{{ bank_name_2 }}', bankName2);
+                        template = template.replace('{{ application_name_2 }}', applicationName2);
+                        emailParts.push(template);
+                        console.log("Added Clarification Request - Business Name Option 2."); // Debug log
+                    }
+                } else if (clarificationType === 'request_for_business_activity_update') {
+                    const originalBusinessActivity = data.get('original_business_activity') || '';
+                    emailParts.push(EMAIL_TEMPLATES['clarification_business_activity_update'].replace('{{ original_business_activity }}', originalBusinessActivity));
+                    console.log("Added Clarification Request - Business Activity Update."); // Debug log
+                } else if (clarificationType === 'request_for_entity_tin_vat_number') {
+                    emailParts.push(EMAIL_TEMPLATES['clarification_entity_tin_vat']);
+                    console.log("Added Clarification Request - Entity TIN/VAT."); // Debug log
+                } else if (clarificationType === 'company_structure_ownership_chart') {
+                    emailParts.push(EMAIL_TEMPLATES['clarification_company_structure_ownership_chart']);
+                    console.log("Added Clarification Request - Company Structure Chart."); // Debug log
+                }
+            }
+
+            // 21. SOW/SOF for the UBOs
+            if (data.get('sow_sof_ubos')) {
+                emailParts.push(EMAIL_TEMPLATES['sow_sof_ubos']);
+                console.log("Added SOW/SOF for UBOs."); // Debug log
+            }
+
+            // 22. SOW/SOF for the Company
+            if (data.get('sow_sof_company')) {
+                emailParts.push(EMAIL_TEMPLATES['sow_sof_company']);
+                console.log("Added SOW/SOF for Company."); // Debug log
+            }
+
+            // 23. Sanctions / PEP Declaration
+            if (data.get('sanctions_pep_declaration')) {
+                emailParts.push(EMAIL_TEMPLATES['sanctions_pep_declaration']);
+                console.log("Added Sanctions / PEP Declaration."); // Debug log
+            }
+
+            // 24. Supplier Company Name (appears before footer if footer is included)
+            const supplierCompanyName = data.get('supplier_company_name')?.trim();
+            if (supplierCompanyName) {
+                emailParts.push(`\nSupplier Company Name: ${supplierCompanyName}\n`);
+                console.log("Added Supplier Company Name."); // Debug log
+            }
+
+            // 25. Footer (conditional based on checkbox)
+            if (data.get('include_footer')) {
+                emailParts.push(EMAIL_TEMPLATES['footer']);
+                console.log("Added Footer."); // Debug log
+            }
+
+            const generatedEmail = emailParts.join('\n');
+            console.log("Final generated email content:", generatedEmail); // Debug log
+            generatedEmailDisplay.innerHTML = generatedEmail;
+            console.log("Display element updated."); // Debug log
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOMContentLoaded event fired."); // Debug log
+            const form = document.getElementById('emailForm');
+            const generatedEmailDisplay = document.getElementById('generated_email_display'); // Get the display element
+
+            if (!form) {
+                console.error("Error: Form element with ID 'emailForm' not found during DOMContentLoaded!"); // Debug log
+            }
+            if (!generatedEmailDisplay) {
+                console.error("Error: Display element with ID 'generated_email_display' not found during DOMContentLoaded!"); // Debug log
+            }
+
+            // Attach event listeners to all form elements that can change the email content.
+            form.addEventListener('change', generateEmail);
+            form.addEventListener('input', generateEmail);
+
+            // Specific logic to show/hide conditional input fields within subcategories.
+            function setupConditionalFieldsVisibility() {
+                // Bank Statement radio buttons to show specific text inputs for account ending
+                const bankStatementRadios = document.querySelectorAll('input[name="bank_statement_issue_type"]');
+                const bankAccountEndingIllegibleField = document.getElementById('bank_account_ending_illegible_field');
+                const bankAccountEndingMismatchField = document.getElementById('bank_account_ending_mismatch_field');
+                const bankAccountEndingExpiredField = document.getElementById('bank_account_ending_expired_field');
+
+                const toggleBankEndingFields = () => {
+                    bankAccountEndingIllegibleField.style.display = 'none';
+                    bankAccountEndingMismatchField.style.display = 'none';
+                    bankAccountEndingExpiredField.style.display = 'none';
+
+                    const selectedRadio = document.querySelector('input[name="bank_statement_issue_type"]:checked');
+                    if (selectedRadio) {
+                        if (selectedRadio.value === 'bank_statement_illegible') {
+                            bankAccountEndingIllegibleField.style.display = 'inline-block';
+                        } else if (selectedRadio.value === 'bank_statement_mismatch') {
+                            bankAccountEndingMismatchField.style.display = 'inline-block';
+                        } else if (selectedRadio.value === 'bank_statement_expired') {
+                            bankAccountEndingExpiredField.style.display = 'inline-block';
+                        }
+                    }
+                };
+                bankStatementRadios.forEach(radio => radio.addEventListener('change', toggleBankEndingFields));
+                toggleBankEndingFields(); // Initial call to set correct visibility on page load
+
+
+                // Logic for 'Changes Made' -> 'Registered Address or Principal Place of Business'
+                const registeredAddressRadio = document.getElementById('registered_address_or_principal_place_of_business');
+                const addressChangeFields = document.getElementById('address_change_fields');
+                const toggleAddressChangeFields = () => {
+                    addressChangeFields.style.display = registeredAddressRadio.checked ? 'block' : 'none';
+                };
+                registeredAddressRadio.addEventListener('change', toggleAddressChangeFields);
+                toggleAddressChangeFields(); // Initial call
+
+
+                // Logic for 'Clarification Request' -> 'Request for clarification on Business Name'
+                const clarificationBusinessNameRadio = document.getElementById('request_for_clarification_on_business_name');
+                const businessNameClarificationOptions = document.getElementById('business_name_clarification_options');
+                const toggleBusinessNameOptions = () => {
+                    businessNameClarificationOptions.style.display = clarificationBusinessNameRadio.checked ? 'block' : 'none';
+                };
+                clarificationBusinessNameRadio.addEventListener('change', toggleBusinessNameOptions);
+                toggleBusinessNameOptions(); // Initial call
+
+                // Logic for 'Clarification Request' -> 'Request for Business Activity Update'
+                // FIX: Corrected variable declaration from document.getElementById directly to a const for consistency
+                const clarificationBusinessActivityRadio = document.getElementById('request_for_business_activity_update');
+                const businessActivityUpdateFields = document.getElementById('business_activity_update_fields');
+                const toggleBusinessActivityUpdateFields = () => {
+                    businessActivityUpdateFields.style.display = clarificationBusinessActivityRadio.checked ? 'block' : 'none';
+                };
+                clarificationBusinessActivityRadio.addEventListener('change', toggleBusinessActivityUpdateFields);
+                toggleBusinessActivityUpdateFields(); // Initial call
+            }
+
+            setupConditionalFieldsVisibility();
+
+            // Perform an initial email generation to display the default state
+            generateEmail();
+        });
+    </script>
+</body>
+</html>
