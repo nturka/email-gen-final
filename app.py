@@ -134,10 +134,9 @@ def create_initial_users():
 
 # --- Main Application Run (for local development or manual commands) ---
 # This block is used for running the app locally OR for executing manual commands.
-if __name__ == '__main__':
-    # To run the web app locally (for testing before deploy):
-    # Uncomment the line below and run `python app.py`
-    # app.run(debug=True)
+# if __name__ == '__main__':
+#     # app.run(debug=True)
+#     # create_initial_users()
 
     # To create initial users for your team (run this LOCALLY ONCE for each user):
     # Uncomment the line below and run `python app.py`
