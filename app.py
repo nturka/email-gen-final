@@ -53,7 +53,7 @@ def load_user(user_id):
 @app.route('/', methods=['GET'])
 @login_required
 def index():
-    return render_template('index.html', current_user=current_user)
+    return render_template('main.html', current_user=current_user) # <--- CHANGED TO main.html
 
 # --- User Registration Route (REMOVED FOR MANUAL CREATION) ---
 # The public /register route is removed to restrict who can create accounts.
