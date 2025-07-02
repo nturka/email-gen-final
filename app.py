@@ -133,11 +133,17 @@ def create_initial_users():
             print(f"User '{username}' created successfully!")
 
 # --- Main Application Run (for local development or manual commands) ---
-# This block is used for running the app locally OR for executing manual commands.
-if __name__ == '__main__':
-    # To run the web app locally (for testing before deploy):
-    # app.run(debug=True)
-
-    # To create initial users for your team (run this LOCALLY ONCE for each user):
-    # Uncomment the line below and run `python app.py`
-# create_initial_users() # <--- RE-COMMENT THIS LINE
+# This entire block is commented out when deploying to Render,
+# as Gunicorn will be responsible for starting the app.
+# When running locally to create users, you uncomment 'create_initial_users()'.
+# When running locally for development, you uncomment 'app.run(debug=True)'.
+#
+# To use this block locally:
+# 1. Uncomment the 'if __name__ == "__main__":' line.
+# 2. Uncomment EITHER 'app.run(debug=True)' OR 'create_initial_users()', but NOT both at once.
+# 3. Save app.py and run 'python app.py' in your terminal.
+# 4. Re-comment the lines before pushing to Render.
+#
+# if __name__ == '__main__':
+#     # app.run(debug=True)
+#     # create_initial_users()
