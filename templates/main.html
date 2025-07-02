@@ -3,7 +3,11 @@
     *** RENDER CACHE BUSTER: VERSION 1.0.6 ***
     This is a unique marker to force Render's CDN to refresh this file.
     If you see this comment, the latest main.html is being served.
-    This version updates the POA Verification (Individual) text.
+    This version includes:
+    - Corrected "Dear [Name]," header.
+    - Updated POA Verification (Individual) text.
+    - Cleaned footer (no images, no extra lines).
+    - Refined generated email text width.
     *****************************************
 -->
 <html lang="en">
@@ -100,32 +104,12 @@
             margin-left: 10px;
         }
 
-        /* Styling for the footer images */
-        .footer-images {
-            display: flex; /* Use flexbox to arrange images horizontally */
-            align-items: center; /* Vertically align images */
-            gap: 10px; /* Space between images */
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-        .footer-images img {
-            max-width: 120px; /* Max width for images */
-            height: auto; /* Maintain aspect ratio */
-            border-radius: 4px; /* Optional: slight round corners */
-        }
+        /* Removed footer-images and signature-images CSS as they are no longer needed */
+        /* .footer-images { ... } */
+        /* .signature-images { ... } */
+        /* .footer-images img { ... } */
+        /* .signature-images img { ... } */
 
-        /* Styling for signature images */
-        .signature-images {
-            display: flex;
-            align-items: center;
-            gap: 5px; /* Smaller gap for signature images */
-            margin-top: 5px; /* Small margin above */
-        }
-        .signature-images img {
-            max-width: 80px; /* Make signature images small */
-            height: auto;
-            border-radius: 2px;
-        }
         .auth-links {
             margin-bottom: 20px;
             text-align: right;
@@ -186,7 +170,7 @@
                 <a href="{{ url_for('logout') }}">Logout</a>
             {% else %}
                 <a href="{{ url_for('login') }}">Login</a>
-                <!-- Register link is intentionally removed for manual user creation -->
+                <!-- Removed Register link as registration is now manual -->
             {% endif %}
         </div>
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -197,7 +181,7 @@
             {% endif %}
         {% endwith %}
 
-        <h1>Email Generator - v1.0.5</h1> <!-- Version marker in H1 -->
+        <h1>Email Generator - v1.0.5</h1> <!-- NEW Version marker in H1 -->
         <form id="emailForm">
             <!-- Header Section -->
             <div class="section-header">
@@ -545,11 +529,6 @@ Should you have any questions or need further assistance, do not hesitate to con
 Thank you for your cooperation and trust in our services.
 Kind Regards,
 Owl KYC Verification Team
-
-<div class="signature-images">
-    <img src="https://i.imgur.com/BPjhFrs.gif" alt="Signature GIF" style="max-width: 80px; height: auto;">
-    <img src="https://i.imgur.com/taKDaPF.png" alt="Signature Image" style="max-width: 80px; height: auto;">
-</div>
 `, // Removed the signature images and email/website lines
             "opener_new_supplier": "Thank you for your application.\nIn order to proceed, we kindly request the following information:\n",
             "opener_rai": "Thank you for your email.\nIn order to proceed, we kindly request the following information:\n",
@@ -564,7 +543,7 @@ Owl KYC Verification Team
             "ubo_address_3": "UBO 3: {{ ubo_address_name_3 }}\n",
             "no_ubo": "As {{ company_name_no_ubo }} is a state-owned entity and no such natural person can be identified as the ultimate beneficial owner, we are required to carry out verification on at least two directors in order to meet our regulatory obligations.\nThe identification and verification process involves confirming the identity of the individuals and their residential addresses. Identity is verified through the secure links provided, which authenticate a valid form of photo IDs. Residential addresses are verified via the proof of address documents submitted. Please note that once you confirm the nominated directors for verification, we can issue the identity verification links to you for onward transmission. We can confirm that email addresses for the directors are not required to complete this process.\n",
             "identity_verification_individual": "To complete the verification process and comply with regulatory requirements, we kindly ask you to provide a valid government-issued photo ID for identity verification. Please ensure the document is clear and legible, showing your full name, photograph, date of birth, and expiration date. Acceptable forms of ID include a passport, national ID card, or driver’s license.\n",
-            "poa_verification_individual": "To complete your verification process, we kindly ask you to provide a valid proof of address document. Please submit a recent (dated within the last 3 months) official document showing your full name and current residential address. Acceptable documents include utility bills, bank statements, government-issued letters, or tenancy agreements. Ensure the document is clear and legible.\n",
+            "poa_verification_individual": "To complete your verification process, we kindly ask you to provide a valid proof of address document. Please submit a recent (dated within the last 3 months) official document showing your full name and current residential address. Acceptable documents include utility bills, bank statements or drivers license (if not used for proof of identity verification). Ensure the document is clear and legible.\n",
             "id_illegible": "Unfortunately, the ID document provided is illegible, and we’re unable to complete the verification process at this time. To proceed, kindly upload a clear and legible copy of your ID. Please ensure that all information, including your name, photo, and expiration date, is clearly visible and not obscured.\n",
             "id_expired": "Thank you for providing your identification. Upon review, we noticed that the ID submitted is expired. Unfortunately, we cannot proceed with the verification process using an expired document. To continue, please submit a valid, unexpired form of identification. Ensure that all details are clearly visible for successful verification.\n",
             "id_mismatch": "Thank you for submitting your identification document. We’ve reviewed the details and noticed that the name on the ID does not match the name registered on your account. For security and verification purposes, we kindly ask you to provide an explanation for the discrepancy, along with any supporting documents (such as a legal name change certificate or proof of relationship, if applicable).\n",
