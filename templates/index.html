@@ -529,18 +529,9 @@
 Further information about the verification process can be found <a href="https://help.supplier.viator.com/en/articles/363-account-verification-for-suppliers-using-owl-payments-europe">here</a>.
 
 Should you have any questions or need further assistance, do not hesitate to contact us.
-Thank you for your cooperation and trust in our services.
-Kind Regards,
+Thank Regards,
 Owl KYC Verification Team
-
-<div class="signature-images">
-    <img src="https://i.imgur.com/BPjhFrs.gif" alt="Signature GIF" style="max-width: 80px; height: auto;">
-    <img src="https://i.imgur.com/taKDaPF.png" alt="Signature Image" style="max-width: 80px; height: auto;">
-</div>
-
-* owleu-verification@viator.com
-www.tripadvisor.ie
-`,
+`, // <-- NOTE: No lines after the closing `Kind Regards, Owl KYC Verification Team`
             "opener_new_supplier": "Thank you for your application.\nIn order to proceed, we kindly request the following information:\n",
             "opener_rai": "Thank you for your email.\nIn order to proceed, we kindly request the following information:\n",
             "why_poi_poa_needed": "We understand your concerns and would like to provide some clarity regarding our request. We are obligated to conduct enhanced due diligence in accordance with regulatory standards. These regulations require us to identify and verify any individual who owns or controls 25% or more of a business. The identification and verification process involves confirming the identity of the individuals and their residential addresses. Identity is verified through the secure links provided, which authenticate a valid form of photo ID.\n",
@@ -916,13 +907,13 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
             }
 
             const generatedEmail = emailParts.join('\n');
-            console.log("Final generated email content (v1.0.3):", generatedEmail); // Debug log
+            console.log("Final generated email content (v1.0.4):", generatedEmail); // Debug log
             generatedEmailDisplay.innerHTML = generatedEmail;
             console.log("Display element updated."); // Debug log
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            console.log("DOMContentLoaded event fired (v1.0.3)."); // Debug log
+            console.log("DOMContentLoaded event fired (v1.0.4)."); // Debug log
             const form = document.getElementById('emailForm');
             const generatedEmailDisplay = document.getElementById('generated_email_display'); // Get the display element
 
