@@ -15,14 +15,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# --- Database Table Creation on App Startup ---
+# --- Database Table Creation on App Startup (The most direct way for Flask 3.x) ---
 # This block ensures database tables are created when the app starts up,
 # as Gunicorn imports and executes the global scope of app.py.
-# This is crucial for ephemeral SQLite on Render's free tier, as the database file
-# and its tables do not persist across restarts or deploys.
+# This is crucial for ephemeral SQLite on Render's free tier.
 with app.app_context():
     db.create_all()
-    print("Database tables checked/created on app startup!")
+    print("Database tables checked/created on app startup!") # This line will appear in Render logs
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -53,7 +52,7 @@ def load_user(user_id):
 @app.route('/', methods=['GET'])
 @login_required
 def index():
-    return render_template('main.html', current_user=current_user) # <--- CHANGED TO main.html
+    return render_template('main.html', current_user=current_user) # Ensure this renders main.html
 
 # --- User Registration Route (REMOVED FOR MANUAL CREATION) ---
 # The public /register route is removed to restrict who can create accounts.
@@ -133,17 +132,12 @@ def create_initial_users():
             print(f"User '{username}' created successfully!")
 
 # --- Main Application Run (for local development or manual commands) ---
-# This entire block is commented out when deploying to Render,
-# as Gunicorn will be responsible for starting the app.
-# When running locally to create users, you uncomment 'create_initial_users()'.
-# When running locally for development, you uncomment 'app.run(debug=True)'.
-#
-# To use this block locally:
-# 1. Uncomment the 'if __name__ == "__main__":' line.
-# 2. Uncomment EITHER 'app.run(debug=True)' OR 'create_initial_users()', but NOT both at once.
-# 3. Save app.py and run 'python app.py' in your terminal.
-# 4. Re-comment the lines before pushing to Render.
-#
-# if __name__ == '__main__':
-#     # app.run(debug=True)
-#     # create_initial_users()
+# This block is used for running the app locally OR for executing manual commands.
+if __name__ == '__main__':
+    # To run the web app locally (for testing before deploy):
+    # Uncomment the line below and run `python app.py`
+    # app.run(debug=True)
+
+    # To create initial users for your team (run this LOCALLY ONCE for each user):
+    # Uncomment the line below and run `python app.py`
+    # create_initial_users() # <--- UNCOMMENT THIS LINE TO MANUALLY CREATE USERS LOCALLY
