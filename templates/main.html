@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <!--
-    *** RENDER CACHE BUSTER: VERSION 1.0.5 ***
+    *** RENDER CACHE BUSTER: VERSION 1.0.6 ***
     This is a unique marker to force Render's CDN to refresh this file.
     If you see this comment, the latest main.html is being served.
-    Please verify the header: "Dear [Name],"
-    And multi-select functionality.
+    This version updates the POA Verification (Individual) text.
     *****************************************
 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Generator - v1.0.5</title> <!-- NEW Version marker in title -->
+    <title>Email Generator - v1.0.6</title> <!-- NEW Version marker in title -->
     <style>
         /* Basic styling for the entire page */
         body {
@@ -198,7 +197,7 @@
             {% endif %}
         {% endwith %}
 
-        <h1>Email Generator - v1.0.5</h1> <!-- NEW Version marker in H1 -->
+        <h1>Email Generator - v1.0.5</h1> <!-- Version marker in H1 -->
         <form id="emailForm">
             <!-- Header Section -->
             <div class="section-header">
@@ -546,6 +545,11 @@ Should you have any questions or need further assistance, do not hesitate to con
 Thank you for your cooperation and trust in our services.
 Kind Regards,
 Owl KYC Verification Team
+
+<div class="signature-images">
+    <img src="https://i.imgur.com/BPjhFrs.gif" alt="Signature GIF" style="max-width: 80px; height: auto;">
+    <img src="https://i.imgur.com/taKDaPF.png" alt="Signature Image" style="max-width: 80px; height: auto;">
+</div>
 `, // Removed the signature images and email/website lines
             "opener_new_supplier": "Thank you for your application.\nIn order to proceed, we kindly request the following information:\n",
             "opener_rai": "Thank you for your email.\nIn order to proceed, we kindly request the following information:\n",
@@ -629,7 +633,7 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
          * This function is called whenever a relevant form input changes.
          */
         function generateEmail() {
-            console.log("generateEmail function called (v1.0.4)."); // Debug log with version
+            console.log("generateEmail function called (v1.0.5)."); // Debug log with version
             const emailParts = []; // Array to hold all selected email sections
             const form = document.getElementById('emailForm');
             const generatedEmailDisplay = document.getElementById('generated_email_display'); // Get the display element
@@ -644,7 +648,7 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
             }
 
             const data = new FormData(form);
-            console.log("Form data collected (v1.0.4):", Object.fromEntries(data.entries())); // Debug log: show all form data
+            console.log("Form data collected (v1.0.5):", Object.fromEntries(data.entries())); // Debug log: show all form data
 
             // 1. Header Section
             const recipientName = data.get('recipient_name')?.trim();
@@ -923,13 +927,13 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
             }
 
             const generatedEmail = emailParts.join('\n');
-            console.log("Final generated email content (v1.0.4):", generatedEmail); // Debug log
+            console.log("Final generated email content (v1.0.5):", generatedEmail); // Debug log
             generatedEmailDisplay.innerHTML = generatedEmail;
             console.log("Display element updated."); // Debug log
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            console.log("DOMContentLoaded event fired (v1.0.4)."); // Debug log
+            console.log("DOMContentLoaded event fired (v1.0.5)."); // Debug log
             const form = document.getElementById('emailForm');
             const generatedEmailDisplay = document.getElementById('generated_email_display'); // Get the display element
 
