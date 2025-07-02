@@ -2,7 +2,7 @@
 <!--
     *** RENDER CACHE BUSTER: VERSION 1.0.4 ***
     This is a unique marker to force Render's CDN to refresh this file.
-    If you see this comment, the latest index.html is being served.
+    If you see this comment, the latest main.html is being served.
     Please verify the header: "Dear [Name],"
     And multi-select functionality.
     *****************************************
@@ -163,9 +163,19 @@
             background-color: #ffc107;
             color: #333;
         }
+
+        /* NEW CSS for text width constraint */
+        .email-preview-panel pre {
+            max-width: 700px; /* Adjust this value as needed (e.g., 600px, 800px) */
+            margin: 0 auto; /* Center the text block horizontally */
+            padding: 15px; /* Add some padding inside the pre tag */
+            box-sizing: border-box; /* Include padding in max-width calculation */
+            /* white-space: pre-wrap; and word-wrap: break-word; are already defined on .email-preview-panel */
+        }
     </style>
 </head>
 <body>
+    <!-- Render's flash messages container -->
     <div class="controls-panel">
         <div class="auth-links">
             {% if current_user.is_authenticated %}
@@ -173,7 +183,7 @@
                 <a href="{{ url_for('logout') }}">Logout</a>
             {% else %}
                 <a href="{{ url_for('login') }}">Login</a>
-                <!-- Removed Register link as registration is now manual -->
+                <!-- Register link is intentionally removed for manual user creation -->
             {% endif %}
         </div>
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -184,7 +194,7 @@
             {% endif %}
         {% endwith %}
 
-        <h1>Email Generator - v1.0.4</h1> <!-- NEW Version marker in H1 -->
+        <h1>Email Generator - v1.0.4</h1> <!-- Version marker in H1 -->
         <form id="emailForm">
             <!-- Header Section -->
             <div class="section-header">
@@ -529,9 +539,10 @@
 Further information about the verification process can be found <a href="https://help.supplier.viator.com/en/articles/363-account-verification-for-suppliers-using-owl-payments-europe">here</a>.
 
 Should you have any questions or need further assistance, do not hesitate to contact us.
-Thank Regards,
+Thank you for your cooperation and trust in our services.
+Kind Regards,
 Owl KYC Verification Team
-`, // <-- NOTE: No lines after the closing `Kind Regards, Owl KYC Verification Team`
+`, // <-- The problem is here. This line should be: ``,
             "opener_new_supplier": "Thank you for your application.\nIn order to proceed, we kindly request the following information:\n",
             "opener_rai": "Thank you for your email.\nIn order to proceed, we kindly request the following information:\n",
             "why_poi_poa_needed": "We understand your concerns and would like to provide some clarity regarding our request. We are obligated to conduct enhanced due diligence in accordance with regulatory standards. These regulations require us to identify and verify any individual who owns or controls 25% or more of a business. The identification and verification process involves confirming the identity of the individuals and their residential addresses. Identity is verified through the secure links provided, which authenticate a valid form of photo ID.\n",
@@ -614,7 +625,7 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
          * This function is called whenever a relevant form input changes.
          */
         function generateEmail() {
-            console.log("generateEmail function called (v1.0.3)."); // Debug log with version
+            console.log("generateEmail function called (v1.0.4)."); // Debug log with version
             const emailParts = []; // Array to hold all selected email sections
             const form = document.getElementById('emailForm');
             const generatedEmailDisplay = document.getElementById('generated_email_display'); // Get the display element
@@ -629,7 +640,7 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
             }
 
             const data = new FormData(form);
-            console.log("Form data collected (v1.0.3):", Object.fromEntries(data.entries())); // Debug log: show all form data
+            console.log("Form data collected (v1.0.4):", Object.fromEntries(data.entries())); // Debug log: show all form data
 
             // 1. Header Section
             const recipientName = data.get('recipient_name')?.trim();
@@ -753,7 +764,8 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
 
             // 6. UBO Address verification (now uses individual checkboxes, no change needed here)
             if (data.get('ubo_address_verification')) {
-                emailParts.push(EMAIL_TEMPLATES['ubo_address_verification']);
+                const companyNameUboId = data.get('company_name_ubo_id') || ''; // Assuming this field is still relevant for UBO Address
+                emailParts.push(EMAIL_TEMPLATES['ubo_address_verification'].replace('{{ company_name_ubo_id }}', companyNameUboId)); // Placeholder needs to be added
                 console.log("Added UBO Address verification."); // Debug log
                 // These are individual checkboxes, so process them separately
                 if (document.getElementById('ubo_address_1').checked) {
@@ -919,9 +931,11 @@ This information is required to fulfill our Anti-Money Laundering (AML) and Know
 
             if (!form) {
                 console.error("Error: Form element with ID 'emailForm' not found during DOMContentLoaded!"); // Debug log
+                return; // Stop if form is not found
             }
             if (!generatedEmailDisplay) {
                 console.error("Error: Display element with ID 'generated_email_display' not found during DOMContentLoaded!"); // Debug log
+                return; // Stop if display element is not found
             }
 
             // Attach event listeners to all form elements that can change the email content.
