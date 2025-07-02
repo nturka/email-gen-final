@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-    *** RENDER CACHE BUSTER: VERSION 1.0.4 ***
+    *** RENDER CACHE BUSTER: VERSION 1.0.5 ***
     This is a unique marker to force Render's CDN to refresh this file.
     If you see this comment, the latest main.html is being served.
     Please verify the header: "Dear [Name],"
@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Generator - v1.0.4</title> <!-- NEW Version marker in title -->
+    <title>Email Generator - v1.0.5</title> <!-- NEW Version marker in title -->
     <style>
         /* Basic styling for the entire page */
         body {
@@ -38,8 +38,7 @@
             background-color: #333; /* Even lighter dark for preview */
             border-left: 1px solid #444; /* Separator line */
             overflow-y: auto; /* Enables vertical scrolling if content overflows */
-            white-space: pre-wrap; /* Preserves whitespace (like newlines) and wraps text */
-            word-wrap: break-word; /* Breaks long words to prevent horizontal scrolling */
+            /* Removed white-space and word-wrap from here, moved to pre for more control */
         }
 
         /* Header styling */
@@ -164,13 +163,17 @@
             color: #333;
         }
 
-        /* NEW CSS for text width constraint */
+        /* Refined CSS for the generated email text block */
         .email-preview-panel pre {
-            max-width: 700px; /* Adjust this value as needed (e.g., 600px, 800px) */
-            margin: 0 auto; /* Center the text block horizontally */
-            padding: 15px; /* Add some padding inside the pre tag */
-            box-sizing: border-box; /* Include padding in max-width calculation */
-            /* white-space: pre-wrap; and word-wrap: break-word; are already defined on .email-preview-panel */
+            max-width: 80ch; /* Limit width to ~80 characters for readability (ch unit is character width) */
+            width: 100%; /* Allows it to shrink on smaller screens */
+            margin: 10px auto 0 auto; /* Top margin, then center horizontally */
+            padding: 15px; /* Padding inside the text block */
+            box-sizing: border-box; /* Include padding in width calculation */
+            white-space: pre-wrap; /* Preserve whitespace and wrap text */
+            word-wrap: break-word; /* Break long words that don't fit */
+            overflow-x: hidden; /* Hide horizontal scrollbar if it somehow appears */
+            text-align: left; /* Ensure text aligns left within the block */
         }
     </style>
 </head>
@@ -194,7 +197,7 @@
             {% endif %}
         {% endwith %}
 
-        <h1>Email Generator - v1.0.4</h1> <!-- Version marker in H1 -->
+        <h1>Email Generator - v1.0.5</h1> <!-- NEW Version marker in H1 -->
         <form id="emailForm">
             <!-- Header Section -->
             <div class="section-header">
@@ -542,7 +545,7 @@ Should you have any questions or need further assistance, do not hesitate to con
 Thank you for your cooperation and trust in our services.
 Kind Regards,
 Owl KYC Verification Team
-`, // <-- The problem is here. This line should be: ``,
+`, // Removed the signature images and email/website lines
             "opener_new_supplier": "Thank you for your application.\nIn order to proceed, we kindly request the following information:\n",
             "opener_rai": "Thank you for your email.\nIn order to proceed, we kindly request the following information:\n",
             "why_poi_poa_needed": "We understand your concerns and would like to provide some clarity regarding our request. We are obligated to conduct enhanced due diligence in accordance with regulatory standards. These regulations require us to identify and verify any individual who owns or controls 25% or more of a business. The identification and verification process involves confirming the identity of the individuals and their residential addresses. Identity is verified through the secure links provided, which authenticate a valid form of photo ID.\n",
@@ -573,7 +576,7 @@ Kindly note that we are unable to proceed with your application until a valid pr
             "bank_statement_mismatch": "Unfortunately, we are unable to accept the copy of the bank statement provided as it was illegible. Please provide a clearer copy of a bank statement in the company’s name for the bank account ending *{{ bank_account_ending_mismatch }} as it appears in your payout details. This document should be dated within the last 3 months.\n",
             "bank_statement_expired": "Unfortunately, the bank statement provided cannot be accepted. As part of our verification process, please provide a bank statement dated within the last three months. The statement must be in the name of the business and clearly show the account holder’s name, account number, and transaction activity.\n",
             "acceptable_address_verification": `Acceptable Forms of Address Verification:
-⦁ A bank statement issued to your residential address within the last three months. (Sensitive details such as transaction values may be redacted, but the name, address, account name, and IBAN/account number must remain visible.); or
+⦁ A bank statement issued to your residential address within the last three months. (Sensitive details such as transaction values may be redacted, but the name, address, account name, and IBAN/account number must remain clearly visible.); or
 ⦁ A utility bill issued to your residential address within the last three months.
 ⦁ A valid Drivers license (This may only be used where it has not already been used as a proof of identity).\n`,
             "acceptable_photo_id": `Acceptable Forms of Photo ID:
