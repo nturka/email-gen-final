@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Generator - v1.0.9</title>
+    <title>Email Generator - v1.1.0</title>
     <style>
         /* Basic styling for the entire page */
         body {
@@ -124,12 +124,13 @@
             {% endif %}
         {% endwith %}
 
-        <h1>Email Generator - v1.0.9</h1>
+        <h1>Email Generator - v1.1.0</h1>
         <form id="emailForm">
 
             <div class="section-header">
-                <label for="recipient_name" style="cursor: default;">Header: Dear </label>
-                <input type="text" id="recipient_name" name="recipient_name" placeholder="Insert Name Here" style="display:inline-block; width: 60%;">,
+                <label for="recipient_name" style="cursor: default;">
+                    Dear <input type="text" id="recipient_name" name="recipient_name" placeholder="Insert Name Here" style="display:inline-block; width: 70%;">,
+                </label>
             </div>
 
             <div class="section-header">
@@ -243,6 +244,7 @@ Owl KYC Verification Team\n`,
             if (data.get('opener_new_supplier')) emailParts.push(EMAIL_TEMPLATES['opener_new_supplier']);
             if (data.get('opener_rai')) emailParts.push(EMAIL_TEMPLATES['opener_rai']);
 
+            // UBO Identity Verification Logic (FIXED)
             if (data.get('ubo_identity_verification')) {
                 const companyNameUboId = data.get('company_name_ubo_id') || '';
                 let uboTemplate = EMAIL_TEMPLATES['ubo_identity_verification'].replace('{{ company_name_ubo_id }}', companyNameUboId);
