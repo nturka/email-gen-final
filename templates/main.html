@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Generator - v1.0.7</title>
+    <title>Email Generator - v1.0.9</title>
     <style>
         /* Basic styling for the entire page */
         body {
@@ -17,7 +17,7 @@
 
         /* Styling for the left-hand control panel */
         .controls-panel {
-            flex: 2; /* Widened the controls panel */
+            flex: 1; /* Made controls panel narrower */
             padding: 20px;
             background-color: #2a2a2a;
             overflow-y: auto;
@@ -25,7 +25,7 @@
 
         /* Styling for the right-hand email preview panel */
         .email-preview-panel {
-            flex: 1.5; /* Shrunk the preview panel */
+            flex: 2; /* Made preview panel wider */
             padding: 20px;
             background-color: #333;
             border-left: 1px solid #444;
@@ -39,27 +39,29 @@
 
         /* Styling for each main form section */
         form div.section-header {
-            margin-bottom: 5px; /* Reduced bottom margin */
+            margin-bottom: 5px;
             padding: 10px;
             border: 1px solid #444;
             border-radius: 5px;
             background-color: #3a3a3a;
         }
 
-        /* Style the main category labels for smaller font and clickability */
+        /* Style the main category labels and checkboxes for clickability */
+        form div.section-header > label,
+        form div.section-header > input[type="checkbox"] {
+            cursor: pointer;
+        }
         form div.section-header > label {
             display: inline-block;
             width: calc(100% - 30px);
             font-weight: bold;
-            font-size: 0.9em; /* Smaller font */
-            cursor: pointer; /* Indicates it's clickable */
+            font-size: 0.9em;
         }
-        
         input[type="checkbox"] {
              vertical-align: middle;
         }
 
-        /* Hide subcategory content by default for the dropdown effect */
+        /* Hide subcategory content by default */
         .subcategory-content {
             display: none;
             margin-top: 10px;
@@ -67,75 +69,41 @@
             padding-top: 10px;
         }
 
-        /* General styling for form elements */
-        label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input[type="text"] {
-            width: calc(100% - 20px);
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #555;
-            border-radius: 4px;
-            background-color: #222;
-            color: #f0f0f0;
-        }
-
-        input[type="checkbox"], input[type="radio"] {
-            margin-right: 8px;
-            accent-color: #66b3ff;
-        }
-
-        .subheader {
-            margin-left: 20px;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            font-weight: normal;
-            font-size: 0.85em;
-        }
-        
-        .inline-field {
-            display: inline-block;
-            margin-left: 10px;
-        }
-
-        .auth-links {
-            margin-bottom: 20px;
-            text-align: right;
-            padding-right: 10px;
-        }
-        .auth-links a {
-            color: #66b3ff;
-            text-decoration: none;
-            margin-left: 15px;
-        }
-        .auth-links a:hover {
-            text-decoration: underline;
-        }
-
-        .flash-message {
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
+        /* Other form element styles */
+        label { margin-bottom: 5px; font-weight: bold; }
+        input[type="text"] { width: calc(100% - 20px); padding: 8px; margin-top: 5px; border: 1px solid #555; border-radius: 4px; background-color: #222; color: #f0f0f0; }
+        .subheader { margin-left: 20px; margin-top: 5px; margin-bottom: 5px; font-weight: normal; font-size: 0.85em; }
+        .inline-field { display: inline-block; margin-left: 10px; }
+        .auth-links { margin-bottom: 20px; text-align: right; padding-right: 10px; }
+        .auth-links a { color: #66b3ff; text-decoration: none; margin-left: 15px; }
+        .auth-links a:hover { text-decoration: underline; }
+        .flash-message { padding: 10px; margin-bottom: 15px; border-radius: 4px; font-weight: bold; }
         .flash-message.success { background-color: #28a745; color: white; }
         .flash-message.danger { background-color: #dc3545; color: white; }
 
         .email-preview-panel pre {
-            max-width: 90%;
-            width: 100%;
-            margin: 10px auto 0 auto;
-            padding: 15px;
-            box-sizing: border-box;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            overflow-x: hidden;
-            text-align: left;
-            line-height: 1.6;
+            max-width: 90%; width: 100%; margin: 10px auto 0 auto; padding: 15px; box-sizing: border-box;
+            white-space: pre-wrap; word-wrap: break-word; overflow-x: hidden; text-align: left; line-height: 1.6;
+            background-color: #2b2b2b; border: 1px solid #444; border-radius: 4px;
         }
+
+        /* Styling for the Copy button */
+        #copyButton {
+            display: block;
+            margin: 10px auto;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #copyButton:hover {
+            background-color: #0056b3;
+        }
+
     </style>
 </head>
 <body>
@@ -156,8 +124,13 @@
             {% endif %}
         {% endwith %}
 
-        <h1>Email Generator - v1.0.7</h1>
+        <h1>Email Generator - v1.0.9</h1>
         <form id="emailForm">
+
+            <div class="section-header">
+                <label for="recipient_name" style="cursor: default;">Header: Dear </label>
+                <input type="text" id="recipient_name" name="recipient_name" placeholder="Insert Name Here" style="display:inline-block; width: 60%;">,
+            </div>
 
             <div class="section-header">
                 <input type="checkbox" id="opener_new_supplier" name="opener_new_supplier">
@@ -168,44 +141,24 @@
                 <input type="checkbox" id="opener_rai" name="opener_rai">
                 <label for="opener_rai">Opener RAI</label>
             </div>
-            
-            <div class="section-header">
-                <input type="checkbox" id="why_poi_poa_needed" name="why_poi_poa_needed">
-                <label for="why_poi_poa_needed">Why POI/POA needed</label>
-            </div>
 
             <div class="section-header">
                 <input type="checkbox" id="ubo_identity_verification" name="ubo_identity_verification">
                 <label for="ubo_identity_verification">UBO Identity verification</label>
                 <div class="subcategory-content">
-                    <label for="company_name_ubo_id" class="subheader">Company Name:</label>
-                    <input type="text" id="company_name_ubo_id" name="company_name_ubo_id" placeholder="Insert Company Name">
+                    <div class="subheader">
+                        <label for="company_name_ubo_id">Company Name:</label>
+                        <input type="text" id="company_name_ubo_id" name="company_name_ubo_id" placeholder="Insert Company Name">
+                    </div>
                     <div class="subheader">
                         <input type="checkbox" id="ubo_id_1" name="ubo_id_1">
                         <label for="ubo_id_1">UBO 1:</label>
                         <input type="text" name="ubo_id_name_1" placeholder="UBO 1 Name" class="inline-field">
                     </div>
-                     <div class="subheader">
+                    <div class="subheader">
                         <input type="checkbox" id="ubo_id_2" name="ubo_id_2">
                         <label for="ubo_id_2">UBO 2:</label>
                         <input type="text" name="ubo_id_name_2" placeholder="UBO 2 Name" class="inline-field">
-                    </div>
-                </div>
-            </div>
-
-            <div class="section-header">
-                <input type="checkbox" id="ubo_address_verification" name="ubo_address_verification">
-                <label for="ubo_address_verification">UBO Address verification</label>
-                <div class="subcategory-content">
-                    <div class="subheader">
-                        <input type="checkbox" id="ubo_address_1" name="ubo_address_1">
-                        <label for="ubo_address_1">UBO 1:</label>
-                        <input type="text" name="ubo_address_name_1" placeholder="UBO 1 Name" class="inline-field">
-                    </div>
-                    <div class="subheader">
-                        <input type="checkbox" id="ubo_address_2" name="ubo_address_2">
-                        <label for="ubo_id_2">UBO 2:</label>
-                        <input type="text" name="ubo_address_name_2" placeholder="UBO 2 Name" class="inline-field">
                     </div>
                 </div>
             </div>
@@ -253,32 +206,26 @@
 
     <div class="email-preview-panel">
         <h2>Generated Email:</h2>
+        <button id="copyButton">Copy Email</button>
         <pre id="generated_email_display"></pre>
     </div>
 
     <script>
-        // JavaScript object to store all email template snippets
         const EMAIL_TEMPLATES = {
+            "header": "Dear {{ recipient_name }},\n\n",
             "footer": `\nWe will retain your documents on file, and all data is stored securely in accordance with GDPR requirements.
-Further information about the verification process can be found <a href="https://help.supplier.viator.com/en/articles/363-account-verification-for-suppliers-using-owl-payments-europe">here</a>.
-
 Should you have any questions or need further assistance, do not hesitate to contact us.
 Thank you for your cooperation and trust in our services.
 Kind Regards,
-Owl KYC Verification Team
-`,
+Owl KYC Verification Team\n`,
             "opener_new_supplier": "Thank you for your application.\nIn order to proceed, we kindly request the following information:\n",
             "opener_rai": "Thank you for your email.\nIn order to proceed, we kindly request the following information:\n",
-            "why_poi_poa_needed": "We understand your concerns and would like to provide some clarity regarding our request. We are obligated to conduct enhanced due diligence in accordance with regulatory standards. These regulations require us to identify and verify any individual who owns or controls 25% or more of a business. The identification and verification process involves confirming the identity of the individuals and their residential addresses. Identity is verified through the secure links provided, which authenticate a valid form of photo ID.\n",
             "ubo_identity_verification": "As the ultimate beneficial owner of {{ company_name_ubo_id }}, please provide valid photo identification for identity verification purposes. A valid form of photo identification will be required to complete this process. Please refer to the list of acceptable forms of photo ID below.\n",
             "ubo_id_1": "UBO 1: {{ ubo_id_name_1 }}\n",
             "ubo_id_2": "UBO 2: {{ ubo_id_name_2 }}\n",
-            "ubo_address_verification": "We require a document verifying your current residential address, issued within the past three months. This can be submitted via return email. Acceptable forms of address verification are listed below.\n",
-            "ubo_address_1": "UBO 1: {{ ubo_address_name_1 }}\n",
-            "ubo_address_2": "UBO 2: {{ ubo_address_name_2 }}\n",
             "illegible_document": "Unfortunately, the document provided is illegible, and we’re unable to complete the verification process at this time. To proceed, kindly upload a clear and legible copy of the document. Please ensure that all information, including your name, photo, and expiration date, is clearly visible and not obscured.\n",
-            "id_expired": "Thank you for providing your identification. Upon review, we noticed that the ID submitted is expired. Unfortunately, we cannot proceed with the verification process using an expired document. To continue, please submit a valid, unexpired form of identification. Ensure that all details are clearly visible for successful verification.\n",
-            "id_mismatch": "Thank you for submitting your identification document. We’ve reviewed the details and noticed that the name on the ID does not match the name registered on your account. For security and verification purposes, we kindly ask you to provide an explanation for the discrepancy, along with any supporting documents (such as a legal name change certificate or proof of relationship, if applicable).\n",
+            "expired_id": "Thank you for providing your identification. Upon review, we noticed that the ID submitted is expired. Unfortunately, we cannot proceed with the verification process using an expired document. To continue, please submit a valid, unexpired form of identification. Ensure that all details are clearly visible for successful verification.\n",
+            "mismatch_id_account_name": "Thank you for submitting your identification document. We’ve reviewed the details and noticed that the name on the ID does not match the name registered on your account. For security and verification purposes, we kindly ask you to provide an explanation for the discrepancy, along with any supporting documents (such as a legal name change certificate or proof of relationship, if applicable).\n",
             "memorandum_articles": "As part of our due diligence and compliance procedures, we kindly request that you provide a copy of your company’s Memorandum and Articles of Association at your earliest convenience.\n",
             "certificate_incorporation": "As part of our compliance and verification process, we kindly request a copy of your company’s Certificate of Incorporation at your earliest convenience.\n"
         };
@@ -288,19 +235,18 @@ Owl KYC Verification Team
             const form = document.getElementById('emailForm');
             const data = new FormData(form);
 
-            if (data.get('opener_new_supplier')) {
-                emailParts.push(EMAIL_TEMPLATES['opener_new_supplier']);
+            const recipientName = data.get('recipient_name')?.trim();
+            if (recipientName) {
+                emailParts.push(EMAIL_TEMPLATES['header'].replace('{{ recipient_name }}', recipientName));
             }
-            if (data.get('opener_rai')) {
-                emailParts.push(EMAIL_TEMPLATES['opener_rai']);
-            }
-            if (data.get('why_poi_poa_needed')) {
-                emailParts.push(EMAIL_TEMPLATES['why_poi_poa_needed']);
-            }
+
+            if (data.get('opener_new_supplier')) emailParts.push(EMAIL_TEMPLATES['opener_new_supplier']);
+            if (data.get('opener_rai')) emailParts.push(EMAIL_TEMPLATES['opener_rai']);
 
             if (data.get('ubo_identity_verification')) {
                 const companyNameUboId = data.get('company_name_ubo_id') || '';
-                emailParts.push(EMAIL_TEMPLATES['ubo_identity_verification'].replace('{{ company_name_ubo_id }}', companyNameUboId));
+                let uboTemplate = EMAIL_TEMPLATES['ubo_identity_verification'].replace('{{ company_name_ubo_id }}', companyNameUboId);
+                emailParts.push(uboTemplate);
                 if (document.getElementById('ubo_id_1').checked) {
                     emailParts.push(EMAIL_TEMPLATES['ubo_id_1'].replace('{{ ubo_id_name_1 }}', data.get('ubo_id_name_1') || ''));
                 }
@@ -309,30 +255,18 @@ Owl KYC Verification Team
                 }
             }
 
-            if (data.get('ubo_address_verification')) {
-                emailParts.push(EMAIL_TEMPLATES['ubo_address_verification']);
-                 if (document.getElementById('ubo_address_1').checked) {
-                    emailParts.push(EMAIL_TEMPLATES['ubo_address_1'].replace('{{ ubo_address_name_1 }}', data.get('ubo_address_name_1') || ''));
-                }
-                if (document.getElementById('ubo_address_2').checked) {
-                    emailParts.push(EMAIL_TEMPLATES['ubo_address_2'].replace('{{ ubo_address_name_2 }}', data.get('ubo_address_name_2') || ''));
-                }
-            }
-
             if (data.get('doc_verification_issues')) {
                 form.querySelectorAll('input[name="doc_issue_type"]:checked').forEach(checkbox => {
-                    const issueType = checkbox.value;
-                    if (EMAIL_TEMPLATES[issueType]) {
-                        emailParts.push(EMAIL_TEMPLATES[issueType]);
+                    if (EMAIL_TEMPLATES[checkbox.value]) {
+                        emailParts.push(EMAIL_TEMPLATES[checkbox.value]);
                     }
                 });
             }
 
             if (data.get('constitutional_documents')) {
                 form.querySelectorAll('input[name="constitutional_doc_type"]:checked').forEach(checkbox => {
-                    const docType = checkbox.value;
-                    if (EMAIL_TEMPLATES[docType]) {
-                        emailParts.push(EMAIL_TEMPLATES[docType]);
+                    if (EMAIL_TEMPLATES[checkbox.value]) {
+                        emailParts.push(EMAIL_TEMPLATES[checkbox.value]);
                     }
                 });
             }
@@ -341,7 +275,7 @@ Owl KYC Verification Team
                 emailParts.push(EMAIL_TEMPLATES['footer']);
             }
 
-            document.getElementById('generated_email_display').innerHTML = emailParts.join('\n');
+            document.getElementById('generated_email_display').innerText = emailParts.join('\n');
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -351,24 +285,46 @@ Owl KYC Verification Team
             form.addEventListener('change', generateEmail);
             form.addEventListener('input', generateEmail);
 
-            // Logic for collapsible dropdown sections
             function setupCollapsibleSections() {
-                const sectionHeaders = document.querySelectorAll('.section-header');
-                sectionHeaders.forEach(header => {
+                document.querySelectorAll('.section-header').forEach(header => {
                     const label = header.querySelector('label');
+                    const checkbox = header.querySelector('input[type="checkbox"]');
                     const content = header.querySelector('.subcategory-content');
-                    if (label && content) {
-                        label.addEventListener('click', function(event) {
-                            event.preventDefault();
+
+                    if (content && label && checkbox) {
+                        const toggleContent = (e) => {
+                            if (e.target.closest('.subcategory-content')) return;
+                            if (e.target.tagName === 'LABEL') e.preventDefault();
                             const isVisible = content.style.display === 'block';
                             content.style.display = isVisible ? 'none' : 'block';
-                        });
+                        };
+                        label.addEventListener('click', toggleContent);
+                        checkbox.addEventListener('click', toggleContent);
                     }
                 });
             }
 
+            function setupCopyButton() {
+                const copyButton = document.getElementById('copyButton');
+                const emailDisplay = document.getElementById('generated_email_display');
+                if (copyButton && emailDisplay) {
+                    copyButton.addEventListener('click', () => {
+                        const textToCopy = emailDisplay.innerText;
+                        navigator.clipboard.writeText(textToCopy).then(() => {
+                            copyButton.textContent = 'Copied!';
+                            setTimeout(() => {
+                                copyButton.textContent = 'Copy Email';
+                            }, 2000);
+                        }).catch(err => {
+                            console.error('Failed to copy text: ', err);
+                        });
+                    });
+                }
+            }
+
             setupCollapsibleSections();
-            generateEmail(); // Initial call
+            setupCopyButton();
+            generateEmail();
         });
     </script>
 </body>
