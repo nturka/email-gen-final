@@ -87,9 +87,8 @@
             background-color: #2b2b2b; border: 1px solid #444; border-radius: 4px;
         }
         
-        /* Make links in preview visible */
         .email-preview-panel pre a {
-            color: #8ab4f8;
+            color: #8ab4f8; /* Makes links in the preview visible */
         }
 
         /* Styling for the Copy button */
@@ -286,19 +285,19 @@
 
     <script>
         const EMAIL_TEMPLATES = {
-            "header": "Dear {{ recipient_name }},\n\n",
+            "header": "Dear {{recipient_name}},\n\n",
             "footer": `\nWe will retain your documents on file, and all data is stored securely in accordance with GDPR requirements.
-Further information about the verification process can be found <a href="https://help.supplier.viator.com/en/articles/363-account-verification-for-suppliers-using-owl-payments-europe" target="_blank" rel="noopener noreferrer">here</a>.
+Further information about the verification process can be found here.
 Should you have any questions or need further assistance, do not hesitate to contact us.
 Thank you for your cooperation and trust in our services.
 Kind Regards,
 Owl KYC Verification Team\n`,
-            "opener_new_supplier": "Thank you for your application...\n",
-            "opener_rai": "Thank you for your email...\n",
-            "ubo_identity_verification": "As the ultimate beneficial owner of {{company_name}}...\n",
-            "illegible_document": "Unfortunately, the document provided is illegible...\n",
-            "memorandum_articles": "As part of our due diligence...\n",
-            "certificate_incorporation": "As part of our compliance...\n",
+            "opener_new_supplier": "Thank you for your application.\nIn order to proceed, we kindly request the following information:\n",
+            "opener_rai": "Thank you for your email.\nIn order to proceed, we kindly request the following information:\n",
+            "ubo_identity_verification": "As the ultimate beneficial owner of {{company_name}}, please provide valid photo identification for identity verification purposes. A valid form of photo identification will be required to complete this process. Please refer to the list of acceptable forms of photo ID below.\n",
+            "illegible_document": "Unfortunately, the document provided is illegible, and we’re unable to complete the verification process at this time. To proceed, kindly upload a clear and legible copy of the document. Please ensure that all information, including your name, photo, and expiration date, is clearly visible and not obscured.\n",
+            "memorandum_articles": "As part of our due diligence and compliance procedures, we kindly request that you provide a copy of your company’s Memorandum and Articles of Association at your earliest convenience.\n",
+            "certificate_incorporation": "As part of our compliance and verification process, we kindly request a copy of your company’s Certificate of Incorporation at your earliest convenience.\n",
             "ownership_structure": "We kindly request further clarification on the company’s Ownership Structure, along with an updated list of shareholders holding 25% or more of the share capital. Please also provide a company organization chart that clearly outlines the ownership hierarchy, including any intermediate entities and the ultimate beneficial owners. To assist with this, we ask that you share the latest version of the Ultimate Beneficial Owner (UBO) Share Register via return email.\n",
             "address": "Upon reviewing your submitted documents, we noticed that the registered address on file does not match the address provided in the documentation. We kindly request clarification regarding this discrepancy and ask that you confirm the correct registered address.\n",
             "business_name": "The bank statement provided is in the name of {{xxx}}, which does not match the name of your entity, {{yyy}}. We kindly request clarification on the relationship between {{xxx}} and {{yyy}}, and an explanation for this discrepancy.\n",
@@ -319,53 +318,41 @@ Owl KYC Verification Team\n`,
             const form = document.getElementById('emailForm');
             const data = new FormData(form);
 
+            // Header
             const recipientName = data.get('recipient_name')?.trim();
             if (recipientName) {
-                emailParts.push(EMAIL_TEMPLATES['header'].replace('{{ recipient_name }}', recipientName));
+                emailParts.push(EMAIL_TEMPLATES['header'].replace('{{recipient_name}}', recipientName));
             }
-
+            
+            // Openers
             if (data.get('opener_new_supplier')) emailParts.push(EMAIL_TEMPLATES['opener_new_supplier']);
             if (data.get('opener_rai')) emailParts.push(EMAIL_TEMPLATES['opener_rai']);
 
+            // UBO
             if (data.get('ubo_identity_verification_main')) {
                 const companyName = data.get('ubo_identity_company_name') || '[Company Name]';
                 emailParts.push(EMAIL_TEMPLATES['ubo_identity_verification'].replace('{{company_name}}', companyName));
             }
-
-            // ... other existing logic ...
             
-            // NEW LOGIC BLOCKS
-            if (data.get('financial_statement_main')) {
-                const companyName = data.get('financial_statement_company_name') || '[Company Name]';
-                emailParts.push(EMAIL_TEMPLATES['financial_statement'].replace('{{company_name}}', companyName));
-            }
-
-            if (data.get('sow_sof_main')) {
-                form.querySelectorAll('input[name="sow_sof_type"]:checked').forEach(checkbox => {
-                    let template, companyName;
-                    if (checkbox.value === 'sow_sof_ubo') {
-                        template = EMAIL_TEMPLATES['sow_sof_ubo'];
-                        companyName = data.get('sow_ubo_company_name') || 'XXX';
-                    } else if (checkbox.value === 'sow_sof_company') {
-                        template = EMAIL_TEMPLATES['sow_sof_company'];
-                        companyName = data.get('sow_company_company_name') || 'XXX';
-                    }
-                    if(template) emailParts.push(template.replace('{{company_name}}', companyName));
-                });
-            }
-
-            if(data.get('sanctions_pep')) {
-                emailParts.push(EMAIL_TEMPLATES['sanctions_pep']);
-            }
-
-            if (data.get('changes_made_main')) {
-                form.querySelectorAll('input[name="changes_made_type"]:checked').forEach(checkbox => {
+            // Document Verification
+            if (data.get('doc_verification_issues_main')) {
+                form.querySelectorAll('input[name="doc_issue_type"]:checked').forEach(checkbox => {
                     if (EMAIL_TEMPLATES[checkbox.value]) {
                         emailParts.push(EMAIL_TEMPLATES[checkbox.value]);
                     }
                 });
             }
             
+            // Constitutional Docs
+            if (data.get('constitutional_documents_main')) {
+                form.querySelectorAll('input[name="constitutional_doc_type"]:checked').forEach(checkbox => {
+                    if (EMAIL_TEMPLATES[checkbox.value]) {
+                        emailParts.push(EMAIL_TEMPLATES[checkbox.value]);
+                    }
+                });
+            }
+
+            // Clarifications
             if (data.get('clarifications_main')) {
                 form.querySelectorAll('input[name="clarification_type"]:checked').forEach(checkbox => {
                     const value = checkbox.value;
@@ -384,13 +371,52 @@ Owl KYC Verification Team\n`,
                 });
             }
 
-            let finalEmail = emailParts.join('\n');
-
-            if (data.get('include_footer')) {
-                 finalEmail += EMAIL_TEMPLATES['footer'];
+            // Financial Statement
+            if (data.get('financial_statement_main')) {
+                const companyName = data.get('financial_statement_company_name') || '[Company Name]';
+                emailParts.push(EMAIL_TEMPLATES['financial_statement'].replace('{{company_name}}', companyName));
             }
 
-            document.getElementById('generated_email_display').innerHTML = finalEmail.replace(/\n/g, '<br>');
+            // SOW/SOF
+            if (data.get('sow_sof_main')) {
+                form.querySelectorAll('input[name="sow_sof_type"]:checked').forEach(checkbox => {
+                    let template, companyName;
+                    if (checkbox.value === 'sow_sof_ubo') {
+                        template = EMAIL_TEMPLATES['sow_sof_ubo'];
+                        companyName = data.get('sow_ubo_company_name') || 'XXX';
+                    } else if (checkbox.value === 'sow_sof_company') {
+                        template = EMAIL_TEMPLATES['sow_sof_company'];
+                        companyName = data.get('sow_company_company_name') || 'XXX';
+                    }
+                    if(template) {
+                        emailParts.push(template.replace('{{company_name}}', companyName));
+                    }
+                });
+            }
+
+            // Sanctions / PEP
+            if(data.get('sanctions_pep')) {
+                emailParts.push(EMAIL_TEMPLATES['sanctions_pep']);
+            }
+
+            // Changes made
+            if (data.get('changes_made_main')) {
+                form.querySelectorAll('input[name="changes_made_type"]:checked').forEach(checkbox => {
+                    if (EMAIL_TEMPLATES[checkbox.value]) {
+                        emailParts.push(EMAIL_TEMPLATES[checkbox.value]);
+                    }
+                });
+            }
+
+            // Prepare email content, handle footer separately for the link
+            let emailContent = emailParts.join('\n');
+            let footerContent = '';
+            if (data.get('include_footer')) {
+                 footerContent = EMAIL_TEMPLATES['footer'];
+            }
+
+            // Use innerHTML to render the link in the footer correctly
+            document.getElementById('generated_email_display').innerHTML = (emailContent + footerContent).replace(/\n/g, '<br>');
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -402,21 +428,20 @@ Owl KYC Verification Team\n`,
 
             function setupCollapsibleSections() {
                 document.querySelectorAll('.section-header').forEach(header => {
-                    const clickableElements = [header.querySelector('label'), header.querySelector('input[type="checkbox"]')];
+                    const label = header.querySelector('label');
+                    const checkbox = header.querySelector('input[type="checkbox"]');
                     const content = header.querySelector('.subcategory-content');
 
-                    if (content) {
-                        clickableElements.forEach(element => {
-                            if (element) {
-                                element.addEventListener('click', (e) => {
-                                    // Prevent label click from also toggling checkbox
-                                    if(e.target.tagName === 'LABEL') e.preventDefault();
-                                    
-                                    const isVisible = content.style.display === 'block';
-                                    content.style.display = isVisible ? 'none' : 'block';
-                                });
+                    if (content && label && checkbox) {
+                        const toggleVisibility = (event) => {
+                            if (event.target.tagName === 'LABEL') {
+                                event.preventDefault();
                             }
-                        });
+                            const isVisible = content.style.display === 'block';
+                            content.style.display = isVisible ? 'none' : 'block';
+                        };
+                        label.addEventListener('click', toggleVisibility);
+                        checkbox.addEventListener('click', toggleVisibility);
                     }
                 });
             }
