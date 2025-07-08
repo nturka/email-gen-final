@@ -144,6 +144,6 @@ def create_initial_users():
 # 3. Save app.py and run 'python app.py' in your terminal.
 # 4. Re-comment the lines before pushing to Render.
 #
-# if __name__ == '__main__':
-#     # app.run(debug=True)
-#     # create_initial_users()
+if __name__ == '__main__':
+    app.run(debug=True)
+    # create_initial_users()
