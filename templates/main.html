@@ -46,6 +46,27 @@
             </div>
 
             <div class="section-header">
+                <input type="checkbox" id="why_poi_poa_needed" name="why_poi_poa_needed">
+                <label for="why_poi_poa_needed">Why POI/POA needed</label>
+            </div>
+
+            <div class="section-header">
+                <input type="checkbox" id="ubo_identity_verification_main" name="ubo_identity_verification_main">
+                <label for="ubo_identity_verification_main">UBO Identity verification</label>
+                <div class="subcategory-content">
+                    <div class="subheader">
+                        <label for="ubo_identity_company_name">Company Name:</label>
+                        <input type="text" id="ubo_identity_company_name" name="ubo_identity_company_name" placeholder="Insert Company Name (XXX)">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-header">
+                <input type="checkbox" id="ubo_address_verification" name="ubo_address_verification">
+                <label for="ubo_address_verification">UBO Address verification</label>
+            </div>
+
+            <div class="section-header">
                 <input type="checkbox" id="constitutional_documents_main" name="constitutional_documents_main">
                 <label for="constitutional_documents_main">Constitutional Documents</label>
                 <div class="subcategory-content">
@@ -65,14 +86,6 @@
                 <label for="clarifications_main">Clarifications</label>
                 <div class="subcategory-content">
                     <div class="subheader">
-                        <input type="checkbox" name="clarification_type" value="ownership_structure">
-                        <label>Ownership Structure</label>
-                    </div>
-                    <div class="subheader">
-                        <input type="checkbox" name="clarification_type" value="address">
-                        <label>Address</label>
-                    </div>
-                    <div class="subheader">
                         <label>Business Name Discrepancy:</label>
                         <input type="text" name="clarification_biz_name_xxx" placeholder="Bank Statement Name (XXX)">
                         <input type="text" name="clarification_biz_name_yyy" placeholder="Your Entity Name (YYY)">
@@ -80,6 +93,14 @@
                     <div class="subheader">
                         <label>Business Activity Update:</label>
                         <input type="text" name="clarification_activity_xxx" placeholder="Original Business Activity">
+                    </div>
+                    <div class="subheader">
+                        <input type="checkbox" name="clarification_type" value="ownership_structure">
+                        <label>Ownership Structure</label>
+                    </div>
+                    <div class="subheader">
+                        <input type="checkbox" name="clarification_type" value="address">
+                        <label>Address</label>
                     </div>
                      <div class="subheader">
                         <input type="checkbox" name="clarification_type" value="nationality_residency">
@@ -141,6 +162,16 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="section-header">
+                <input type="checkbox" id="acceptable_address_verification" name="acceptable_address_verification">
+                <label for="acceptable_address_verification">Acceptable Forms of Address Verification</label>
+            </div>
+
+            <div class="section-header">
+                <input type="checkbox" id="acceptable_photo_id" name="acceptable_photo_id">
+                <label for="acceptable_photo_id">Acceptable Forms of Photo ID</label>
+            </div>
 
             <div class="section-header">
                 <input type="checkbox" id="include_footer" name="include_footer" checked>
@@ -166,6 +197,9 @@ Kind Regards,
 Owl KYC Verification Team\n`,
             "opener_new_supplier": "Thank you for your application.\nIn order to proceed, we kindly request the following information:\n",
             "opener_rai": "Thank you for your email.\nIn order to proceed, we kindly request the following information:\n",
+            "why_poi_poa_needed": "We understand your concerns and would like to provide some clarity regarding our request. We are obligated to conduct enhanced due diligence in accordance with regulatory standards. These regulations require us to identify and verify any individual who owns or controls 25% or more of a business.\nThe identification and verification process involves confirming the identity of the individuals and their residential addresses. Identity is verified through the secure links provided, which authenticate a valid form of photo ID and include liveness checks. Residential addresses are verified via the proof of address documents submitted.\nWe will retain the proof of identity and address on file, and all data is stored securely in accordance with GDPR requirements.\nFurther information about the verification process can be found here.\n",
+            "ubo_identity_verification": "As the ultimate beneficial owner of {{company_name}}, please provide valid photo identification for identity verification purposes. A valid form of photo identification will be required to complete this process. Please refer to the list of acceptable forms of photo ID below.\n",
+            "ubo_address_verification": "We require a document verifying your current residential address, issued within the past three months. This can be submitted via return email. Acceptable forms of address verification are listed below.\n",
             "memorandum_articles": "As part of our due diligence and compliance procedures, we kindly request that you provide a copy of your company’s Memorandum and Articles of Association at your earliest convenience.\n",
             "certificate_incorporation": "As part of our compliance and verification process, we kindly request a copy of your company’s Certificate of Incorporation at your earliest convenience.\n",
             "ownership_structure": "We kindly request further clarification on the company’s Ownership Structure, along with an updated list of shareholders holding 25% or more of the share capital. Please also provide a company organization chart that clearly outlines the ownership hierarchy, including any intermediate entities and the ultimate beneficial owners. To assist with this, we ask that you share the latest version of the Ultimate Beneficial Owner (UBO) Share Register via return email.\n",
@@ -180,7 +214,9 @@ Owl KYC Verification Team\n`,
             "address_change": "We would like to confirm that we have successfully changed your address to reflect the details provided in your documents and our records have been updated accordingly.\n",
             "eircode_change": "We would like to confirm that we have successfully changed your Eircode to reflect the details provided in your documents and our records have been updated accordingly.\n",
             "tin_change": "We wish to inform you that we have updated the Tax Identification Number (TIN) in our system to reflect the documentation you provided, in line with our internal records.\n",
-            "registration_number_change": "We would like to confirm that your company’s registration number has been successfully updated in our records to reflect the information provided in your documentation.\n"
+            "registration_number_change": "We would like to confirm that your company’s registration number has been successfully updated in our records to reflect the information provided in your documentation.\n",
+            "acceptable_address_verification": "Acceptable Forms of Address Verification:\n⦁\tA bank statement issued to your residential address within the last three months. (Sensitive details such as transaction values may be redacted, but the name, address, account name, and IBAN/account number must remain visible.); or\n⦁\tA utility bill issued to your residential address within the last three months.\n",
+            "acceptable_photo_id": "Acceptable Forms of Photo ID:\n⦁\tA valid passport; or\n⦁\tA valid photo card driving license issued by an EU/EEA Member State; or\n⦁\tA valid government-issued ID card from an EU/EEA Member State.\n"
         };
 
         function generateEmail() {
@@ -197,6 +233,27 @@ Owl KYC Verification Team\n`,
             // Openers
             if (data.get('opener_new_supplier')) emailParts.push(EMAIL_TEMPLATES['opener_new_supplier']);
             if (data.get('opener_rai')) emailParts.push(EMAIL_TEMPLATES['opener_rai']);
+
+            // Why POI/POA needed
+            if (data.get('why_poi_poa_needed')) {
+                emailParts.push(EMAIL_TEMPLATES['why_poi_poa_needed']);
+            }
+
+            // UBO Identity Verification
+            if (data.get('ubo_identity_verification_main')) {
+                const companyName = data.get('ubo_identity_company_name')?.trim();
+                if (companyName) {
+                    emailParts.push(EMAIL_TEMPLATES['ubo_identity_verification'].replace('{{company_name}}', companyName));
+                } else {
+                    // Push template with placeholder if no company name is entered but box is checked
+                    emailParts.push(EMAIL_TEMPLATES['ubo_identity_verification'].replace('{{company_name}}', 'XXX'));
+                }
+            }
+
+            // UBO Address Verification
+            if (data.get('ubo_address_verification')) {
+                 emailParts.push(EMAIL_TEMPLATES['ubo_address_verification']);
+            }
             
             // Constitutional Docs
             if (data.get('constitutional_documents_main')) {
@@ -265,10 +322,17 @@ Owl KYC Verification Team\n`,
                 });
             }
 
-            // Footer
+            // Acceptable Forms
+            if (data.get('acceptable_address_verification')) emailParts.push(EMAIL_TEMPLATES['acceptable_address_verification']);
+            if (data.get('acceptable_photo_id')) emailParts.push(EMAIL_TEMPLATES['acceptable_photo_id']);
+
+
+            // Footer and final render
             let emailBody = emailParts.join('\n');
             if (data.get('include_footer')) {
-                emailBody += EMAIL_TEMPLATES['footer'];
+                let footerTemplate = EMAIL_TEMPLATES['footer'];
+                let linkedFooter = footerTemplate.replace('here', '<a href="https://help.supplier.viator.com/en/articles/363-account-verification-for-suppliers-using-owl-payments-europe" target="_blank" rel="noopener noreferrer">here</a>');
+                emailBody += linkedFooter;
             }
 
             document.getElementById('generated_email_display').innerHTML = emailBody.replace(/\n/g, '<br>');
