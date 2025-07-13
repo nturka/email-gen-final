@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'a-super-secret-key')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'a-super-secret-key-that-is-long')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -55,6 +55,6 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-# To run locally for testing, uncomment the block below
-# if __name__ == '__main__':
-#     app.run(debug=True)
+# This block is for running the app locally for testing
+if __name__ == '__main__':
+    app.run(debug=True)
