@@ -62,11 +62,11 @@
                 <input type="checkbox" id="bank_statement_main" name="bank_statement_main">
                 <label for="bank_statement_main">Bank Statement</label>
             </div>
-            <div class="section-header">
+             <div class="section-header">
                 <input type="checkbox" id="clarifications_main" name="clarifications_main">
                 <label for="clarifications_main">Clarifications</label>
                 <div class="subcategory-content">
-                     <div class="subheader">
+                    <div class="subheader">
                         <input type="checkbox" id="show_biz_name_fields" name="show_biz_name_fields"><label for="show_biz_name_fields">Business Name Discrepancy</label>
                         <div id="biz_name_fields" style="display:none; margin-left: 20px;">
                             <label for="clarification_biz_name_1">Bank Statement Name:</label><input type="text" id="clarification_biz_name_1" name="clarification_biz_name_1">
@@ -78,15 +78,6 @@
                         <div id="biz_activity_fields" style="display:none; margin-left: 20px;">
                             <label for="clarification_activity_text">Original Business Activity:</label><input type="text" id="clarification_activity_text" name="clarification_activity_text">
                         </div>
-                    </div>
-                    <div class="subheader">
-                        <input type="checkbox" name="clarification_type" value="ownership_structure" id="ownership_structure_check"><label for="ownership_structure_check">Ownership Structure</label>
-                    </div>
-                    <div class="subheader">
-                        <input type="checkbox" name="clarification_type" value="address" id="address_check"><label for="address_check">Address</label>
-                    </div>
-                     <div class="subheader">
-                        <input type="checkbox" name="clarification_type" value="nationality_residency" id="nationality_check"><label for="nationality_check">Clarification on Nationality / Residency</label>
                     </div>
                 </div>
             </div>
@@ -155,24 +146,21 @@
     <script>
         const EMAIL_TEMPLATES = {
             "header": "Dear {{recipient_name}},\n\n",
-            "why_poi_poa_needed": "We understand your concerns of providing your personal documentation and would like to provide some clarity regarding our request.\nWe are obligated to conduct enhanced due diligence in accordance with regulatory standards. These regulations require us to identify and verify any individual who owns or controls 25% or more of a business.\nThe identification and verification process involves confirming the identity of the individuals and their residential addresses. Identity is verified through the secure links provided, which authenticate a valid form of photo ID and include liveness checks. Residential addresses are verified via the proof of address documents submitted.\nWe will retain the proof of identity and address on file, and all data is stored securely in accordance with GDPR requirements.\nFurther information about the verification process can be found here.\n",
+            "why_poi_poa_needed": "We understand your concerns of providing your personal documentation and would like to provide some clarity regarding our request.\nWe are obligated to conduct enhanced due diligence in accordance with regulatory standards. These regulations require us to identify and verify any individual who owns or controls 25% or more of a business.\nThe identification and verification process involves confirming the identity of the individuals and their residential addresses. Residential addresses are verified via the proof of address documents submitted.\n",
             "ubo_identity_verification": "As the ultimate beneficial owner of {{ubo_name}}, please provide valid photo identification for identity verification purposes. A valid form of photo identification will be required to complete this process. Please refer to the list of acceptable forms of photo ID below.\n",
             "ubo_address_verification": "We require a document verifying current residential address of {{ubo_name}}, issued within the past three months. This can be submitted via return email. Acceptable forms of address verification are listed below.\n",
-            "no_ubo": "As {{company_name}} is a state-owned entity and no such natural person can be identified as the ultimate beneficial owner, we are required to carry out verification on at least two directors in order to meet our regulatory obligations...\n",
+            "no_ubo": "As {{company_name}} is a state-owned entity and no such natural person can be identified as the ultimate beneficial owner, we are required to carry out verification on at least two directors in order to meet our regulatory obligations. The identification and verification process involves confirming the identity of the individuals and their residential addresses. Identity is verified through the secure links provided, which authenticate a valid form of photo IDs. Residential addresses are verified via the proof of address documents submitted. Please note that once you confirm the nominated directors for verification, we can issue the identity verification links to you for onward transmission. We can confirm that email addresses for the directors are not required to complete this process.\n",
             "constitutional_documents": "As part of our due diligence and compliance procedures, we kindly request a copy of your company’s Memorandum and Articles of Association and/or the Certificate of Incorporation.\n",
             "bank_statement": "As part of our verification process, please provide a bank statement dated within the last three months. The statement must be in the name of the business and clearly show the account holder’s name, account number, and transaction activity.\n",
-            "ownership_structure": "We kindly request further clarification on the company’s Ownership Structure, along with an updated list of shareholders holding 25% or more of the share capital. Please also provide a company organization chart that clearly outlines the ownership hierarchy, including any intermediate entities and the ultimate beneficial owners. To assist with this, we ask that you share the latest version of the Ultimate Beneficial Owner (UBO) Share Register via return email.\n",
-            "address": "Upon reviewing your submitted documents, we noticed that the registered address on file does not match the address provided in the documentation. We kindly request clarification regarding this discrepancy and ask that you confirm the correct registered address.\n",
             "business_name_discrepancy": "The bank statement provided is in the name of {{bank_name}}, which does not match the name of your entity, {{entity_name}}. We kindly request clarification on the relationship between {{bank_name}} and {{entity_name}}, and an explanation for this discrepancy.\n",
             "business_activity_update": "Our records indicate that the company was originally incorporated as an {{activity}}. Please provide clarification on when the nature of the business changed.\n",
-            "nationality_residency": "Thank you for submitting your documents. During our review, we noticed that there is some inconsistency or missing information regarding your nationality or residency status.To proceed with the verification process, we kindly ask you to provide clarification and, if possible, additional documentation confirming your current nationality and/or residency (e.g., passport, residency permit, or utility bill).\n",
             "illegible": "Thank you for your recent submission. Unfortunately, the document provided is illegible, and we’re unable to complete the verification process at this time.\nTo proceed, kindly upload a clear and legible copy of your document. Please ensure that all information, including your name, photo, and expiration date, is clearly visible and not obscured.\n",
             "expired": "Thank you for providing your documentation. Upon review, we noticed that the document submitted is expired. Unfortunately, we cannot proceed with the verification process using an expired document.\nTo continue, please submit a valid, unexpired form of documentation. Ensure that all details are clearly visible for successful verification.\n",
             "info_mismatch": "Thank you for submitting your documentation. Upon review, we noticed that the name on the document does not match the name registered on your account.\nTo proceed with the verification process, we kindly ask you to provide clarification regarding this discrepancy. If applicable, please submit supporting documentation (such as a legal name change certificate, marriage certificate, a signed declaration explaining the relationship, etc.).\n",
             "financial_statement": "To assess the financial standing of {{company_name}}, we kindly request a copy of the most recent financial statements and accounts, audited where available.\n",
-            "sow_sof_ubo": "As part of our ongoing due diligence requirements, we kindly request that you provide the Source of Wealth (SOW) and Source of Funds (SOF) information for the Ultimate Beneficial Owners (UBOs) of {{company_name}}. Please include supporting documentation where available...\n",
-            "sow_sof_company": "As part of our ongoing compliance and due diligence requirements, we kindly request documentation regarding the Source of Wealth (SOW) and Source of Funds (SOF) for {{company_name}}...\n",
-            "sanctions_pep": "Please confirm the following for all relevant individuals or entities (including UBOs, directors, and key stakeholders):\n- Whether any party is currently listed on international sanctions lists...\n- Whether any party is or has been a PEP...\n",
+            "sow_sof_ubo": "As part of our ongoing due diligence requirements, we kindly request that you provide the Source of Wealth (SOW) and Source of Funds (SOF) information for the Ultimate Beneficial Owners (UBOs) of {{company_name}}. Please include supporting documentation where available, such as bank statements, audited financials, investment records, or other relevant evidence that helps demonstrate the origin of the UBOs’ wealth and the specific sources of funds used in relation to the entity. Source of Funds:The specific origin of the funds being used in this transaction or business relationship (e.g., bank statements, sale agreements, dividends, etc.).\n",
+            "sow_sof_company": "As part of our ongoing compliance and due diligence requirements, we kindly request documentation regarding the Source of Wealth (SOW) and Source of Funds (SOF) for {{company_name}}. Please provide information that includes: Source of Wealth (SOW): An explanation of how the business has generated its overall wealth (e.g., revenue from operations, sale of assets, investments, long-term contracts, etc.). Source of Funds (SOF): Details on the specific origin of the funds involved in the current or proposed transaction (e.g., recent income, capital contributions, loan agreements, or other relevant documentation). This information is essential for us to complete our verification process and proceed with the necessary steps in accordance with regulatory requirements.\n",
+            "sanctions_pep": "As part of our regulatory compliance procedures, we kindly request a self-certification regarding your sanctions status and whether you or any related parties are considered Politically Exposed Persons (PEPs).\nPlease confirm the following for all relevant individuals or entities (including UBOs, directors, and key stakeholders):\n- Whether any party is currently listed on international sanctions lists (e.g., OFAC, UN, EU, UK sanctions)\n- Whether any party is or has been a PEP, including close associates or immediate family members of PEPs.\nYou may submit this declaration in a signed letter or by completing a standard self-certification form if one has been provided.\nThis information is required to fulfill our Anti-Money Laundering (AML) and Know Your Customer (KYC) obligations.\n",
             "address_change": "We would like to confirm that we have successfully changed your address to reflect the details provided in your documents and our records have been updated accordingly.\n",
             "eircode_change": "We would like to confirm that we have successfully changed your Eircode to reflect the details provided in your documents and our records have been updated accordingly.\n",
             "tin_change": "We wish to inform you that we have updated the Tax Identification Number (TIN) in our system to reflect the documentation you provided, in line with our internal records.\n",
@@ -192,13 +180,7 @@ Owl KYC Verification Team\n`
             const form = document.getElementById('emailForm');
             const data = new FormData(form);
 
-            // Process Header
-            const recipientName = data.get('recipient_name')?.trim();
-            if (recipientName) {
-                emailParts.push(EMAIL_TEMPLATES['header'].replace('{{recipient_name}}', recipientName));
-            }
-
-            // --- Process Sections Based on a Configuration ---
+            // This config object drives the email generation logic.
             const sectionConfig = [
                 { id: 'why_poi_poa_needed', type: 'simple-link', placeholder: 'here.' },
                 { id: 'ubo_identity_verification_main', type: 'multi-text', template: 'ubo_identity_verification', name_prefix: 'ubo_id_name_', placeholder: '{{ubo_name}}'},
@@ -215,6 +197,12 @@ Owl KYC Verification Team\n`
                 { id: 'acceptable_address_verification', type: 'simple' },
                 { id: 'acceptable_photo_id', type: 'simple' }
             ];
+
+            // Process Header
+            const recipientName = data.get('recipient_name')?.trim();
+            if (recipientName) {
+                emailParts.push(EMAIL_TEMPLATES['header'].replace('{{recipient_name}}', recipientName));
+            }
 
             sectionConfig.forEach(config => {
                 const mainCheckbox = document.getElementById(config.id);
@@ -289,6 +277,7 @@ Owl KYC Verification Team\n`
                     }
                 });
             });
+
             const conditional_inputs = [
                 { checkboxId: 'show_biz_name_fields', divId: 'biz_name_fields' },
                 { checkboxId: 'show_biz_activity_fields', divId: 'biz_activity_fields' }
@@ -300,6 +289,7 @@ Owl KYC Verification Team\n`
                     checkbox.addEventListener('change', () => div.style.display = checkbox.checked ? 'block' : 'none');
                 }
             });
+            
             const richButton = document.getElementById('copyRichButton');
             const plainButton = document.getElementById('copyPlainButton');
             const display = document.getElementById('generated_email_display');
