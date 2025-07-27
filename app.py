@@ -56,5 +56,5 @@ def logout():
     return redirect(url_for('login'))
 
 # This block is for running the app locally for testing
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)

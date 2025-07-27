@@ -21,36 +21,49 @@
         <h1>Owl Email Gen</h1>
         <form id="emailForm">
             <div class="section-header">
-                <span style="vertical-align: middle; margin-right: 4px;">Dear</span>
-                <input type="text" id="recipient_name" name="recipient_name" placeholder="Insert Name Here" style="display:inline-block; width: 70%; vertical-align: middle;">
-                <span style="vertical-align: middle;">,</span>
-            </div>
-
-            <div class="section-header">
                 <input type="checkbox" id="opener" name="opener">
                 <label for="opener">Opener</label>
+                <div class="subcategory-content">
+                    <div class="subheader"><label for="recipient_name">Dear:</label><input type="text" id="recipient_name" name="recipient_name" placeholder="Insert Customer Name"></div>
+                </div>
             </div>
-
             <div class="section-header">
                 <input type="checkbox" id="why_poi_poa_needed" name="why_poi_poa_needed">
                 <label for="why_poi_poa_needed">Why POI/POA needed</label>
             </div>
             <div class="section-header">
-                <input type="checkbox" id="ubo_identity_verification_main" name="ubo_identity_verification_main">
-                <label for="ubo_identity_verification_main">UBO Identity verification</label>
+                <input type="checkbox" id="poi_poa_request_main" name="poi_poa_request_main">
+                <label for="poi_poa_request_main">POI/POA request</label>
                 <div class="subcategory-content">
-                    <div class="subheader"><label for="ubo_id_name_1">UBO 1:</label><input type="text" id="ubo_id_name_1" name="ubo_id_name_1" placeholder="Insert UBO 1 Name"></div>
-                    <div class="subheader"><label for="ubo_id_name_2">UBO 2:</label><input type="text" id="ubo_id_name_2" name="ubo_id_name_2" placeholder="Insert UBO 2 Name"></div>
-                    <div class="subheader"><label for="ubo_id_name_3">UBO 3:</label><input type="text" id="ubo_id_name_3" name="ubo_id_name_3" placeholder="Insert UBO 3 Name"></div>
-                </div>
-            </div>
-            <div class="section-header">
-                <input type="checkbox" id="ubo_address_verification_main" name="ubo_address_verification_main">
-                <label for="ubo_address_verification_main">UBO Address verification</label>
-                <div class="subcategory-content">
-                    <div class="subheader"><label for="ubo_addr_name_1">UBO 1:</label><input type="text" id="ubo_addr_name_1" name="ubo_addr_name_1" placeholder="Insert UBO 1 Name"></div>
-                    <div class="subheader"><label for="ubo_addr_name_2">UBO 2:</label><input type="text" id="ubo_addr_name_2" name="ubo_addr_name_2" placeholder="Insert UBO 2 Name"></div>
-                    <div class="subheader"><label for="ubo_addr_name_3">UBO 3:</label><input type="text" id="ubo_addr_name_3" name="ubo_addr_name_3" placeholder="Insert UBO 3 Name"></div>
+                    <div class="subheader">
+                        <input type="checkbox" id="poi_1_check" name="poi_1_check"><label for="poi_1_check">POI 1</label>
+                        <div id="poi_1_fields" style="display:none; margin-left: 20px; margin-top: 5px;">
+                            <label>Company Name (XXX):</label><input type="text" id="poi_1_company_name" name="poi_1_company_name">
+                            <label>Individual Name (YYY):</label><input type="text" id="poi_1_individual_name" name="poi_1_individual_name">
+                            <label>Link (ZZZ):</label><input type="text" id="poi_1_link" name="poi_1_link">
+                        </div>
+                    </div>
+                    <div class="subheader">
+                        <input type="checkbox" id="poi_2_check" name="poi_2_check"><label for="poi_2_check">POI 2</label>
+                        <div id="poi_2_fields" style="display:none; margin-left: 20px; margin-top: 5px;">
+                            <label>Company Name (XXX):</label><input type="text" id="poi_2_company_name" name="poi_2_company_name">
+                            <label>Individual Name (YYY):</label><input type="text" id="poi_2_individual_name" name="poi_2_individual_name">
+                            <label>Link (ZZZ):</label><input type="text" id="poi_2_link" name="poi_2_link">
+                        </div>
+                    </div>
+                    <hr style="border-color: #444; margin: 15px 0;">
+                    <div class="subheader">
+                        <input type="checkbox" id="poa_1_check" name="poa_1_check"><label for="poa_1_check">POA 1</label>
+                         <div id="poa_1_fields" style="display:none; margin-left: 20px; margin-top: 5px;">
+                            <label>Person's Name (XXX):</label><input type="text" id="poa_1_person_name" name="poa_1_person_name">
+                        </div>
+                    </div>
+                    <div class="subheader">
+                        <input type="checkbox" id="poa_2_check" name="poa_2_check"><label for="poa_2_check">POA 2</label>
+                        <div id="poa_2_fields" style="display:none; margin-left: 20px; margin-top: 5px;">
+                            <label>Person's Name (XXX):</label><input type="text" id="poa_2_person_name" name="poa_2_person_name">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="section-header">
@@ -61,28 +74,43 @@
                 </div>
             </div>
             <div class="section-header">
-                <input type="checkbox" id="constitutional_documents_main" name="constitutional_documents_main">
-                <label for="constitutional_documents_main">Constitutional Documents</label>
+                <input type="checkbox" id="constitutional_documents" name="constitutional_documents">
+                <label for="constitutional_documents">Constitutional Documents</label>
             </div>
             <div class="section-header">
-                <input type="checkbox" id="bank_statement_main" name="bank_statement_main">
-                <label for="bank_statement_main">Bank Statement</label>
+                <input type="checkbox" id="statements_main" name="statements_main">
+                <label for="statements_main">Statements</label>
+                <div class="subcategory-content">
+                    <div class="subheader"><input type="checkbox" name="statement_type" value="bank_statement" id="bank_statement_check"><label for="bank_statement_check">Bank Statement</label></div>
+                    <div class="subheader"><input type="checkbox" name="statement_type" value="paypal_statement" id="paypal_check"><label for="paypal_check">PayPal Statement</label></div>
+                </div>
+            </div>
+            <div class="section-header">
+                <input type="checkbox" id="tin_request" name="tin_request">
+                <label for="tin_request">TIN request</label>
             </div>
             <div class="section-header">
                 <input type="checkbox" id="clarifications_main" name="clarifications_main">
                 <label for="clarifications_main">Clarifications</label>
                 <div class="subcategory-content">
                     <div class="subheader">
+                        <input type="checkbox" id="show_address_clarification" name="show_address_clarification"><label for="show_address_clarification">Address Clarification</label>
+                        <div id="address_clarification_fields" style="display:none; margin-left: 20px;">
+                            <label>Registered Address (XXX):</label><input type="text" id="clarification_addr_1" name="clarification_addr_1">
+                            <label>System Address (YYY):</label><input type="text" id="clarification_addr_2" name="clarification_addr_2">
+                        </div>
+                    </div>
+                    <div class="subheader">
                         <input type="checkbox" id="show_biz_name_fields" name="show_biz_name_fields"><label for="show_biz_name_fields">Business Name Discrepancy</label>
                         <div id="biz_name_fields" style="display:none; margin-left: 20px;">
-                            <label for="clarification_biz_name_1">Bank Statement Name:</label><input type="text" id="clarification_biz_name_1" name="clarification_biz_name_1">
-                            <label for="clarification_biz_name_2">Your Entity Name:</label><input type="text" id="clarification_biz_name_2" name="clarification_biz_name_2">
+                            <label>Bank Statement Name:</label><input type="text" id="clarification_biz_name_1" name="clarification_biz_name_1">
+                            <label>Your Entity Name:</label><input type="text" id="clarification_biz_name_2" name="clarification_biz_name_2">
                         </div>
                     </div>
                     <div class="subheader">
                         <input type="checkbox" id="show_biz_activity_fields" name="show_biz_activity_fields"><label for="show_biz_activity_fields">Business Activity Update</label>
                         <div id="biz_activity_fields" style="display:none; margin-left: 20px;">
-                            <label for="clarification_activity_text">Original Business Activity:</label><input type="text" id="clarification_activity_text" name="clarification_activity_text">
+                            <label>Original Business Activity:</label><input type="text" id="clarification_activity_text" name="clarification_activity_text">
                         </div>
                     </div>
                 </div>
@@ -100,29 +128,48 @@
                 <input type="checkbox" id="financial_statement_main" name="financial_statement_main">
                 <label for="financial_statement_main">Financial Statement</label>
                 <div class="subcategory-content">
-                    <div class="subheader"><label for="financial_statement_company_name">Company Name:</label><input type="text" id="financial_statement_company_name" name="financial_statement_company_name" placeholder="Insert Company Name"></div>
+                    <div class="subheader"><label>Company Name:</label><input type="text" id="financial_statement_company_name" name="financial_statement_company_name" placeholder="Insert Company Name"></div>
                 </div>
             </div>
             <div class="section-header">
                 <input type="checkbox" id="sow_sof_main" name="sow_sof_main">
                 <label for="sow_sof_main">SOW/SOF</label>
                 <div class="subcategory-content">
-                    <div class="subheader"><label for="sow_ubo_company_name">Source of Wealth for the UBO:</label><input type="text" id="sow_ubo_company_name" name="sow_ubo_company_name" placeholder="Insert Company Name"></div>
-                    <div class="subheader"><label for="sow_company_company_name">SOW/SOF for the Company:</label><input type="text" id="sow_company_company_name" name="sow_company_company_name" placeholder="Insert Company Name"></div>
+                    <div class="subheader"><label>Source of Wealth for the UBO:</label><input type="text" id="sow_ubo_company_name" name="sow_ubo_company_name" placeholder="Insert Company Name"></div>
+                    <div class="subheader"><label>SOW/SOF for the Company:</label><input type="text" id="sow_company_company_name" name="sow_company_company_name" placeholder="Insert Company Name"></div>
                 </div>
             </div>
-             <div class="section-header">
+            <div class="section-header">
                 <input type="checkbox" id="sanctions_pep" name="sanctions_pep">
                 <label for="sanctions_pep">Sanctions / PEP Declaration</label>
             </div>
             <div class="section-header">
                 <input type="checkbox" id="changes_made_main" name="changes_made_main">
                 <label for="changes_made_main">Changes made</label>
-                <div class="subcategory-content">
+                 <div class="subcategory-content">
                     <div class="subheader"><input type="checkbox" name="changes_made_type" value="address_change" id="addr_change_check"><label for="addr_change_check">Address change</label></div>
                     <div class="subheader"><input type="checkbox" name="changes_made_type" value="eircode_change" id="eir_change_check"><label for="eir_change_check">Eircode change</label></div>
                     <div class="subheader"><input type="checkbox" name="changes_made_type" value="tin_change" id="tin_change_check"><label for="tin_change_check">TIN change</label></div>
                     <div class="subheader"><input type="checkbox" name="changes_made_type" value="registration_number_change" id="reg_change_check"><label for="reg_change_check">Registration number change</label></div>
+                </div>
+            </div>
+            <div class="section-header">
+                <input type="checkbox" id="change_payment_flow" name="change_payment_flow">
+                <label for="change_payment_flow">Change Payment Flow Instructions</label>
+            </div>
+            <div class="section-header">
+                <input type="checkbox" id="liquidation_main" name="liquidation_main">
+                <label for="liquidation_main">Liquidation</label>
+                <div class="subcategory-content">
+                    <div class="subheader"><label>Company Name:</label><input type="text" id="liquidation_company_name" name="liquidation_company_name" placeholder="Insert Company Name"></div>
+                </div>
+            </div>
+            <div class="section-header">
+                <input type="checkbox" id="complex_structure_main" name="complex_structure_main">
+                <label for="complex_structure_main">Complex Structure ownership</label>
+                <div class="subcategory-content">
+                     <div class="subheader"><label>Owned Company (XXX):</label><input type="text" id="complex_owned_company" name="complex_owned_company"></div>
+                     <div class="subheader"><label>Parent Company (YYY):</label><input type="text" id="complex_parent_company" name="complex_parent_company"></div>
                 </div>
             </div>
             <div class="section-header">
@@ -151,22 +198,24 @@
 
     <script>
         const EMAIL_TEMPLATES = {
-            "header": "Dear {{recipient_name}},\n\n",
-            "opener": "Thank you for your application/email.\nIn order to proceed, we kindly request the following information:\n",
+            "opener": "Dear {{recipient_name}},\nThank you for your application/email.\nIn order to proceed, we kindly request the following information:\n",
             "why_poi_poa_needed": "We understand your concerns of providing your personal documentation and would like to provide some clarity regarding our request.\nWe are obligated to conduct enhanced due diligence in accordance with regulatory standards. These regulations require us to identify and verify any individual who owns or controls 25% or more of a business.\nThe identification and verification process involves confirming the identity of the individuals and their residential addresses. Residential addresses are verified via the proof of address documents submitted.\n",
-            "ubo_identity_verification": "As the ultimate beneficial owner of {{ubo_name}}, please provide valid photo identification for identity verification purposes. A valid form of photo identification will be required to complete this process. Please refer to the list of acceptable forms of photo ID below.\n",
-            "ubo_address_verification": "We require a document verifying current residential address of {{ubo_name}}, issued within the past three months. This can be submitted via return email. Acceptable forms of address verification are listed below.\n",
+            "poi_request": "As the beneficial owner of {{company_name}}, please provide valid photo identification and liveness check for {{individual_name}} for identity verification purposes via this link {{link}}. A valid form of photo identification will be required to complete this process. Please refer to the list of acceptable forms of photo ID below.\n",
+            "poa_request": "We require documents verifying current residential address of {{person_name}}, issued within the past three months. This can be submitted via return email. Acceptable forms of address verification are listed below.\n",
             "no_ubo": "As {{company_name}} is a state-owned entity and no such natural person can be identified as the ultimate beneficial owner, we are required to carry out verification on at least two directors in order to meet our regulatory obligations. The identification and verification process involves confirming the identity of the individuals and their residential addresses. Identity is verified through the secure links provided, which authenticate a valid form of photo IDs. Residential addresses are verified via the proof of address documents submitted. Please note that once you confirm the nominated directors for verification, we can issue the identity verification links to you for onward transmission. We can confirm that email addresses for the directors are not required to complete this process.\n",
             "constitutional_documents": "As part of our due diligence and compliance procedures, we kindly request a copy of your company’s Memorandum and Articles of Association and/or the Certificate of Incorporation.\n",
             "bank_statement": "As part of our verification process, please provide a bank statement dated within the last three months. The statement must be in the name of the business and clearly show the account holder’s name, account number, and transaction activity.\n",
+            "paypal_statement": "To proceed, we kindly request a valid PayPal Statement showing the Account & Personal Identification, Statement Period, etc. Please note that PayPal Transaction History Report cannot be accepted.\n",
+            "tin_request": "We kindly request that you provide your Taxpayer Identification Number (TIN) to ensure our records are complete and accurate.\n",
+            "address_clarification": "We would like to bring to your attention that, according to our records, the registered address is listed as {{address_1}}. However, the registered address currently provided in the system is {{address_2}}.\nTo ensure the accuracy of our records and compliance with our internal requirements, we kindly request your clarification on this discrepancy.\nPlease let us know which address is correct and provide supporting documentation if necessary.\n",
             "business_name_discrepancy": "The bank statement provided is in the name of {{bank_name}}, which does not match the name of your entity, {{entity_name}}. We kindly request clarification on the relationship between {{bank_name}} and {{entity_name}}, and an explanation for this discrepancy.\n",
-            "business_activity_update": "Our records indicate that the company was originally incorporated as an {{activity}}. Please provide clarification on when the nature of the business changed.\n",
+            "business_activity_update": "Our records indicate that the company was originally incorporated as {{activity}}. Please provide clarification on when the nature of the business changed.\n",
             "illegible": "Thank you for your recent submission. Unfortunately, the document provided is illegible, and we’re unable to complete the verification process at this time.\nTo proceed, kindly upload a clear and legible copy of your document. Please ensure that all information, including your name, photo, and expiration date, is clearly visible and not obscured.\n",
             "expired": "Thank you for providing your documentation. Upon review, we noticed that the document submitted is expired. Unfortunately, we cannot proceed with the verification process using an expired document.\nTo continue, please submit a valid, unexpired form of documentation. Ensure that all details are clearly visible for successful verification.\n",
             "info_mismatch": "Thank you for submitting your documentation. Upon review, we noticed that the name on the document does not match the name registered on your account.\nTo proceed with the verification process, we kindly ask you to provide clarification regarding this discrepancy. If applicable, please submit supporting documentation (such as a legal name change certificate, marriage certificate, a signed declaration explaining the relationship, etc.).\n",
             "financial_statement": "To assess the financial standing of {{company_name}}, we kindly request a copy of the most recent financial statements and accounts, audited where available.\n",
-            "sow_sof_ubo": "As part of our ongoing due diligence requirements, we kindly request that you provide the Source of Wealth (SOW) and Source of Funds (SOF) information for the Ultimate Beneficial Owners (UBOs) of {{company_name}}. Please include supporting documentation where available...\n",
-            "sow_sof_company": "As part of our ongoing compliance and due diligence requirements, we kindly request documentation regarding the Source of Wealth (SOW) and Source of Funds (SOF) for {{company_name}}...\n",
+            "sow_sof_ubo": "As part of our ongoing due diligence requirements, we kindly request that you provide the Source of Wealth (SOW) and Source of Funds (SOF) information for the Ultimate Beneficial Owners (UBOs) of {{company_name}}. Please include supporting documentation where available, such as bank statements, audited financials, investment records, or other relevant evidence that helps demonstrate the origin of the UBOs’ wealth and the specific sources of funds used in relation to the entity. Source of Funds: The specific origin of the funds being used in this transaction or business relationship (e.g., bank statements, sale agreements, dividends, etc.).\n",
+            "sow_sof_company": "As part of our ongoing compliance and due diligence requirements, we kindly request documentation regarding the Source of Wealth (SOW) and Source of Funds (SOF) for {{company_name}}. Please provide information that includes:\nSource of Wealth (SOW): An explanation of how the business has generated its overall wealth (e.g., revenue from operations, sale of assets, investments, long-term contracts, etc.).\nSource of Funds (SOF): Details on the specific origin of the funds involved in the current or proposed transaction (e.g., recent income, capital contributions, loan agreements, or other relevant documentation). This information is essential for us to complete our verification process and proceed with the necessary steps in accordance with regulatory requirements.\n",
             "sanctions_pep": "As part of our regulatory compliance procedures, we kindly request a self-certification regarding your sanctions status and whether you or any related parties are considered Politically Exposed Persons (PEPs).\nPlease confirm the following for all relevant individuals or entities (including UBOs, directors, and key stakeholders):\n- Whether any party is currently listed on international sanctions lists (e.g., OFAC, UN, EU, UK sanctions)\n- Whether any party is or has been a PEP, including close associates or immediate family members of PEPs.\nYou may submit this declaration in a signed letter or by completing a standard self-certification form if one has been provided.\nThis information is required to fulfill our Anti-Money Laundering (AML) and Know Your Customer (KYC) obligations.\n",
             "address_change": "We would like to confirm that we have successfully changed your address to reflect the details provided in your documents and our records have been updated accordingly.\n",
             "eircode_change": "We would like to confirm that we have successfully changed your Eircode to reflect the details provided in your documents and our records have been updated accordingly.\n",
@@ -174,7 +223,11 @@
             "registration_number_change": "We would like to confirm that your company’s registration number has been successfully updated in our records to reflect the information provided in your documentation.\n",
             "acceptable_address_verification": "Acceptable Forms of Address Verification:\n⦁ A bank statement issued to your residential address within the last three months. (Sensitive details such as transaction values may be redacted, but the name, address, account name, and IBAN/account number must remain visible.); or\n⦁ A utility bill issued to your residential address within the last three months.\n",
             "acceptable_photo_id": "Acceptable Forms of Photo ID:\n⦁ A valid passport; or\n⦁ A valid photo card driving license issued by an EU/EEA Member State; or\n⦁ A valid government-issued ID card from an EU/EEA Member State.\n",
-            "footer": `\n<hr>\nWe will retain your documents on file, and all data is stored securely in accordance with GDPR requirements.
+            "change_payment_flow": "You can update your payout method in the Finance section of the Viator platform once the verification process is fully completed and the required documentation for the chosen payment method has been provided.\n",
+            "liquidation": "Our records indicate that {{company_name}} appears to have undergone liquidation. We are contacting you to kindly confirm whether the company has, in fact, been dissolved.\nIf you intend to proceed with your application for verification on Viator, we would appreciate clarification regarding the current status of the business and an explanation outlining your reasons for continuing with the application despite the company's reported status.\n",
+            "complex_structure": "According to our records, {{owned_company}} is owned by {{parent_company}}. Please provide us with the shareholders list for this companies so we can proceed with the identification and verification process (ID&V). We are required to identify and verify any natural persons who own or control 25% or more of a business.\n",
+            "footer": `\n<hr>\nOnce all the required steps completed, we'll be happy to proceed with your application.
+We will retain your documents on file, and all data is stored securely in accordance with GDPR requirements.
 Further information about the verification process can be found <a href="https://help.supplier.viator.com/en/articles/363-account-verification-for-suppliers-using-owl-payments-europe" target="_blank" rel="noopener noreferrer">here</a>.
 Should you have any questions or need further assistance, do not hesitate to contact us.
 Thank you for your cooperation and trust in our services.
@@ -184,87 +237,100 @@ Owl KYC Verification Team\n`
 
         function generateEmail() {
             const emailParts = [];
-            const form = document.getElementById('emailForm');
-            const data = new FormData(form);
-
-            // Process Header
-            const recipientName = data.get('recipient_name')?.trim();
-            if (recipientName) {
-                emailParts.push(EMAIL_TEMPLATES['header'].replace('{{recipient_name}}', recipientName));
+            const getValue = (id) => document.getElementById(id)?.value.trim() || '';
+            const isChecked = (id) => document.getElementById(id)?.checked;
+            
+            if (isChecked('opener')) {
+                emailParts.push(EMAIL_TEMPLATES.opener.replace('{{recipient_name}}', getValue('recipient_name') || 'Customer'));
             }
-            // Opener
-            if (document.getElementById('opener')?.checked) {
-                emailParts.push(EMAIL_TEMPLATES['opener']);
+            if (isChecked('why_poi_poa_needed')) {
+                let template = EMAIL_TEMPLATES.why_poi_poa_needed;
+                const link = `<a href="https://help.supplier.viator.com/en/articles/363-account-verification-for-suppliers-using-owl-payments-europe" target="_blank" rel="noopener noreferrer">here</a>`;
+                emailParts.push(template.replace('here.', `${link}.`));
+            }
+            if (isChecked('poi_poa_request_main')) {
+                if (isChecked('poi_1_check')) {
+                    const co = getValue('poi_1_company_name') || 'XXX';
+                    const ind = getValue('poi_1_individual_name') || 'YYY';
+                    const linkVal = getValue('poi_1_link') || 'ZZZ';
+                    emailParts.push(EMAIL_TEMPLATES.poi_request.replace('{{company_name}}', co).replace('{{individual_name}}', ind).replace('{{link}}', linkVal));
+                }
+                if (isChecked('poi_2_check')) {
+                    const co = getValue('poi_2_company_name') || 'XXX';
+                    const ind = getValue('poi_2_individual_name') || 'YYY';
+                    const linkVal = getValue('poi_2_link') || 'ZZZ';
+                    emailParts.push(EMAIL_TEMPLATES.poi_request.replace('{{company_name}}', co).replace('{{individual_name}}', ind).replace('{{link}}', linkVal));
+                }
+                if (isChecked('poa_1_check')) {
+                    const person = getValue('poa_1_person_name') || 'XXX';
+                    emailParts.push(EMAIL_TEMPLATES.poa_request.replace('{{person_name}}', person));
+                }
+                if (isChecked('poa_2_check')) {
+                    const person = getValue('poa_2_person_name') || 'XXX';
+                    emailParts.push(EMAIL_TEMPLATES.poa_request.replace('{{person_name}}', person));
+                }
+            }
+            if (isChecked('no_ubo_main')) {
+                const companyName = getValue('no_ubo_company_name');
+                if (companyName) emailParts.push(EMAIL_TEMPLATES.no_ubo.replace('{{company_name}}', companyName));
+            }
+            if (isChecked('constitutional_documents')) {
+                 emailParts.push(EMAIL_TEMPLATES.constitutional_documents);
+            }
+            if (isChecked('statements_main')) {
+                document.querySelectorAll('input[name="statement_type"]:checked').forEach(c => emailParts.push(EMAIL_TEMPLATES[c.value]));
+            }
+            if (isChecked('tin_request')) {
+                emailParts.push(EMAIL_TEMPLATES.tin_request);
+            }
+            if (isChecked('clarifications_main')) {
+                if (isChecked('show_address_clarification')) {
+                    emailParts.push(EMAIL_TEMPLATES.address_clarification.replace('{{address_1}}', getValue('clarification_addr_1') || 'XXX').replace('{{address_2}}', getValue('clarification_addr_2') || 'YYY'));
+                }
+                if (isChecked('show_biz_name_fields')) {
+                    emailParts.push(EMAIL_TEMPLATES.business_name_discrepancy.replace('{{bank_name}}', getValue('clarification_biz_name_1') || 'Bank Name').replace('{{entity_name}}', getValue('clarification_biz_name_2') || 'Entity Name'));
+                }
+                 if (isChecked('show_biz_activity_fields')) {
+                    const activity = getValue('clarification_activity_text') || 'XXX';
+                    emailParts.push(EMAIL_TEMPLATES['business_activity_update'].replace('{{activity}}', activity));
+                }
+            }
+            if (isChecked('invalid_docs_main')) {
+                document.querySelectorAll('input[name="invalid_doc_type"]:checked').forEach(c => emailParts.push(EMAIL_TEMPLATES[c.value]));
+            }
+            if (isChecked('financial_statement_main')) {
+                const fsName = getValue('financial_statement_company_name');
+                if(fsName) emailParts.push(EMAIL_TEMPLATES.financial_statement.replace('{{company_name}}', fsName));
+            }
+            if (isChecked('sow_sof_main')) {
+                const sowUboName = getValue('sow_ubo_company_name');
+                if(sowUboName) emailParts.push(EMAIL_TEMPLATES.sow_sof_ubo.replace('{{company_name}}', sowUboName));
+                const sowCompName = getValue('sow_company_company_name');
+                if(sowCompName) emailParts.push(EMAIL_TEMPLATES.sow_sof_company.replace('{{company_name}}', sowCompName));
+            }
+            if (isChecked('sanctions_pep')) emailParts.push(EMAIL_TEMPLATES.sanctions_pep);
+            
+            if (isChecked('changes_made_main')) {
+                document.querySelectorAll('input[name="changes_made_type"]:checked').forEach(c => emailParts.push(EMAIL_TEMPLATES[c.value]));
             }
             
-            // This config object drives the email generation logic.
-            const sectionConfig = [
-                { id: 'why_poi_poa_needed', type: 'simple-link', placeholder: 'here.' },
-                { id: 'ubo_identity_verification_main', type: 'multi-text', template: 'ubo_identity_verification', name_prefix: 'ubo_id_name_', placeholder: '{{ubo_name}}'},
-                { id: 'ubo_address_verification_main', type: 'multi-text', template: 'ubo_address_verification', name_prefix: 'ubo_addr_name_', placeholder: '{{ubo_name}}'},
-                { id: 'no_ubo_main', type: 'single-text', template: 'no_ubo', input_name: 'no_ubo_company_name', placeholder: '{{company_name}}'},
-                { id: 'constitutional_documents_main', type: 'simple', key: 'constitutional_documents' },
-                { id: 'bank_statement_main', type: 'simple', key: 'bank_statement' },
-                { id: 'clarifications_main', type: 'clarifications' },
-                { id: 'invalid_docs_main', type: 'sub-checkbox', name: 'invalid_doc_type' },
-                { id: 'financial_statement_main', type: 'single-text', template: 'financial_statement', input_name: 'financial_statement_company_name', placeholder: '{{company_name}}' },
-                { id: 'sow_sof_main', type: 'sow-sof' },
-                { id: 'sanctions_pep', type: 'simple' },
-                { id: 'changes_made_main', type: 'sub-checkbox', name: 'changes_made_type' },
-                { id: 'acceptable_address_verification', type: 'simple' },
-                { id: 'acceptable_photo_id', type: 'simple' }
-            ];
+            if (isChecked('change_payment_flow')) emailParts.push(EMAIL_TEMPLATES.change_payment_flow);
 
-            sectionConfig.forEach(config => {
-                const mainCheckbox = document.getElementById(config.id);
-                if (!mainCheckbox || !mainCheckbox.checked) return;
-                const type = config.type || 'simple';
-                const templateKey = config.key || config.id.replace('_main', '');
-                
-                switch(type) {
-                    case 'simple':
-                        emailParts.push(EMAIL_TEMPLATES[templateKey]);
-                        break;
-                    case 'simple-link':
-                        // This logic is flawed for the why_poi_poa_needed template
-                        emailParts.push(EMAIL_TEMPLATES[templateKey]);
-                        break;
-                    case 'multi-text':
-                        ['1', '2', '3'].forEach(i => {
-                            const name = data.get(`${config.name_prefix}${i}`)?.trim();
-                            if (name) emailParts.push(EMAIL_TEMPLATES[config.template].replace(config.placeholder, name));
-                        });
-                        break;
-                    case 'single-text':
-                        const textValue = data.get(config.input_name)?.trim();
-                        if (textValue) emailParts.push(EMAIL_TEMPLATES[config.template].replace(config.placeholder, textValue));
-                        break;
-                    case 'sow-sof':
-                        const uboName = data.get('sow_ubo_company_name')?.trim();
-                        if (uboName) emailParts.push(EMAIL_TEMPLATES['sow_sof_ubo'].replace('{{company_name}}', uboName));
-                        const compName = data.get('sow_company_company_name')?.trim();
-                        if (compName) emailParts.push(EMAIL_TEMPLATES['sow_sof_company'].replace('{{company_name}}', compName));
-                        break;
-                    case 'sub-checkbox':
-                        form.querySelectorAll(`input[name="${config.name}"]:checked`).forEach(c => emailParts.push(EMAIL_TEMPLATES[c.value]));
-                        break;
-                    case 'clarifications':
-                        if (document.getElementById('show_biz_name_fields')?.checked) {
-                            const bankName = data.get('clarification_biz_name_1') || 'XXX';
-                            const entityName = data.get('clarification_biz_name_2') || 'YYY';
-                            emailParts.push(EMAIL_TEMPLATES['business_name_discrepancy'].replace('{{bank_name}}', bankName).replace('{{entity_name}}', entityName));
-                        }
-                        if (document.getElementById('show_biz_activity_fields')?.checked) {
-                            const activity = data.get('clarification_activity_text') || 'XXX';
-                            emailParts.push(EMAIL_TEMPLATES['business_activity_update'].replace('{{activity}}', activity));
-                        }
-                        break;
-                }
-            });
+            const liqName = getValue('liquidation_company_name');
+            if(liqName) emailParts.push(EMAIL_TEMPLATES.liquidation.replace('{{company_name}}', liqName));
+
+            const owned = getValue('complex_owned_company');
+            const parent = getValue('complex_parent_company');
+            if (owned || parent) {
+                emailParts.push(EMAIL_TEMPLATES.complex_structure.replace('{{owned_company}}', owned || 'XXX').replace('{{parent_company}}', parent || 'YYY'));
+            }
+
+            if (isChecked('acceptable_address_verification')) emailParts.push(EMAIL_TEMPLATES.acceptable_address_verification);
+            if (isChecked('acceptable_photo_id')) emailParts.push(EMAIL_TEMPLATES.acceptable_photo_id);
 
             let emailBody = emailParts.join('\n\n');
-            if (document.getElementById('include_footer')?.checked) {
-                emailBody += EMAIL_TEMPLATES['footer'];
+            if (isChecked('include_footer')) {
+                emailBody += EMAIL_TEMPLATES.footer;
             }
             document.getElementById('generated_email_display').innerHTML = emailBody.replace(/\n/g, '<br>');
         }
@@ -276,10 +342,9 @@ Owl KYC Verification Team\n`
 
             document.querySelectorAll('.section-header > label, .section-header > input[type=checkbox]').forEach(el => {
                 el.addEventListener('click', e => {
-                    const parentHeader = e.currentTarget.parentElement;
-                    const content = parentHeader.querySelector('.subcategory-content');
+                    const content = e.currentTarget.parentElement.querySelector('.subcategory-content');
                     if (content) {
-                        if (e.currentTarget.tagName === 'LABEL' && parentHeader.classList.contains('section-header')) e.preventDefault();
+                        if (e.currentTarget.tagName === 'LABEL') e.preventDefault();
                         const isVisible = content.style.display === 'block';
                         content.style.display = isVisible ? 'none' : 'block';
                     }
@@ -288,39 +353,45 @@ Owl KYC Verification Team\n`
 
             const conditional_inputs = [
                 { checkboxId: 'show_biz_name_fields', divId: 'biz_name_fields' },
-                { checkboxId: 'show_biz_activity_fields', divId: 'biz_activity_fields' }
+                { checkboxId: 'show_biz_activity_fields', divId: 'biz_activity_fields' },
+                { checkboxId: 'show_address_clarification', divId: 'address_clarification_fields' },
+                { checkboxId: 'poi_1_check', divId: 'poi_1_fields' },
+                { checkboxId: 'poi_2_check', divId: 'poi_2_fields' },
+                { checkboxId: 'poa_1_check', divId: 'poa_1_fields' },
+                { checkboxId: 'poa_2_check', divId: 'poa_2_fields' }
             ];
             conditional_inputs.forEach(item => {
                 const checkbox = document.getElementById(item.checkboxId);
                 const div = document.getElementById(item.divId);
                 if(checkbox && div) {
-                    checkbox.addEventListener('change', () => div.style.display = checkbox.checked ? 'block' : 'none');
+                    checkbox.addEventListener('change', () => { div.style.display = checkbox.checked ? 'block' : 'none'; });
                 }
             });
             
             const richButton = document.getElementById('copyRichButton');
             const plainButton = document.getElementById('copyPlainButton');
             const display = document.getElementById('generated_email_display');
-            if(richButton && plainButton && display) {
-                plainButton.addEventListener('click', () => {
-                    navigator.clipboard.writeText(display.innerText).then(() => {
-                        plainButton.textContent = 'Copied!';
-                        setTimeout(() => { plainButton.textContent = 'Copy Plain Text'; }, 2000);
+
+            plainButton.addEventListener('click', () => {
+                navigator.clipboard.writeText(display.innerText).then(() => {
+                    plainButton.textContent = 'Copied!';
+                    setTimeout(() => { plainButton.textContent = 'Copy Plain Text'; }, 2000);
+                });
+            });
+
+            richButton.addEventListener('click', () => {
+                try {
+                    const item = new ClipboardItem({
+                        "text/html": new Blob([display.innerHTML.replace(/<br\s*\/?>/gi, '\n')], { type: 'text/html' }),
+                        "text/plain": new Blob([display.innerText], { type: 'text/plain' })
                     });
-                });
-                richButton.addEventListener('click', () => {
-                    try {
-                        const html = display.innerHTML;
-                        const item = new ClipboardItem({ "text/html": new Blob([html], { type: 'text/html' }) });
-                        navigator.clipboard.write([item]).then(() => {
-                            richButton.textContent = 'Copied!';
-                            setTimeout(() => { richButton.textContent = 'Copy Rich Text (for Email)'; }, 2000);
-                        });
-                    } catch (err) {
-                        console.error('Failed to copy rich text: ', err);
-                    }
-                });
-            }
+                    navigator.clipboard.write([item]).then(() => {
+                        richButton.textContent = 'Copied!';
+                        setTimeout(() => { richButton.textContent = 'Copy Rich Text (for Email)'; }, 2000);
+                    });
+                } catch(e) { console.error('Rich copy failed', e); }
+            });
+
             generateEmail();
         });
     </script>
